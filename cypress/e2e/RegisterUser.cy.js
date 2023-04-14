@@ -70,7 +70,6 @@ describe('User registration flow', () => {
 
         cy.get('[data-qa="account-deleted"]').should('be.visible')
         cy.get('[data-qa="account-deleted"]').should('have.text',"Account Deleted!")
-
         cy.get('[data-qa="continue-button"]').should('be.visible')
         cy.get('[data-qa="continue-button"]').click()
     })
