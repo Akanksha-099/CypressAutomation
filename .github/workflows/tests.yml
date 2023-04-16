@@ -15,12 +15,14 @@ jobs:
        with:
          name: cypress-execution-report
          path: cypress/reports/html
-     - uses: actions/upload-artifact@v3
+     - name: Upload test screenshots
+       uses: actions/upload-artifact@v3
        if: failure()
        with:
          name: cypress-screenshots
          path: cypress/screenshots
-     - uses: actions/upload-artifact@v3
+     - name: Upload test videos
+       uses: actions/upload-artifact@v3
        if: always()
        with:
          name: cypress-videos
@@ -32,3 +34,13 @@ jobs:
          publish_dir: cypress/reports/html
          publish_branch: gh-pages
          publish_dir_prefix: my-report
+  deploy:
+    name: github-pages
+    url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: cypress-run
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
+
