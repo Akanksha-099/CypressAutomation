@@ -1,5 +1,8 @@
 name: Cypress Artifacts
-on: [push]
+on: 
+ push:
+  branches:
+   - main
 jobs:
  cypress-run:
    runs-on: ubuntu-latest
@@ -27,6 +30,8 @@ jobs:
        with:
          github_token: ${{secrets.GITHUB_TOKEN}}
          publish_dir: cypress/reports/html
+         publish_branch: main
+         publish_dir_prefix: my-report
         
      
         
