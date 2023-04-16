@@ -2,11 +2,13 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
+    "reporterOptions": {
+      "configFile": "reporter-config.json"
+  },
     retries:{ "runMode": 2, "openMode": 0 },
     pageLoadTimeout:10000,
     responseTimeout:30000,
     screenshotOnRunFailure:true,
-    video: false,
     reporterOptions: {
     charts: true,
     reportPageTitle: 'Cypress Inline Reporter',
