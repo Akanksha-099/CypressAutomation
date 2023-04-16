@@ -1,11 +1,14 @@
 name: Cypress Artifacts
-on: [push]
+on: 
+ push:
+  branches:
+   - main
 jobs:
  cypress-run:
    runs-on: ubuntu-latest
    name: Test Artifacts
    steps:
-     - uses: actions/checkout@v2
+     - uses: actions/checkout@v3 
      - uses: cypress-io/github-action@v4
      - uses: actions/upload-artifact@v3
        if: always()
@@ -22,4 +25,13 @@ jobs:
        with:
          name: cypress-videos
          path: cypress/videos
+     - name : Deploy to Github pages
+       uses : peaceiris/actions-gh-pages@v3
+       with:
+         github_token: ${{secrets.GITHUB_TOKEN}}
+         publish_dir: cypress/reports/html
+         publish_branch: main
+         publish_dir_prefix: my-report
+        
+     
         
