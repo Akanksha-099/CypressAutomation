@@ -2,6 +2,7 @@
   "devDependencies": {
     "cypress": "^12.1.0",
     "cypress-mochawesome-reporter": "^3.3.0",
+    "cypress-multi-reporters": "^1.6.3",
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0"
   },
@@ -168,7 +169,6 @@
     "report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
     "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
     "combine:report": "cypress-multi-reporters merge cypress/reports/*/*"
-
   },
   "author": "Akanksha Bhasin",
   "license": "ISC",
