@@ -15,6 +15,9 @@ jobs:
      - name: Actions checkout 
        uses: actions/checkout@v3 
 
+     - name: Install NPM Packages
+       run: npm install
+
      - name: Cypress Actions
        uses: cypress-io/github-action@v4
 
@@ -44,17 +47,17 @@ jobs:
          cp -r cypress/videos public/videos
          cp -r cypress/screenshots public/screenshots
 
+     - name: Install cypress-multi-reporters
+       run: npm install cypress-multi-reporters
+
      - name: Merge test reports
-       run: npm run combine:report
+       run: npx mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mocha/report.json
 
      - name: Generate HTML report
-       run: npm run generate:report
+       run: npx mochawesome-report-generator cypress/reports/mocha/report.json --reportDir cypress/reports/html --reportTitle "Cypress Test Report"
 
      - name : Deploy to Github pages
        uses : peaceiris/actions-gh-pages@v3
        with:
          github_token: ${{ secrets.GITHUB_TOKEN }}
          publish_dir: ./public
-         
-
-
