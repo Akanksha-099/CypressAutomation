@@ -166,7 +166,9 @@
   "scripts": {
     "test": "Cypress Open",
     "report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
-    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
+    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
+    "combine:report": "cypress-multi-reporters merge cypress/reports/*/*"
+
   },
   "author": "Akanksha Bhasin",
   "license": "ISC",
