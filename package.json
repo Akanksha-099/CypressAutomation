@@ -165,10 +165,10 @@
     "yauzl": "^2.10.0"
   },
   "scripts": {
-    "test": "Cypress Open",
-    "report:merge": "mochawesome-merge cypress/results/json/*.json > index.json",
-    "report:generate": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html",
-    "combine:report": "cypress-multi-reporters merge cypress/reports/*/*"
+    "test:chrome": "cypress run --browser chrome",
+    "combine:report": "mochawesome-merge ./mochawesome-report/*.json -o index.json",
+    "generate:report": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
+
   },
   "author": "Akanksha Bhasin",
   "license": "ISC",
