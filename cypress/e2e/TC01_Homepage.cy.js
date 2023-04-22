@@ -9,7 +9,7 @@ describe('Homepage Visit', () => {
   })
   it('Verify the homepage items',()=>{
       cy.title().should('eq', 'Automation Exercise')
-      cy.get('div[class*="left-sidebar"]>h2').should('have.text',"Category1")
+      cy.get('div[class*="left-sidebar"]>h2').should('have.text',"Category")
       cy.get('div[class*="left-sidebar"]>h2').isLeftOf('div[class*="features_items"]>h2')
       cy.get('div[class*="features_items"]>h2').should('have.text',"Features Items")
       cy.get('div[class*="left-sidebar"]>h2').isLeftAlignedOnScreen()
