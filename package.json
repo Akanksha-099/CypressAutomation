@@ -166,8 +166,9 @@
   },
   "scripts": {
     "test:chrome": "cypress run --browser chrome",
-    "combine:report": "mochawesome-merge ./mochawesome-report/*.json -o index.json",
-    "generate:report": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
+    "combine-reports": "mochawesome-merge ./node_modules/mochawesome-merge/tests/mochawesome-report/*.json -o cypress/reports/report.json",
+    "generate-reports": "marge cypress/reports/report.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
+
 
   },
   "author": "Akanksha Bhasin",

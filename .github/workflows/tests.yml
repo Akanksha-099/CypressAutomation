@@ -41,14 +41,15 @@ jobs:
      - name: Copy test execution videos and screenshots
        run: |
          mkdir public
+         cp -r cypress/html public/html
          cp -r cypress/videos public/videos
          cp -r cypress/screenshots public/screenshots
 
      - name: Merge test reports
-       run: npm run combine:report
+       run: npm run combine-reports
 
      - name: Generate HTML report
-       run: npm run generate:report
+       run: npm run generate-reports
 
      - name : Deploy to Github pages
        uses : peaceiris/actions-gh-pages@v3
