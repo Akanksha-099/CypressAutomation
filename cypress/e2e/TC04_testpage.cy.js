@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 
-describe('Test cases page visit', () => {
+describe('Test cases page visit 2', () => {
     before(() => {
       cy.visit('/')
      
