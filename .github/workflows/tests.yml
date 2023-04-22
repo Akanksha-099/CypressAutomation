@@ -7,10 +7,6 @@ jobs:
  cypress-run:
    runs-on: ubuntu-latest
    name: Test Artifacts
-   permissions:
-      pages: write     
-      id-token: write
-      contents: read
    steps:
      - uses: actions/checkout@v3 
      - uses: cypress-io/github-action@v4
