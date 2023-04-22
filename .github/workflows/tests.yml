@@ -37,7 +37,7 @@ jobs:
          github_token: ${{ secrets.GITHUB_TOKEN }}
          publish_dir: cypress/reports/html
          publish_branch: gh-pages
-         publish_dir_prefix: my-report
+         
  deploy:
    name: github-pages
    runs-on: ubuntu-latest
