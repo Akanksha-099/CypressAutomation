@@ -41,7 +41,7 @@ jobs:
       pages: write      # to deploy to Pages
       id-token: write
    steps:
-    - uses: actions/download-artifact@main
+    - uses: actions/download-artifact@master
       with:
         name: cypress-execution-report
         path: cypress/reports/html
@@ -49,6 +49,6 @@ jobs:
     - uses: actions/upload-pages-artifact@v1
       with:
         path: .
-     - name: Deploy to GitHub Pages
-       id: deployment
-       uses: actions/deploy-pages@main
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@main
