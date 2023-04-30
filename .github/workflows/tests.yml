@@ -3,6 +3,10 @@ on:
  push:
   branches:
    - main
+permissions:
+ contents: write
+ pages: write
+ id-token: write
 jobs:
  cypress-run:
    runs-on: ubuntu-latest
@@ -28,27 +32,9 @@ jobs:
          name: cypress-videos
          path: cypress/videos
      - name : Deploy to Github Pages
-       uses : peaceiris/actions-gh-pages@v3
+       uses: JamesIves/github-pages-deploy-action@v4
        with:
-         github_token: ${{ secrets.GITHUB_TOKEN }}
-         publish_dir: cypress/reports/html
-         publish_branch: gh-pages
- deploy:
-   name: github-pages
-   runs-on: ubuntu-latest
-   needs: cypress-run
-   permissions:
-      pages: write      # to deploy to Pages
-      id-token: write
-   steps:
-    - uses: actions/download-artifact@master
-      with:
-        name: cypress-execution-report
-        path: cypress/reports/html
-    - uses: actions/configure-pages@v1
-    - uses: actions/upload-pages-artifact@v1
-      with:
-        path: .
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@main
+          folder: cypress/reports/html 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+         
+ 
