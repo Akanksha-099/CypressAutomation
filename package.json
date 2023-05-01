@@ -165,10 +165,7 @@
     "yauzl": "^2.10.0"
   },
   "scripts": {
-    "test:chrome": "cypress run --browser chrome",
-    "combine-reports": "mochawesome-merge ./node_modules/mochawesome-merge/tests/mochawesome-report/*.json -o cypress/reports/report.json",
-    "generate-reports": "marge cypress/reports/report.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
-
+    "test:chrome": "cypress run --browser chrome"
 
   },
   "author": "Akanksha Bhasin",

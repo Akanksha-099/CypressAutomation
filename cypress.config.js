@@ -10,11 +10,14 @@ module.exports = defineConfig({
     responseTimeout:30000,
     screenshotOnRunFailure:true,
     video:true,
+    videosFolder:cypress/videos,
+    videoCompression: 15,
     reporterOptions: {
     charts: true,
     reportPageTitle: 'Cypress Inline Reporter',
     embeddedScreenshots: true,
     inlineAssets: true, //Adds the asserts inline
+    
 },
  
   e2e: {
