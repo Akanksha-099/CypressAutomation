@@ -8,7 +8,7 @@ describe('Test cases page visit 2', () => {
     })
     it("Verifies the Test case page flow 56",()=>{
 
-            cy.title().should('eq', 'Automation Exercise1')
+            cy.title().should('eq', 'Automation Exercise')
             cy.get('div[class*="left-sidebar"]>h2').should('have.text',"Category")
             cy.get('div[class*="features_items"]>h2').should('have.text',"Features Items")
             cy.get('div[class*="brands_products"]>h2').should('have.text',"Brands")
