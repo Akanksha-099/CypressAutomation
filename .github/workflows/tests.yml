@@ -12,20 +12,23 @@ jobs:
    runs-on: ubuntu-latest
    name: Test Artifacts
    steps:
-     - uses: actions/checkout@v3 
-     - uses: cypress-io/github-action@v4
-     - uses: actions/upload-artifact@master
+     - name: Github Actions Checkout
+       uses: actions/checkout@v3 
+     - name: Cypress Checkout
+       uses: cypress-io/github-action@v4
+     - name: Upload tests report
+       uses: actions/upload-artifact@master
        if: always()
        with:
          name: cypress-execution-report
          path: cypress/reports/html
-     - name: Upload test screenshots
+     - name: Upload tests screenshots
        uses: actions/upload-artifact@v3
        if: failure()
        with:
          name: cypress-screenshots
          path: cypress/screenshots
-     - name: Upload test videos
+     - name: Upload tests videos
        uses: actions/upload-artifact@v3
        if: always()
        with:
@@ -33,8 +36,17 @@ jobs:
          path: cypress/videos
      - name : Deploy to Github Pages
        uses: JamesIves/github-pages-deploy-action@v4
+       if: always()
        with:
           folder: cypress/reports/html 
           github_token: ${{ secrets.GITHUB_TOKEN }}
-         
+     - name : Slack Notification
+       uses: rtCamp/action-slack-notify@v2
+       env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_MESSAGE: 'Post Content :rocket:'
+        SLACK_TITLE: Regression Test
+        SLACK_USERNAME: testuser
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}               
  
