@@ -12,7 +12,7 @@ jobs:
    runs-on: ubuntu-latest
    name: Test Artifacts
    steps:
-     - name: Github Actions Checkout
+     - name: Actions Checkout
        uses: actions/checkout@v3 
      - name: Cypress Checkout
        uses: cypress-io/github-action@v4
@@ -39,13 +39,13 @@ jobs:
        if: always()
        with:
           folder: cypress/reports/html 
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
      - name : Slack Notification
        uses: rtCamp/action-slack-notify@v2
        env:
-        SLACK_CHANNEL: general
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_MESSAGE: 'Post Content :rocket:'
+        SLACK_CHANNEL: cypressautomation
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_MESSAGE: 'New Changes :rocket:'
         SLACK_TITLE: Regression Test
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}               
