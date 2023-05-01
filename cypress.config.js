@@ -11,6 +11,7 @@ module.exports = defineConfig({
     screenshotOnRunFailure:true,
     video:true,
     videoCompression:15,
+    videoUploadOnPasses:true,
     reporterOptions: {
     charts: true,
     reportPageTitle: 'Cypress Inline Reporter',
