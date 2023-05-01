@@ -9,6 +9,7 @@ module.exports = defineConfig({
     pageLoadTimeout:10000,
     responseTimeout:30000,
     screenshotOnRunFailure:true,
+    video:true,
     reporterOptions: {
     charts: true,
     reportPageTitle: 'Cypress Inline Reporter',
