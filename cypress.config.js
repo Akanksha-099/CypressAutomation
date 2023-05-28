@@ -1,4 +1,6 @@
 const { defineConfig } = require("cypress");
+const { lighthouse, prepareAudit } = require('@cypress-audit/lighthouse');
+const { pa11y } = require('@cypress-audit/pa11y');
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
@@ -6,7 +8,7 @@ module.exports = defineConfig({
       "configFile": "reporter-config.json"
   },
     retries:{ "runMode": 2, "openMode": 0 },
-    pageLoadTimeout:10000,
+    pageLoadTimeout:20000,
     responseTimeout:30000,
     screenshotOnRunFailure:true,
     video:true,
@@ -25,6 +27,47 @@ module.exports = defineConfig({
       // implement node event listeners here
       require('cypress-mochawesome-reporter/plugin')(on);
 
-    },
+      on("before:browser:launch", (browser = {}, launchOptions) => {
+        prepareAudit(launchOptions);
+      });
+  
+      on('task', {
+        pa11y: pa11y(pa11yReport => {
+          console.log(pa11yReport) // raw pa11y report
+        }),
+        async lighthouse(allOptions) {
+          let txt
+          // calling the function is important
+          const lighthouseTask = lighthouse((lighthouseReport) => {
+            let lighthouseScoreText = ''
+            let lighthouseResult = lighthouseReport?.lhr?.categories
+            let lighthousePerformance =
+              'Performance: ' + lighthouseResult?.performance?.score + '\n'
+            let lighthouseAccessibility =
+              'Accessibility: ' + lighthouseResult?.accessibility?.score + '\n'
+            let lighthouseBestPractices =
+              'Best Practices: ' +
+              lighthouseResult?.['best-practices']?.score +
+              '\n'
+            let lighthouseSEO = 'SEO: ' + lighthouseResult?.seo?.score + '\n'
+            lighthouseScoreText =
+              lighthousePerformance +
+              lighthouseAccessibility +
+              lighthouseBestPractices +
+              lighthouseSEO
+    
+            console.log(lighthouseScoreText)
+            txt = lighthouseScoreText
+          })
+
+          const report = await lighthouseTask(allOptions)
+          // insert the text into the report returned the test
+          report.txt = txt
+          return report
+        },
+        
+      })
+    
   },
+}
 });

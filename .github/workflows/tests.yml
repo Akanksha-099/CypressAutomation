@@ -18,6 +18,8 @@ jobs:
        uses: actions/checkout@v3 
      - name: Cypress Checkout
        uses: cypress-io/github-action@v4
+       with:
+         browser: chrome
      - name: Upload tests report
        uses: actions/upload-artifact@master
        if: always()

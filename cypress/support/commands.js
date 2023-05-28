@@ -166,6 +166,41 @@ Cypress.Commands.add('handleCookieBanner', (cookie = 'OptanonAlertBoxClosed') =>
     cy.wait(2000)
     // cy.setCookie('OptanonAlertBoxClosed', '2022-03-31T10:33:16.279Z')
   })
+
+  const severityIndicators = {
+    minor:    '⚪️',
+    moderate: '🟡',
+    serious:  '🟠',
+    critical: '🔴',
+  }
+  
+  function callback(violations) {
+    violations.forEach(violation => {
+      const nodes = Cypress.$(violation.nodes.map(node => node.target).join(','))
+  
+      Cypress.log({
+        name: `${severityIndicators[violation.impact]} A11Y`,
+        consoleProps: () => violation,
+        $el: nodes,
+        message: `[${violation.help}](${violation.helpUrl})`
+      })
+  
+      violation.nodes.forEach(({ target }) => {
+        Cypress.log({
+          name: '🔧',
+          consoleProps: () => violation,
+          $el: Cypress.$(target.join(',')),
+          message: target
+        })
+      })
+    });
+  }
+  
+  Cypress.Commands.add("checkPageA11y", (path) => {
+    cy.visit(path);
+    cy.injectAxe();
+    cy.checkA11y(null, null, callback);
+  })
   
   export {}
   

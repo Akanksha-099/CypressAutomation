@@ -14,8 +14,13 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+import '@cypress-audit/lighthouse/commands';
+import 'cypress-axe';
+import "@cypress-audit/pa11y/commands";
 import './commands'
 import 'cypress-mochawesome-reporter/register';
+
+//import ‘cypress-audit/commands’;
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
@@ -29,3 +34,5 @@ Cypress.on("test:after:run", (test, runnable) => {
 
     addContext({ test }, videoUrl)
 });
+
+//import 'cypress-audit/commands';
