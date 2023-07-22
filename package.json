@@ -6,6 +6,7 @@
     "cypress-audit": "^1.1.0",
     "cypress-mochawesome-reporter": "^3.3.0",
     "cypress-multi-reporters": "^1.6.3",
+    "k6": "^0.0.0",
     "mochawesome-merge": "^4.3.0",
     "mochawesome-report-generator": "^6.2.0"
   },
