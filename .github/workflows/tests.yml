@@ -12,7 +12,7 @@ permissions:
 jobs:
  cypress-run:
    runs-on: ubuntu-latest
-   name: Test Artifacts
+   name: Cypress e2e tests
    steps:
      - name: Actions Checkout
        uses: actions/checkout@v3 
@@ -63,6 +63,14 @@ jobs:
     - name: Run k6 local test
       uses: grafana/k6-action@v0.3.0
       with:
-        filename: loadTests/**.js
+        filename: loadTests/single-request.js
         flags: --vus 50 --duration 10s
+    - name: Upload test report
+      uses: actions/upload-artifact@v2
+      with:
+        #html file name define in k6 code
+        name: summary  
+        # path in our github repo
+        path: result.html   
+        retention-days: 2  
    
