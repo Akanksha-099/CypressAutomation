@@ -63,7 +63,7 @@ jobs:
     - name: Run k6 local test
       uses: grafana/k6-action@v0.3.0
       with:
-        filename: loadTests/single-request.js
+        filename: cypress/loadTests/single-request.js
         flags: --vus 50 --duration 10s
     - name: Upload test report
       uses: actions/upload-artifact@v2
