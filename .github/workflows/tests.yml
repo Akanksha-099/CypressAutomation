@@ -78,6 +78,7 @@ jobs:
         retention-days: 2  
  send-slack-notification:
    needs: [cypress-run, performance-tests] # Wait for both cypress-run and performance-tests to complete
+   if: always() # Always run the Slack notification job regardless of the status of previous jobs
    runs-on: ubuntu-latest
    name: Send Slack Notification
    steps:
@@ -90,13 +91,13 @@ jobs:
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2
        if: always()
-       with:
-         # Combine the status of both jobs in the Slack message
-         message: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }}"
        env:
         SLACK_CHANNEL: cypressautomation
         SLACK_COLOR: ${{ job.status }} 
         SLACK_TITLE: Combined Job Status
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+         # Combine the status of both jobs in the Slack message
+        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }}"
+      
    
