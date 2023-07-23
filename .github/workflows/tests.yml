@@ -46,7 +46,17 @@ jobs:
        if: always()
        with:
           folder: cypress/reports/html 
-          token: ${{ secrets.GITHUB_TOKEN }}            
+          token: ${{ secrets.GITHUB_TOKEN }}
+     #- name : Slack Notification
+      # uses: rtCamp/action-slack-notify@v2
+       #if: always()
+       #env:
+      #  SLACK_CHANNEL: cypressautomation
+       # SLACK_COLOR: ${{ job.status }} 
+        #SLACK_MESSAGE: 'New Changes :rocket:'
+        #SLACK_TITLE: Regression Test
+        #SLACK_USERNAME: testuser
+        #SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}               
  performance-tests:
    runs-on: ubuntu-latest
    name: K6 performance tests
@@ -82,7 +92,7 @@ jobs:
        if: always()
        with:
          # Combine the status of both jobs in the Slack message
-         SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }}"
+         message: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }}"
        env:
         SLACK_CHANNEL: cypressautomation
         SLACK_COLOR: ${{ job.status }} 
