@@ -26,34 +26,27 @@ jobs:
        with:
          name: cypress-execution-report
          path: cypress/reports/html
+         retention-days: 2
      - name: Upload tests screenshots
        uses: actions/upload-artifact@v3
        if: failure()
        with:
          name: cypress-screenshots
          path: cypress/screenshots
+         retention-days: 2
      - name: Upload tests videos
        uses: actions/upload-artifact@v3
        if: always()
        with:
          name: cypress-videos
          path: cypress/videos
+         retention-days: 2
      - name : Deploy to Github Pages
        uses: JamesIves/github-pages-deploy-action@v4
        if: always()
        with:
           folder: cypress/reports/html 
-          token: ${{ secrets.GITHUB_TOKEN }}
-     - name : Slack Notification
-       uses: rtCamp/action-slack-notify@v2
-       if: always()
-       env:
-        SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ job.status }} 
-        SLACK_MESSAGE: 'New Changes :rocket:'
-        SLACK_TITLE: Regression Test
-        SLACK_USERNAME: testuser
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}               
+          token: ${{ secrets.GITHUB_TOKEN }}            
  performance-tests:
    runs-on: ubuntu-latest
    name: K6 performance tests
@@ -73,4 +66,27 @@ jobs:
         # path in our github repo
         path: result.html   
         retention-days: 2  
+ send-slack-notification:
+   needs: [cypress-run, performance-tests] # Wait for both cypress-run and performance-tests to complete
+   runs-on: ubuntu-latest
+   name: Send Slack Notification
+   steps:
+     - name: Combine job outputs
+       id: combine-outputs
+       run: |
+         echo "::set-output name=cypress-status::${{ job.status }}"
+         echo "::set-output name=performance-tests-status::${{ needs.performance-tests.result }}"
+
+     - name: Slack Notification
+       uses: rtCamp/action-slack-notify@v2
+       if: always()
+       with:
+         # Combine the status of both jobs in the Slack message
+         SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }}"
+       env:
+        SLACK_CHANNEL: cypressautomation
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_TITLE: Combined Job Status
+        SLACK_USERNAME: testuser
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
    
