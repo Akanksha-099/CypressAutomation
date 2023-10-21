@@ -76,12 +76,14 @@ jobs:
      - name: Audit URLs using Lighthouse
        uses: foo-software/lighthouse-check-action@master
        id: lighthouseCheck
-       with:
-         outputDirectory: ${{ github.workspace }}/tmp/artifacts
-         slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
+       with:     
          gitAuthor: ${{ github.actor }}
          gitBranch: ${{ github.ref }}
          urls: 'https://www.foo.software,https://www.foo.software/contact'
+         device: all
+         maxRetries: 1
+         outputDirectory: ${{ github.workspace }}/tmp/artifacts
+         slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
      - name: Upload artifacts
        uses: actions/upload-artifact@master
        with:
