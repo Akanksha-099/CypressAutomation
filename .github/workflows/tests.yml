@@ -73,13 +73,16 @@ jobs:
      - name: Actions Checkout
        uses: actions/checkout@v3 
      - name: Audit URLs using Lighthouse
-       uses: treosh/lighthouse-ci-action@v10
+       uses: foo-software/lighthouse-check-action@master
        with:
-         urls: |
-            https://example.com/pricing
-            budgetPath: lighthouse/budget.json # test performance budgets
-         uploadArtifacts: true # save results as an action artifacts
-         temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+         outputDirectory: /tmp/artifacts
+         urls: 'https://www.foo.software,https://www.foo.software/contact'
+     - name: Upload artifacts
+       uses: actions/upload-artifact@master
+       with:
+        name: Lighthouse reports
+        path: /tmp/artifacts
+           
  send-slack-notification:
    needs: [cypress-run, performance-tests] # Wait for both cypress-run and performance-tests to complete
    if: always() # Always run the Slack notification job regardless of the status of previous jobs
