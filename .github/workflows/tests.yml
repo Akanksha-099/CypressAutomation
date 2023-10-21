@@ -77,6 +77,7 @@ jobs:
        uses: foo-software/lighthouse-check-action@master
        with:
          outputDirectory: /tmp/artifacts
+         slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
          urls: 'https://www.foo.software,https://www.foo.software/contact'
      - name: Upload artifacts
        uses: actions/upload-artifact@master
@@ -85,7 +86,7 @@ jobs:
         path: /tmp/artifacts
            
  send-slack-notification:
-   needs: [cypress-run, performance-tests] # Wait for both cypress-run and performance-tests to complete
+   needs: [cypress-run, performance-tests,  lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
    if: always() # Always run the Slack notification job regardless of the status of previous jobs
    runs-on: ubuntu-latest
    name: Send Slack Notification
@@ -95,7 +96,7 @@ jobs:
        run: |
          echo "::set-output name=cypress-status::${{ job.status }}"
          echo "::set-output name=performance-tests-status::${{ needs.performance-tests.result }}"
-
+         echo "::set-output name=lighthouse-tests-status::${{ needs.lighthouse-tests.result }}"
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2
        if: always()
@@ -105,7 +106,7 @@ jobs:
         SLACK_TITLE: Combined Job Status
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-         # Combine the status of both jobs in the Slack message
-        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }}"
+         # Combine the status of the jobs in the Slack message
+        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
       
    
