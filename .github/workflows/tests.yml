@@ -72,18 +72,30 @@ jobs:
    steps:
      - name: Actions Checkout
        uses: actions/checkout@v3 
-     - run: mkdir /tmp/artifacts
+     - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
      - name: Audit URLs using Lighthouse
        uses: foo-software/lighthouse-check-action@master
+       id: lighthouseCheck
        with:
-         outputDirectory: /tmp/artifacts
+         outputDirectory: ${{ github.workspace }}/tmp/artifacts
          slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
+         gitAuthor: ${{ github.actor }}
+         gitBranch: ${{ github.ref }}
          urls: 'https://www.foo.software,https://www.foo.software/contact'
      - name: Upload artifacts
        uses: actions/upload-artifact@master
        with:
         name: Lighthouse reports
-        path: /tmp/artifacts
+        path: ${{ github.workspace }}/tmp/artifacts
+     - name: Verify Lighthouse Check results
+       uses: foo-software/lighthouse-check-status-action@master
+       with:
+          lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "80"
+          minBestPracticesScore: "50"
+          minPerformanceScore: "50"
+          minProgressiveWebAppScore: "50"
+          minSeoScore: "50"
            
  send-slack-notification:
    needs: [cypress-run, performance-tests,  lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
