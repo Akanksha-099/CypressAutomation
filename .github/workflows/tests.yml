@@ -46,17 +46,7 @@ jobs:
        if: always()
        with:
           folder: cypress/reports/html 
-          token: ${{ secrets.GITHUB_TOKEN }}
-     #- name : Slack Notification
-      # uses: rtCamp/action-slack-notify@v2
-       #if: always()
-       #env:
-      #  SLACK_CHANNEL: cypressautomation
-       # SLACK_COLOR: ${{ job.status }} 
-        #SLACK_MESSAGE: 'New Changes :rocket:'
-        #SLACK_TITLE: Regression Test
-        #SLACK_USERNAME: testuser
-        #SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}               
+          token: ${{ secrets.GITHUB_TOKEN }}             
  performance-tests:
    runs-on: ubuntu-latest
    name: K6 performance tests
@@ -76,6 +66,21 @@ jobs:
         # path in our github repo
         path: result.html   
         retention-days: 2  
+ lighthouse-tests:
+   runs-on: ubuntu-latest
+   name: Lighthouse checks
+   steps:
+     - name: Actions Checkout
+       uses: actions/checkout@v3 
+     - name: Audit URLs using Lighthouse
+       uses: treosh/lighthouse-ci-action@v10
+       with:
+         urls: |
+            https://www.google.com/
+            https://www.mckinsey.com/
+            budgetPath: lighthouse/budget.json # test performance budgets
+         uploadArtifacts: true # save results as an action artifacts
+         temporaryPublicStorage: true # upload lighthouse report to the temporary storage
  send-slack-notification:
    needs: [cypress-run, performance-tests] # Wait for both cypress-run and performance-tests to complete
    if: always() # Always run the Slack notification job regardless of the status of previous jobs
