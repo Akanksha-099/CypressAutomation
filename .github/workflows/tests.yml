@@ -79,12 +79,14 @@ jobs:
        with:     
          gitAuthor: ${{ github.actor }}
          gitBranch: ${{ github.ref }}
-         urls: 'https://www.foo.software,https://www.google.com'
+         urls: 'https://www.foo.software,https://www.foo.software/contact'
          device: all
          maxRetries: 1
          gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
+         prCommentEnabled: true
          outputDirectory: ${{ github.workspace }}/tmp/artifacts
          slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
+         commentUrl: https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
      - name: Upload artifacts
        uses: actions/upload-artifact@master
        with:
@@ -101,7 +103,7 @@ jobs:
           minSeoScore: "50"
            
  send-slack-notification:
-   needs: [cypress-run, performance-tests,  lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
+   needs: [cypress-run, performance-tests, lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
    if: always() # Always run the Slack notification job regardless of the status of previous jobs
    runs-on: ubuntu-latest
    name: Send Slack Notification
