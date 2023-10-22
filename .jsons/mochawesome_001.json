@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-10-22T14:25:22.060Z",
+    "end": "2023-10-22T14:25:26.655Z",
+    "duration": 4595,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "61142668-aa44-4aea-85c4-626cedebb3b4",
+      "title": "",
+      "fullFile": "cypress/e2e/TC02_TestCasesPage.cy.js",
+      "file": "cypress/e2e/TC02_TestCasesPage.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d1ad0356-f7f6-4706-af1f-715e8b9248dc",
+          "title": "Test cases page visit",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Verifies the Test case page flow",
+              "fullTitle": "Test cases page visit Verifies the Test case page flow",
+              "timedOut": null,
+              "duration": 4530,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  {\n    \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n    \"value\": \"cypress/e2e/TC02_TestCasesPage.cy.js\"\n  },\n  \"videos/TC02_TestCasesPage.cy.js.mp4\"\n]",
+              "code": "cy.title().should('eq', 'Automation Exercise');\ncy.get('div[class*=\"left-sidebar\"]>h2').should('have.text', \"Category\");\ncy.get('div[class*=\"features_items\"]>h2').should('have.text', \"Features Items\");\ncy.get('div[class*=\"brands_products\"]>h2').should('have.text', \"Brands\");\ncy.get('a[href=\"/test_cases\"]').should('have.css', 'color', 'rgb(105, 103, 99)');\ncy.get('a[href=\"/test_cases\"]').eq(0).click();\ncy.url().should('include', '/test_cases');\ncy.get('b').should('have.text', 'Test Cases');",
+              "err": {},
+              "uuid": "c7fe4d3b-a5e4-4612-9091-78625c96da94",
+              "parentUUID": "d1ad0356-f7f6-4706-af1f-715e8b9248dc",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "c7fe4d3b-a5e4-4612-9091-78625c96da94"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4530,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "reportPageTitle": "Cypress Inline Reporter",
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
