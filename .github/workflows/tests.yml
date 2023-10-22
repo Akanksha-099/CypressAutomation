@@ -53,7 +53,10 @@ jobs:
    steps:
     - name: Checkout
       uses: actions/checkout@master
-    - run: mkdir -p summary
+    - name: Create summary folder
+      run: mkdir -p summary
+    - name: Install k6-html-reporter
+      run: npm install k6-html-reporter
     - name: Run k6 local test
       uses: grafana/k6-action@v0.3.0
       with:
