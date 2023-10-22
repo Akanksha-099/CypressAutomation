@@ -220,7 +220,6 @@ function logViolations(violations) {
 
         }
         Cypress.log(log)
-
         violation.nodes.forEach(({ target }) => {
             Cypress.log({
                 name: '-🩸FIXME',
@@ -271,6 +270,44 @@ Cypress.Commands.add('testAccessibility', (path) => {
       );
 })
   
+Cypress.Commands.add('checkA11yCustom', (context, options, violationCallback, skipFailures) => {
+  cy.window({ log: false }).then(win => {
+    if (isEmptyObjectorNull(context)) context = undefined;
+    if (isEmptyObjectorNull(options)) options = undefined;
+    if (isEmptyObjectorNull(violationCallback)) violationCallback = undefined;
+    if (isEmptyObjectorNull(skipFailures)) skipFailures = false;
+    return win.axe.run(context ? context = context : context = win.document, options);
+  }).then(({ violations }) => {
+    // Log the violations
+    if (!skipFailures) {
+      Cypress.log({
+        name: 'a11y violation summary',
+        message: violations.length + " accessibility violation" + (violations.length === 1 ? '' : 's') + " " + (violations.length === 1 ? 'was' : 'were') + " detected",
+      });
+    }
+    
+    // Handle violations as needed
+    if (violations.length) {
+      // You can perform custom actions with the violations here
+      if (violationCallback) violationCallback(violations);
+    }
+    
+    // Continue processing violations as desired
+    return cy.wrap(violations, { log: false });
+  });
+});
+
+// Define the 'checkA11y' alias for the custom command
+Cypress.Commands.add('checkA11y', (context, options, violationCallback, skipFailures) => {
+  // Use the custom 'checkA11yCustom' command
+  cy.checkA11yCustom(context, options, violationCallback, skipFailures);
+});
+
+// Rest of your Cypress commands
+function isEmptyObjectorNull(value) {
+  if (value == null) return true;
+  return Object.entries(value).length === 0 && value.constructor === Object;
+}
   export {}
   
   

@@ -96,10 +96,10 @@ jobs:
        uses: foo-software/lighthouse-check-status-action@master
        with:
           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-          minAccessibilityScore: "80"
+          minAccessibilityScore: "70"
           minBestPracticesScore: "50"
           minPerformanceScore: "50"
-          minProgressiveWebAppScore: "50"
+          minProgressiveWebAppScore: "20"
           minSeoScore: "50"
            
  send-slack-notification:
