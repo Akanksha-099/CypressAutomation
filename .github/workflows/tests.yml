@@ -10,44 +10,45 @@ permissions:
  pages: write
  id-token: write
 jobs:
-#  cypress-run:
-#    runs-on: ubuntu-latest
-#    name: Cypress e2e tests
-#    steps:
-#      - name: Actions Checkout
-#        uses: actions/checkout@v3 
-#      - name: Cypress Checkout and test execution
-#        uses: cypress-io/github-action@v4
-#        with:
-#          browser: chrome
-#      - name: Upload tests report
-#        uses: actions/upload-artifact@master
-#        if: always()
-#        with:
-#          name: cypress-execution-report
-#          path: cypress/reports/html
-#          retention-days: 2
-#      - name: Upload tests screenshots
-#        uses: actions/upload-artifact@v3
-#        if: failure()
-#        with:
-#          name: cypress-screenshots
-#          path: cypress/screenshots
-#          retention-days: 2
-#      - name: Upload tests videos
-#        uses: actions/upload-artifact@v3
-#        if: always()
-#        with:
-#          name: cypress-videos
-#          path: cypress/videos
-#          retention-days: 2
-#      - name : Deploy to Github Pages
-#        uses: JamesIves/github-pages-deploy-action@v4
-#        if: always()
-#        with:
-#           folder: cypress/reports/html 
-#           token: ${{ secrets.GITHUB_TOKEN }}             
-  performance-tests:
+ cypress-run:
+   runs-on: ubuntu-latest
+   name: Cypress e2e tests
+   steps:
+     - name: Actions Checkout
+       uses: actions/checkout@v3 
+     - name: Cypress Checkout and test execution
+       uses: cypress-io/github-action@v4
+       with:
+         browser: chrome
+     - name: Upload tests report
+       uses: actions/upload-artifact@master
+       if: always()
+       with:
+         name: cypress-execution-report
+         path: cypress/reports/html
+         retention-days: 2
+     - name: Upload tests screenshots
+       uses: actions/upload-artifact@v3
+       if: failure()
+       with:
+         name: cypress-screenshots
+         path: cypress/screenshots
+         retention-days: 2
+     - name: Upload tests videos
+       uses: actions/upload-artifact@v3
+       if: always()
+       with:
+         name: cypress-videos
+         path: cypress/videos
+         retention-days: 2
+     - name : Deploy to Github Pages
+       uses: JamesIves/github-pages-deploy-action@v4
+       if: always()
+       with:
+          folder: cypress/reports/html 
+          token: ${{ secrets.GITHUB_TOKEN }}             
+ 
+ performance-tests:
    runs-on: ubuntu-latest
    name: K6 performance tests
    steps:
@@ -78,64 +79,65 @@ jobs:
         name: K6 summary report
         path: summary/report.html
         retention-days: 2
-#  lighthouse-tests:
-#    runs-on: ubuntu-latest
-#    name: Lighthouse checks
-#    steps:
-#      - name: Actions Checkout
-#        uses: actions/checkout@v3 
-#      - run: mkdir -p ${{ github.workspace }}/tmp/artifacts
-#      - name: Audit URLs using Lighthouse
-#        uses: foo-software/lighthouse-check-action@master
-#        id: lighthouseCheck
-#        with:     
-#          gitAuthor: ${{ github.actor }}
-#          gitBranch: ${{ github.ref }}
-#          urls: 'https://www.foo.software,https://www.w3.org/WAI/,https://webaim.org/,https://dequeuniversity.com/,https://developer.mozilla.org/en-US/,https://alistapart.com/,https://www.nasa.gov/'
-#          device: all
-#          maxRetries: 1
-#          gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
-#          prCommentEnabled: true
-#          outputDirectory: ${{ github.workspace }}/tmp/artifacts
-#          slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
-#          commentUrl: https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
-#      - name: Upload artifacts
-#        uses: actions/upload-artifact@master
-#        with:
-#         name: Lighthouse reports
-#         path: ${{ github.workspace }}/tmp/artifacts
-#      - name: Verify Lighthouse Check results
-#        uses: foo-software/lighthouse-check-status-action@master
-#        with:
-#           lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
-#           minAccessibilityScore: "70"
-#           minBestPracticesScore: "50"
-#           minPerformanceScore: "50"
-#           minProgressiveWebAppScore: "20"
-#           minSeoScore: "50"
+ lighthouse-tests:
+   runs-on: ubuntu-latest
+   name: Lighthouse checks
+   steps:
+     - name: Actions Checkout
+       uses: actions/checkout@v3 
+     - name: Create Report folder
+       run: mkdir -p ${{ github.workspace }}/tmp/artifacts
+     - name: Audit URLs using Lighthouse
+       uses: foo-software/lighthouse-check-action@master
+       id: lighthouseCheck
+       with:     
+         gitAuthor: ${{ github.actor }}
+         gitBranch: ${{ github.ref }}
+         urls: 'https://www.foo.software,https://www.w3.org/WAI/,https://webaim.org/,https://dequeuniversity.com/,https://developer.mozilla.org/en-US/,https://alistapart.com/,https://www.nasa.gov/'
+         device: all
+         maxRetries: 1
+         gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
+         prCommentEnabled: true
+         outputDirectory: ${{ github.workspace }}/tmp/artifacts
+         slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
+         commentUrl: https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
+     - name: Upload artifacts
+       uses: actions/upload-artifact@master
+       with:
+        name: Lighthouse reports
+        path: ${{ github.workspace }}/tmp/artifacts
+     - name: Verify Lighthouse Check results
+       uses: foo-software/lighthouse-check-status-action@master
+       with:
+          lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "70"
+          minBestPracticesScore: "50"
+          minPerformanceScore: "50"
+          minProgressiveWebAppScore: "20"
+          minSeoScore: "50"
            
-#  send-slack-notification:
-#    needs: [cypress-run, performance-tests, lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
-#    if: always() # Always run the Slack notification job regardless of the status of previous jobs
-#    runs-on: ubuntu-latest
-#    name: Send Slack Notification
-#    steps:
-#      - name: Combine job outputs
-#        id: combine-outputs
-#        run: |
-#          echo "::set-output name=cypress-status::${{ job.status }}"
-#          echo "::set-output name=performance-tests-status::${{ needs.performance-tests.result }}"
-#          echo "::set-output name=lighthouse-tests-status::${{ needs.lighthouse-tests.result }}"
-#      - name: Slack Notification
-#        uses: rtCamp/action-slack-notify@v2
-#        if: always()
-#        env:
-#         SLACK_CHANNEL: cypressautomation
-#         SLACK_COLOR: ${{ job.status }} 
-#         SLACK_TITLE: Combined Job Status
-#         SLACK_USERNAME: testuser
-#         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-#          # Combine the status of the jobs in the Slack message
-#         SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
+ send-slack-notification:
+   needs: [cypress-run, performance-tests, lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
+   if: always() # Always run the Slack notification job regardless of the status of previous jobs
+   runs-on: ubuntu-latest
+   name: Send Slack Notification
+   steps:
+     - name: Combine job outputs
+       id: combine-outputs
+       run: |
+         echo "::set-output name=cypress-status::${{ job.status }}"
+         echo "::set-output name=performance-tests-status::${{ needs.performance-tests.result }}"
+         echo "::set-output name=lighthouse-tests-status::${{ needs.lighthouse-tests.result }}"
+     - name: Slack Notification
+       uses: rtCamp/action-slack-notify@v2
+       if: always()
+       env:
+        SLACK_CHANNEL: cypressautomation
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_TITLE: Combined Job Status
+        SLACK_USERNAME: testuser
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+         # Combine the status of the jobs in the Slack message
+        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
       
    
