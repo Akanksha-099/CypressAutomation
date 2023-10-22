@@ -26,7 +26,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
       require('cypress-mochawesome-reporter/plugin')(on);
-
+      
       on("before:browser:launch", (browser = {}, launchOptions) => {
         prepareAudit(launchOptions);
       });
@@ -35,6 +35,7 @@ module.exports = defineConfig({
         pa11y: pa11y(pa11yReport => {
           console.log(pa11yReport) // raw pa11y report
         }),
+        lighthouse:lighthouse(),
         async lighthouse(allOptions) {
           let txt
           // calling the function is important
@@ -65,7 +66,16 @@ module.exports = defineConfig({
           report.txt = txt
           return report
         },
-        
+        log(message) {
+          // Define the behavior for the 'log' task.
+          console.log(message);
+          return null; // This can be any value you want to return
+        },
+        table(data) {
+          // Define the behavior for the 'table' task.
+          console.table(data); // Example of logging as a table.
+          return null; // This can be any value you want to return
+        },
       })
     
   },

@@ -19,6 +19,8 @@ import 'cypress-axe';
 import "@cypress-audit/pa11y/commands";
 import './commands'
 import 'cypress-mochawesome-reporter/register';
+import "cypress-audit/commands";
+
 
 //import ‘cypress-audit/commands’;
 
@@ -34,5 +36,11 @@ Cypress.on("test:after:run", (test, runnable) => {
 
     addContext({ test }, videoUrl)
 });
+
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // prevents Cypress from failing the test whenever an page-owned error or dependency fails to load (like the JQuery error)
+    return false
+})
 
 //import 'cypress-audit/commands';

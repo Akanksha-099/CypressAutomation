@@ -79,7 +79,7 @@ jobs:
        with:     
          gitAuthor: ${{ github.actor }}
          gitBranch: ${{ github.ref }}
-         urls: 'https://www.foo.software,https://www.foo.software/contact'
+         urls: 'https://www.foo.software,https://www.w3.org/WAI/,https://webaim.org/,https://dequeuniversity.com/,https://developer.mozilla.org/en-US/,https://alistapart.com/,https://www.nasa.gov/'
          device: all
          maxRetries: 1
          gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
