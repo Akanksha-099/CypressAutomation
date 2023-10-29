@@ -62,7 +62,7 @@ jobs:
     - name: Run k6 local test
       uses: grafana/k6-action@v0.3.0
       with:
-        filename: k6Tests/main.js
+        filename: k6Tests/single-request.js
         flags: -v -q
         #flags: --vus 50 --duration 10s
     - name: Upload test report
