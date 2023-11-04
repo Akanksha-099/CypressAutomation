@@ -128,9 +128,9 @@ jobs:
      - name: Combine job outputs
        id: combine-outputs
        run: |
-         echo "cypress-status=${{ job.status }}" >> $GITHUB_ENV
-         echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_ENV
-         echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_ENV
+         echo "cypress-status=${{ job.status }}" >> $GITHUB_OUTPUT
+         echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
+         echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2      
        with:
@@ -140,12 +140,12 @@ jobs:
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
-        SLACK_TEXT: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks: ${{ steps.combine-outputs.outputs.lighthouse-tests-status }}"
+        #SLACK_TEXT: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks: ${{ steps.combine-outputs.outputs.lighthouse-tests-status }}"
         SLACK_COLOR: ${{ job.status }} 
         SLACK_TITLE: Combined Job Status
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
          # Combine the status of the jobs in the Slack message
-        #SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
+        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
         
    
