@@ -128,9 +128,9 @@ jobs:
      - name: Combine job outputs
        id: combine-outputs
        run: |
-         echo "::set-output name=cypress-status::${{ job.status }}"
-         echo "::set-output name=performance-tests-status::${{ needs.performance-tests.result }}"
-         echo "::set-output name=lighthouse-tests-status::${{ needs.lighthouse-tests.result }}"
+         echo "cypress-status=${{ job.status }}" >> $GITHUB_ENV
+         echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_ENV
+         echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_ENV
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2
        if: always()
