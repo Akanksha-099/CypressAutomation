@@ -1,4 +1,4 @@
-name: Cypress Artifacts
+name: Test Execution Workflow
 on: 
  workflow_dispatch:
  push:
@@ -85,6 +85,18 @@ jobs:
    runs-on: ubuntu-latest
    name: Lighthouse checks
    steps:
+     - name: Get Last Commit SHA
+       id: last-commit
+       run: echo "::set-output name=sha::$(git log -1 --format='%H')"
+     - name: Check for Changes
+       id: check-changes
+       run: |
+        if [ "${{ steps.last-commit.outputs.sha }}" != "${{ github.sha }}" ]; then
+          echo "Changes detected. Running Lighthouse checks."
+        else
+          echo "No changes detected. Skipping Lighthouse checks."
+          exit 0  # Exit successfully since there are no changes
+        fi
      - name: Actions Checkout
        uses: actions/checkout@v3 
      - name: Create Report folder
@@ -133,10 +145,6 @@ jobs:
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2      
-      #  with:
-      #   status: ${{ job.status }}
-      #   performance_tests_status: ${{ needs.performance-tests.result }}
-      #   lighthouse_tests_status: ${{ needs.lighthouse-tests.result }}
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
