@@ -132,7 +132,11 @@ jobs:
          echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_ENV
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_ENV
      - name: Slack Notification
-       uses: rtCamp/action-slack-notify@v2
+       uses: rtCamp/action-slack-notify@v2      
+       with:
+        status: ${{ job.status }}
+        performance_tests_status: ${{ needs.performance-tests.result }}
+        lighthouse_tests_status: ${{ needs.lighthouse-tests.result }}
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
