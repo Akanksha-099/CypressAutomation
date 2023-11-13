@@ -1,0 +1,109 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2023-11-13T17:25:54.006Z",
+    "end": "2023-11-13T17:26:07.499Z",
+    "duration": 13493,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "8dd41f6c-416b-42df-8806-891d667ac8ed",
+      "title": "",
+      "fullFile": "cypress/e2e/TC03_RegisterUser.cy.js",
+      "file": "cypress/e2e/TC03_RegisterUser.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "d4fd2827-6b9d-443e-9a67-48143fb83929",
+          "title": "User registration flow",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Verifies the Register User flow",
+              "fullTitle": "User registration flow Verifies the Register User flow",
+              "timedOut": null,
+              "duration": 13482,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  {\n    \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n    \"value\": \"cypress/e2e/TC03_RegisterUser.cy.js\"\n  },\n  \"videos/TC03_RegisterUser.cy.js.mp4\"\n]",
+              "code": "//Click on signup/login button\ncy.get('a[href*=\"/login\"]').click();\ncy.url().should('contain', \"/login\");\n//Verify 'New User Signup!' is visible\ncy.get('div[class*=\"signup-form\"]').should('be.visible');\ncy.get('div[class*=\"signup-form\"]').should('contain.text', \"New User Signup!\");\n//Enter name and email address\ncy.get('input[name=\"name\"]').type('Alpha1');\ncy.get('input[name=\"email\"]').eq(1).type(userID_Alpha_Numeric() + '@abcd.com');\n//Click 'Signup' button\ncy.get('button[type=\"submit\"]').eq(1).click();\n//Verify that 'ENTER ACCOUNT INFORMATION' is visible\ncy.get('b').should('be.visible');\ncy.get('b').should('contain.text', \"Enter Account Information\");\n//Fill details: Title, Name, Email, Password, Date of birth\ncy.get('[type=\"radio\"]').first().check();\ncy.get('input[id=\"password\"]').type('Abcd@1234');\ncy.get('select').eq(0).select('1').should('have.value', '1');\ncy.get('select').eq(1).select('June').should('have.value', '6');\ncy.get('select').eq(2).select('1993').should('have.value', '1993');\n//Select checkbox 'Sign up for our newsletter!'\ncy.get('label').eq(7).should('have.text', 'Sign up for our newsletter!');\ncy.get('#newsletter').check('1');\n//Select checkbox 'Receive special offers from our partners!'\ncy.get('label').eq(8).should('have.text', 'Receive special offers from our partners!');\ncy.get('#optin').check('1');\n//Fill details: First name, Last name, Company, Address, Address2, Country, State, City, Zipcode, Mobile Number\ncy.get('h2').eq(1).should('have.text', \"Address Information\");\ncy.get('h2').eq(1).should('have.css', 'color', 'rgb(254, 152, 15)');\ncy.get('[data-qa=\"first_name\"]').type('Alpha');\ncy.get('[data-qa=\"last_name\"]').type('Beta');\ncy.get('[data-qa=\"company\"]').type('test');\ncy.get('[data-qa=\"address\"]').type('Test-123');\ncy.get('[data-qa=\"address2\"]').type('Test Block, 123ABC');\ncy.get('[data-qa=\"country\"]').select('New Zealand');\ncy.get('[data-qa=\"state\"]').type('TestState');\ncy.get('[data-qa=\"city\"]').type('TestCity');\ncy.get('[data-qa=\"zipcode\"]').type('009988');\ncy.get('[data-qa=\"mobile_number\"]').type('9876543210');\n//Click 'Create Account button'\ncy.get('[data-qa=\"create-account\"]').should('have.text', \"Create Account\");\ncy.get('[data-qa=\"create-account\"]').click();\n//Verify that 'ACCOUNT CREATED!' is visible\ncy.get('[data-qa=\"account-created\"]').should('be.visible');\ncy.get('[data-qa=\"account-created\"]').should('have.text', \"Account Created!\");\n//Click 'Continue' button\ncy.get('[data-qa=\"continue-button\"]').should('be.visible');\ncy.get('[data-qa=\"continue-button\"]').click();\n//Verify that 'Logged in as username' is visible\ncy.get(':nth-child(10) > a').should('contain.text', \"Logged in as\");\n//Click 'Delete Account' button\ncy.get('a[href=\"/delete_account\"]').should('be.visible');\ncy.get('a[href=\"/delete_account\"]').click();\n//Verify that 'ACCOUNT DELETED!' is visible and click 'Continue' button\ncy.get('[data-qa=\"account-deleted\"]').should('be.visible');\ncy.get('[data-qa=\"account-deleted\"]').should('have.text', \"Account Deleted!\");\ncy.get('[data-qa=\"continue-button\"]').should('be.visible');\ncy.get('[data-qa=\"continue-button\"]').click();\nfunction userID_Alpha_Numeric() {\n  var text = \"\";\n  var possible = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\n  for (var i = 0; i < 10; i++) text += possible.charAt(Math.floor(Math.random() * possible.length));\n  return text;\n}",
+              "err": {},
+              "uuid": "9ebf2a3b-6c70-4b48-8cdb-c50efb8bb3a4",
+              "parentUUID": "d4fd2827-6b9d-443e-9a67-48143fb83929",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "9ebf2a3b-6c70-4b48-8cdb-c50efb8bb3a4"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 13482,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "reportPageTitle": "Cypress Inline Reporter",
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
