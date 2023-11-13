@@ -32,7 +32,7 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 ```git clone https://github.com/Akanksha-099/CypressAutomation.git```
 
 ### Install the dependencies
-cd CypressAutomation
+```cd CypressAutomation```
 ```npm install```
 
 ### Running Cypress Tests
@@ -40,6 +40,7 @@ cd CypressAutomation
 
 ### Running K6 Performance Tests
 ```npm run k6Tests/<script-name>.js```
+
 Note: Replace <script-name> with the specific script you want to run.
 
 ### Running Lighthouse Tests
