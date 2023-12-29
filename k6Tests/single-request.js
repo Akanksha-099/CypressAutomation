@@ -6,7 +6,7 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 import { Trend, Rate, Counter, Gauge } from 'k6/metrics';
 
 export const TrendRTT = new Trend('RTT');
-export const RateContentOK = new Rate('Content OK');
+export const RateContentOK = new Rate('ContentOK');
 export const GaugeContentSize = new Gauge('ContentSize');
 export const CounterErrors = new Counter('Errors');
 export let options = {
@@ -21,7 +21,7 @@ export let options = {
     // Gauge: returned content must be smaller than 4000 bytes
     'ContentSize': ['value<4000'],
     // Rate: content must be OK more than 95 times
-    'Content OK': ['rate>0.95'],
+    'ContentOK': ['rate>0.95'],
     // Trend: Percentiles, averages, medians, and minimums
     // must be within specified milliseconds.
     'RTT': ['p(99)<300', 'p(70)<250', 'avg<200', 'med<150', 'min<100'],
