@@ -50,6 +50,6 @@ export function handleSummary(data) {
     return {
       "summary/result.html": htmlReport(data),
       stdout: textSummary(data, { indent: " ", enableColors: true }),
-      'summary/summary.json': JSON.stringify(data)
+      'summary/summary.json': JSON.stringify(data) 
     };
   }
