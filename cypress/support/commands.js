@@ -32,8 +32,8 @@ Cypress.Commands.add('handleCookieBanner', (cookie = 'OptanonAlertBoxClosed') =>
     // })
     // cy.wait(2000)
     /** This is a temporary fix */
-    cy.setCookie('OptanonAlertBoxClosed', '2022-03-31T10:33:16.279Z')
-    // cy.get('button#onetrust-accept-btn-handler').click()
+    cy.setCookie('OptanonAlertBoxClosed', '2030-03-31T10:33:16.279Z')
+    cy.get('button#onetrust-accept-btn-handler').click()
   })
   
   /** isLeftOf and isRightOf can be used to check relative horizontal position of 
