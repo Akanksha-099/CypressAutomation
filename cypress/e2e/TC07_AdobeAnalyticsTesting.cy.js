@@ -45,7 +45,7 @@ describe('Testing Adobe Analytics', () => {
         })
       })
 
-      it('Validate Adobe Analytics variables', () => {
+    it('Validate Adobe Analytics variables', () => {
         // Visit the URL of the article
         cy.visit('https://www.mckinsey.com/capabilities/risk-and-resilience/our-insights/implementing-generative-ai-with-speed-and-safety')
         cy.handleCookieBanner() 
@@ -89,5 +89,18 @@ describe('Testing Adobe Analytics', () => {
           })
         })
       })
-
+    it.only('Validate Adobe analtics variables', () => {
+        cy.intercept('/b/ss/**').as('adobe')
+        cy.visit('https://promos.marriott.com/en/GROUP/golden-triangle')
+        
+        
+        cy.scrollTo('bottom')
+       
+       
+        cy.wait('@adobe').then(interception => {
+            // Extract the values from the intercepted request
+            const v41ValueExpand = new URL(interception.request.url).searchParams.get('v41')
+            expect(v41ValueExpand).to.eq('Augustine, a Luxury Collection Hotel, Prague')
+        })
+    })
 })
