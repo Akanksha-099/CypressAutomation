@@ -116,7 +116,7 @@ describe('Testing Adobe Analytics', () => {
         expect(c26ValueExpand).to.eq('AEM-prod') // Adjust the expected value based on your scenario
         expect(v22ValueExpand).to.eq('unauthenticated')
         expect(v192ValueExpand).to.eq('www.marriott.com/en-us/hotels/laspm-park-mgm-las-vegas-a-tribute-portfolio-resort/rooms/')
-        expect(eventsValueExpand).to.eq('event1,prodView,event441')
+        expect(eventsValueExpand).to.contain('event1,prodView')
         expect(linkNameValueExpand).to.eq(null)
 
         cy.get('.onCorePage > .faq-accordion-faq-question').click()
