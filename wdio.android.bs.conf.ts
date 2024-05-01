@@ -9,6 +9,7 @@ import { config } from './wdio.conf';
 config.user = process.env.BROWSERSTACK_USER;
 config.key = process.env.BROWSERSTACK_KEY;
 
+
 //
 // ============
 // Specs
@@ -23,17 +24,17 @@ config.specs = [
 // Capabilities
 // ============
 config.capabilities = [
-  {
-    platformName: "Android",
-    "appium:platformVersion": "10.0",
-    "appium:orientation": "PORTRAIT",  
-    "appium:deviceName": "Google Pixel 2",
-    "appium:automationName": "UIAutomator2",
-    "appium:app": "bs://c8665c3bac9f20d72fe75e9da665d590aefa351d",
-    "appium:appWaitActivity": "com.wdiodemoapp.MainActivity",
-    "appium:autoGrantPermissions": true
-  }
-]
+    {
+      platformName: "Android",
+      "appium:platformVersion": "10.0",
+      "appium:orientation": "PORTRAIT",  
+      "appium:deviceName": "Google Pixel 2",
+      "appium:automationName": "UIAutomator2",
+      "appium:app": path.join(process.cwd(), './apps/Android-NativeDemoApp-0.4.0.apk'), // Use 'file' instead of 'app'
+      "appium:appWaitActivity": "com.wdiodemoapp.MainActivity",
+      "appium:autoGrantPermissions": true
+    }
+  ]
 
 //
 // Test runner services
