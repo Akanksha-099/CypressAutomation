@@ -5,6 +5,7 @@
     "@cypress-audit/pa11y": "^1.4.2",
     "@types/jquery": "^3.5.29",
     "@wdio/appium-service": "^8.34.1",
+    "@wdio/browserstack-service": "^8.36.1",
     "@wdio/local-runner": "^8.34.1",
     "@wdio/mocha-framework": "^8.33.1",
     "@wdio/spec-reporter": "^8.32.4",
