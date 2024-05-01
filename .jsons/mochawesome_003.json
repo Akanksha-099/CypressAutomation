@@ -1,0 +1,166 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-05-01T18:08:44.906Z",
+    "end": "2024-05-01T18:08:46.471Z",
+    "duration": 1565,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "624f7256-d378-4404-a472-87e345fc7584",
+      "title": "",
+      "fullFile": "cypress/e2e/TC04_GoogleMapsAPITests.cy.js",
+      "file": "cypress/e2e/TC04_GoogleMapsAPITests.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "51a0bb66-40b7-4f4a-8dd3-947a786144d6",
+          "title": "Google Maps API tests",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Add Place API",
+              "fullTitle": "Google Maps API tests Add Place API",
+              "timedOut": null,
+              "duration": 569,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  {\n    \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n    \"value\": \"cypress/e2e/TC04_GoogleMapsAPITests.cy.js\"\n  },\n  \"videos/TC04_GoogleMapsAPITests.cy.js.mp4\"\n]",
+              "code": "cy.request({\n  method: 'POST',\n  url: 'http://216.10.245.166/maps/api/place/add/json?key=qaclick123',\n  body: {\n    \"location\": {\n      \"lat\": -38.383494,\n      \"lng\": 33.427362\n    },\n    \"accuracy\": 50,\n    \"name\": \"Frontline house\",\n    \"phone_number\": \"(+91) 983 893 3937\",\n    \"address\": \"29, side layout, cohen 09\",\n    \"types\": [\"shoe park\", \"shop\"],\n    \"website\": \"http://google.com\",\n    \"language\": \"French-IN\"\n  }\n}).as('places');\ncy.get('@places').its('status').should('eq', 200);\ncy.get('@places').then(response => {\n  let res = response.body;\n  placeId = res.place_id;\n  cy.log(placeId);\n});\ncy.get('@places').then(response => {\n  cy.log(JSON.stringify(response.body));\n});",
+              "err": {},
+              "uuid": "541abbf4-d6fc-4aff-b4c3-b94910ac7705",
+              "parentUUID": "51a0bb66-40b7-4f4a-8dd3-947a786144d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Get Place API",
+              "fullTitle": "Google Maps API tests Get Place API",
+              "timedOut": null,
+              "duration": 365,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  {\n    \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n    \"value\": \"cypress/e2e/TC04_GoogleMapsAPITests.cy.js\"\n  },\n  \"videos/TC04_GoogleMapsAPITests.cy.js.mp4\"\n]",
+              "code": "cy.request({\n  method: 'GET',\n  url: 'http://216.10.245.166/maps/api/place/get/json?place_id=' + placeId + '&key=qaclick123'\n}).as('places');\ncy.get('@places').its('status').should('eq', 200);\ncy.get('@places').then(response => {\n  cy.log(JSON.stringify(response.body));\n});",
+              "err": {},
+              "uuid": "cee64bde-3312-48f6-bb36-f643c3f9b246",
+              "parentUUID": "51a0bb66-40b7-4f4a-8dd3-947a786144d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Put Place API",
+              "fullTitle": "Google Maps API tests Put Place API",
+              "timedOut": null,
+              "duration": 352,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  {\n    \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n    \"value\": \"cypress/e2e/TC04_GoogleMapsAPITests.cy.js\"\n  },\n  \"videos/TC04_GoogleMapsAPITests.cy.js.mp4\"\n]",
+              "code": "cy.request({\n  method: 'PUT',\n  url: 'http://216.10.245.166/maps/api/place/update/json?key=qaclick123',\n  body: {\n    \"place_id\": placeId,\n    \"address\": \"70 winter walk, USA\",\n    \"key\": \"qaclick123\"\n  }\n}).as('places');\ncy.get('@places').its('status').should('eq', 200);\ncy.get('@places').then(response => {\n  let res = response.body;\n  placeId = res.place_id;\n  cy.log(placeId);\n});\ncy.get('@places').then(response => {\n  cy.log(JSON.stringify(response.body));\n});",
+              "err": {},
+              "uuid": "24cd8ae5-03fb-4f56-9879-79abcfe5b093",
+              "parentUUID": "51a0bb66-40b7-4f4a-8dd3-947a786144d6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Delete Place API",
+              "fullTitle": "Google Maps API tests Delete Place API",
+              "timedOut": null,
+              "duration": 259,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": "[\n  {\n    \"title\": \"cypress-mochawesome-reporter-videos-passed\",\n    \"value\": \"cypress/e2e/TC04_GoogleMapsAPITests.cy.js\"\n  },\n  \"videos/TC04_GoogleMapsAPITests.cy.js.mp4\"\n]",
+              "code": "cy.request({\n  method: 'PUT',\n  url: 'http://216.10.245.166/maps/api/place/delete/json?key=qaclick123',\n  body: {\n    \"place_id\": placeId\n  }\n}).as('places');\ncy.get('@places').its('status').should('eq', 200);\ncy.get('@places').then(response => {\n  cy.log(JSON.stringify(response.body));\n});",
+              "err": {},
+              "uuid": "3e07d223-0a7d-47c9-b0ad-b82419c35c7f",
+              "parentUUID": "51a0bb66-40b7-4f4a-8dd3-947a786144d6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "541abbf4-d6fc-4aff-b4c3-b94910ac7705",
+            "cee64bde-3312-48f6-bb36-f643c3f9b246",
+            "24cd8ae5-03fb-4f56-9879-79abcfe5b093",
+            "3e07d223-0a7d-47c9-b0ad-b82419c35c7f"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1545,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "reportPageTitle": "Cypress Inline Reporter",
+        "embeddedScreenshots": true,
+        "inlineAssets": true,
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress/reports/html/.jsons"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
