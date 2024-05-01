@@ -33,7 +33,7 @@ export const config: Options.Testrunner = {
     // of the config file unless it's absolute.
     //
     specs: [
-        './test/specs/**/android.ts'
+        join(process.cwd(), './test/specs/android.ts' )
     ],
     // Patterns to exclude.
     exclude: [
@@ -83,6 +83,7 @@ export const config: Options.Testrunner = {
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'info',
+    
     //
     // Set specific log levels per logger
     // loggers:
