@@ -315,3 +315,4 @@ export const config: Options.Testrunner = {
     // afterAssertion: function(params) {
     // }
 }
+export default config;
