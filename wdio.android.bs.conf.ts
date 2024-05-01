@@ -1,4 +1,4 @@
-import path from 'path';
+import * as path from 'path';
 require('dotenv').config()
 import { config } from './wdio.conf';
 
