@@ -107,10 +107,10 @@ describe('Testing Adobe Analytics', () => {
       cy.get('.onCorePage > .faq-accordion-faq-question').click()
       cy.wait('@adobe').then(interception => {
         // Extract the values from the intercepted request
-        const c26ValueExpand = new URL(interception.request.url).searchParams.get('c26')
-        const v22ValueExpand = new URL(interception.request.url).searchParams.get('v22')
+        const c26ValueExpand = new URL(interception.request.url).searchParams.get('c26')  //for prop26
+        const v22ValueExpand = new URL(interception.request.url).searchParams.get('v22')  //for evar22
         const v192ValueExpand = new URL(interception.request.url).searchParams.get('v192')
-        const linkNameValueExpand = new URL(interception.request.url).searchParams.get('pev2')
+        const linkNameValueExpand = new URL(interception.request.url).searchParams.get('pev2') //for custom link
         const eventsValueExpand = new URL(interception.request.url).searchParams.get('events')
 
         expect(c26ValueExpand).to.eq('AEM-prod') // Adjust the expected value based on your scenario
