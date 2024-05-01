@@ -15,7 +15,7 @@ jobs:
           env:
             BROWSERSTACK_USER: ${{ secrets.BS_USER }}
             BROWSERSTACK_KEY: ${{ secrets.BS_KEY }}
-          run: npx wdio wdio.android.bs.conf.ts --spec test/specs/android.ts
+          run: npm test wdio.android.bs.conf.ts --spec test/specs/android.ts
         - uses: actions/upload-artifact@v1
           if: failure()
           with:
