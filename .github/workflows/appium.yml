@@ -11,6 +11,8 @@ jobs:
             node-version: 18
         - name: Install
           run: npm install
+        - name: Install and Run Appium Server
+          uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4
         - name: Test
           env:
             BROWSERSTACK_USER: ${{ secrets.BS_USER }}
