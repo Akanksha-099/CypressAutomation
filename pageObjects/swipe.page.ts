@@ -1,5 +1,5 @@
 import Gestures from "../test/helpers/Gestures";
-import {$} from '@wdio/globals';
+//import {$} from '@wdio/globals';
 class SwipePage {
   get cardTitle1() {
     const selector =
