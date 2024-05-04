@@ -1,6 +1,7 @@
+require('dotenv').config()
 exports.config = {
-    user: process.env.BROWSERSTACK_USERNAME ,
-    key: process.env.BROWSERSTACK_ACCESS_KEY ,
+    user: process.env.BROWSERSTACK_USERNAME || 'amaya_cArCFS',
+    key: process.env.BROWSERSTACK_ACCESS_KEY || 'JBUbwP7HftDW46qRiqhu',
     hostname: 'hub.browserstack.com',
     services: [
       [
