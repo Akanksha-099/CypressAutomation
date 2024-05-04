@@ -7,8 +7,11 @@ exports.config = {
         'browserstack',
         {
           app: 'bs://c8665c3bac9f20d72fe75e9da665d590aefa351d',
-          buildName: 'Test App',
-          browserstackLocal: true
+          browserstackLocal: true,
+          testObservability: true,
+          'projectName': 'CypressAutomation',
+          'buildName': 'run-appium-tests',
+          //'buildTag': ''
         },
       ]
     ],
