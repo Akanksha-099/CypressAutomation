@@ -4,11 +4,11 @@ jobs:
   run-appium-tests:
     runs-on: macos-latest
     steps:
-        - name: Setup Java
-          uses: actions/setup-java@v3
-          with:
-            distribution: 'temurin'
-            java-version:  '11'
+        # - name: Setup Java
+        #   uses: actions/setup-java@v3
+        #   with:
+        #     distribution: 'temurin'
+        #     java-version:  '11'
         - name: Checkout Project
           uses: actions/checkout@v4
         
@@ -23,13 +23,13 @@ jobs:
           with:
             api-level: 29
             script: npm test wdio.conf.ts --spec test/specs/android.ts
-        - name: Test
-          env:
-            BROWSERSTACK_USER: ${{ secrets.BS_USER }}
-            BROWSERSTACK_KEY: ${{ secrets.BS_KEY }}
-          run: npm test wdio.android.bs.conf.ts --spec test/specs/android.ts
-        - uses: actions/upload-artifact@v1
-          if: failure()
-          with:
-            name: logs
-            path: logs
+        # - name: Test
+        #   env:
+        #     BROWSERSTACK_USER: ${{ secrets.BS_USER }}
+        #     BROWSERSTACK_KEY: ${{ secrets.BS_KEY }}
+        #   run: npm test wdio.android.bs.conf.ts --spec test/specs/android.ts
+        # - uses: actions/upload-artifact@v1
+        #   if: failure()
+        #   with:
+        #     name: logs
+        #     path: logs
