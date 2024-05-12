@@ -1,5 +1,6 @@
 # Code-Craft-LearnAutomation
 [![Test Execution Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/tests.yml)
+[![Run Appium Tests](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml)
 
 ## Overview
 Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse and other tools to hone my skills in the automation domain.
@@ -9,6 +10,7 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Cypress Mastery:** Crafting robust end-to-end testing scenarios using Cypress for seamless automation.
 - **Performance with K6:** Delving into the realm of performance testing, simulating and optimizing system behavior with K6.
 - **Lighthouse Insights:** Exploring Lighthouse for in-depth insights into accessibility and performance metrics.
+- **Appium:** Learning about Mobile Automation, and automating it using appium tests.
 
 ### Why Code-Craft-LearnAutomation?
 
@@ -20,6 +22,7 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Cypress Run:** Executes end-to-end tests using Cypress.
 - **Performance Tests:** Runs performance tests using K6.
 - **Lighthouse Checks:** Performs accessibility and performance checks using Lighthouse.
+- **Appium Tests:** Executes Appium tests using BrowserStack.
 - **Send Slack Notification:** Sends notifications to Slack with combined workflow status.
 
 ## Getting Started
@@ -27,6 +30,7 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 ### Prerequisites
 - [Node.js](https://nodejs.org/) installed
 - Git installed on your machine
+- BrowserStack is also configured
 
 ### Clone the Repository
 ```git clone https://github.com/Akanksha-099/CypressAutomation.git```
@@ -46,4 +50,6 @@ Note: Replace <script-name> with the specific script you want to run.
 ### Running Lighthouse Tests
 Lighthouse tests are automated through workflows and are triggered automatically. Check the GitHub Actions for the latest results.
 
+### Running Appium Tests
+```npx wdio run wdio.android.bs.conf.js --spec ./test/specs/<script-name>.ts```
 
