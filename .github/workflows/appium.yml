@@ -1,5 +1,7 @@
 name: Run Appium Tests 
-on: [push, pull_request]
+on: 
+ workflow_dispatch:
+ push:
 jobs:
   run-appium-tests:
     runs-on: ubuntu-latest
@@ -23,3 +25,28 @@ jobs:
           with:
             name: logs
             path: logs
+
+  send-slack-notification:
+   needs: [run-appium-tests] # Wait for both cypress-run and performance-tests to complete
+   if: always() # Always run the Slack notification job regardless of the status of previous jobs
+   runs-on: ubuntu-latest
+   name: Send Slack Notification
+   steps:
+    #  - name: Combine job outputs
+    #    id: combine-outputs
+    #    run: |
+    #      echo "cypress-status=${{ needs.cypress-run.result }}" >> $GITHUB_OUTPUT
+    #      echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
+    #      echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
+     - name: Slack Notification
+       uses: rtCamp/action-slack-notify@v2      
+       if: always()
+       env:
+        SLACK_CHANNEL: cypressautomation
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_TITLE: Appium Tests Results
+        SLACK_USERNAME: testuser
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: "Appium Job Status: ${{ needs.cypress-run.result }} "
+        
+   

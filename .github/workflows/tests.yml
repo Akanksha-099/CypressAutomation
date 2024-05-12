@@ -129,7 +129,7 @@ jobs:
      - name: Combine job outputs
        id: combine-outputs
        run: |
-         echo "cypress-status=${{ job.status }}" >> $GITHUB_OUTPUT
+         echo "cypress-status=${{ needs.cypress-run.result }}" >> $GITHUB_OUTPUT
          echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
      - name: Slack Notification
