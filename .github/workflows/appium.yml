@@ -9,9 +9,9 @@ jobs:
         - name: Code Checkout
           uses: actions/checkout@v4
         - name: Setup Node
-          uses: actions/setup-node@v1
+          uses: actions/setup-node@v4
           with:
-            node-version: 18
+            node-version: 20
         - name: Install
           run: npm install
         - name: Run Tests
@@ -32,12 +32,6 @@ jobs:
    runs-on: ubuntu-latest
    name: Send Slack Notification
    steps:
-    #  - name: Combine job outputs
-    #    id: combine-outputs
-    #    run: |
-    #      echo "cypress-status=${{ needs.cypress-run.result }}" >> $GITHUB_OUTPUT
-    #      echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
-    #      echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2      
        if: always()
