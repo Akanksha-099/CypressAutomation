@@ -47,6 +47,6 @@ jobs:
         SLACK_TITLE: Appium Tests Results
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: "Appium Job Status: ${{ needs.cypress-run.result }} "
+        SLACK_MESSAGE: "Appium Job Status: ${{ needs.run-appium-tests.result }} "
         
    

@@ -11,7 +11,7 @@ permissions:
  pages: write
  id-token: write
 jobs:
- cypress-run:
+ cypress-tests:
    runs-on: ubuntu-latest
    name: Cypress e2e tests
    steps:
@@ -121,7 +121,7 @@ jobs:
           minSeoScore: "50"
            
  send-slack-notification:
-   needs: [cypress-run, performance-tests, lighthouse-tests] # Wait for both cypress-run and performance-tests to complete
+   needs: [cypress-tests, performance-tests, lighthouse-tests] # Wait for both cypress-tests and performance-tests to complete
    if: always() # Always run the Slack notification job regardless of the status of previous jobs
    runs-on: ubuntu-latest
    name: Send Slack Notification
@@ -129,7 +129,7 @@ jobs:
      - name: Combine job outputs
        id: combine-outputs
        run: |
-         echo "cypress-status=${{ needs.cypress-run.result }}" >> $GITHUB_OUTPUT
+         echo "cypress-status=${{ needs.cypress-tests.result }}" >> $GITHUB_OUTPUT
          echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
      - name: Slack Notification
