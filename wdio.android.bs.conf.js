@@ -22,13 +22,19 @@ exports.config = {
         platformVersion: '13.0',
         platformName: 'android',
       } }, 
-    //   {
-    //   'bstack:options': {
-    //     deviceName: 'OnePlus 9',
-    //     platformVersion: '11.0',
-    //     platformName: 'android',
-    //   }
-    // }
+      {
+        'bstack:options': {
+          deviceName: 'Samsung Galaxy S22 Ultra',
+          platformVersion: '12.0',
+          platformName: 'android',
+        }},
+      {
+      'bstack:options': {
+        deviceName: 'OnePlus 9',
+        platformVersion: '11.0',
+        platformName: 'android',
+      }
+    }
   ],
     commonCapabilities: {
       'bstack:options': {
@@ -41,6 +47,6 @@ exports.config = {
        //percyCaptureMode: auto
       }
     },
-    maxInstances: 2,
+    maxInstances: 6,
 
 }

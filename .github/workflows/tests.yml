@@ -142,6 +142,8 @@ jobs:
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
          # Combine the status of the jobs in the Slack message
-        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} | Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
+        SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} |
+                        Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | 
+                        Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
         
    
