@@ -48,5 +48,4 @@ exports.config = {
       }
     },
     maxInstances: 6,
-
 }
