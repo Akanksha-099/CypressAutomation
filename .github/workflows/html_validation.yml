@@ -35,9 +35,15 @@ jobs:
       - name: Run WHATWG Validator
         run: bash -c "cd HTMLValidator && node validator_WHATWG.js"
 
-      # Step 6: Upload the generated reports as artifacts (optional)
+      # Step 6: List all files to verify creation
+      - name: List all files in HTMLValidator directory
+        run: ls -R HTMLValidator
+
+      # Step 7: Upload the generated reports as artifacts (optional)
       - name: Upload Reports
         uses: actions/upload-artifact@v2
         with:
           name: validation-reports
-          path: HTMLValidator/logs/*.json, HTMLValidator/*.html
+          path: |
+            HTMLValidator/logs/*.json
+            HTMLValidator/*.html
