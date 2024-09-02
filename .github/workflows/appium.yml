@@ -1,7 +1,6 @@
 name: Run Appium Tests 
 on: 
  workflow_dispatch:
- push:
 jobs:
   run-appium-tests:
     runs-on: ubuntu-latest

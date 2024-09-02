@@ -42,93 +42,132 @@ function generateHtmlContent(data) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validation Report</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #f5f5f5;
-      }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f5f5f5;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 20px auto; /* Centers the container with equal margins */
+      padding: 20px;
+      border-radius: 8px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    .summary, .details {
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      table-layout: fixed;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      word-break: break-word;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .info {
+      background-color: #d9edf7;
+    }
+    .warning {
+      background-color: #fcf8e3;
+    }
+    .error {
+      background-color: #f2dede;
+    }
+    .chart {
+      margin: 20px 0;
+    }
+    .chart text {
+      font-size: 14px;
+      fill: white;
+    }
+    .message {
+      width: 30%;
+    }
+    .extract {
+      width: 20%;
+    }
+    .icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .info-icon {
+      background-color: #3498db;
+    }
+    .warning-icon {
+      background-color: #f39c12;
+    }
+    .error-icon {
+      background-color: #e74c3c;
+    }
+    @media (max-width: 768px) {
       .container {
-        width: 90%;
-        max-width: 1200px;
-        background-color: #ffffff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        margin: 20px;
-        padding: 20px;
-        border-radius: 8px;
-        overflow-x: auto;
-      }
-      .summary, .details {
         width: 100%;
-        padding: 20px;
+        margin: 0 auto; /* Centers the container on smaller screens */
+        padding: 10px;
       }
-      h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        table-layout: fixed;
-      }
-      th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        word-break: break-word;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .info {
-        background-color: #d9edf7;
-      }
-      .warning {
-        background-color: #fcf8e3;
-      }
-      .error {
-        background-color: #f2dede;
-      }
-      .chart {
-        margin: 20px 0;
-      }
-      .chart text {
-        font-size: 14px;
-        fill: white;
-      }
-      .message {
-        width: 30%;
-      }
-      .extract {
-        width: 20%;
-      }
-      .icon {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-right: 8px;
-        vertical-align: middle;
-      }
-      .info-icon {
-        background-color: #3498db;
-      }
-      .warning-icon {
-        background-color: #f39c12;
-      }
-      .error-icon {
-        background-color: #e74c3c;
-      }
-      @media (max-width: 768px) {
-        .container {
-          width: 100%;
-          margin: 0;
-          padding: 10px;
-        }
-      }
-    </style>
+    }
+  
+    /* Adding right padding to table cells to prevent content from sticking to the edge */
+    .details-table td {
+      padding-right: 15px; /* Adds extra space to the right */
+    }
+  
+    /* Adding space after the "extract" column */
+    .details-table td:last-child {
+      position: relative;
+    }
+  
+    .details-table td:last-child::after {
+      content: "";
+      display: block;
+      width: 15px; /* Adjust the width as needed */
+      height: 100%;
+      position: absolute;
+      right: -15px; /* Moves the space outside the table cell */
+      top: 0;
+    }
+  
+
+  /* Add margin between the search box and the table */
+  .dataTables_wrapper .dataTables_filter {
+    margin-bottom: 20px; /* Adds space below the search box */
+  }
+
+  .dataTables_wrapper .dataTables_length {
+    margin-bottom: 20px; /* Adds space below the "Show entries" dropdown */
+  }
+
+  /* Optional: Adjust spacing around the DataTable itself */
+  #detailsTable_wrapper {
+    margin-top: 20px; /* Adds space above the DataTable */
+    margin-bottom: 20px; /* Adds space below the DataTable */
+  }
+  </style>
+  
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>

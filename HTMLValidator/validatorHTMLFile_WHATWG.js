@@ -23,7 +23,7 @@ function escapeHtml(unsafe) {
 }
 
 // Function to generate HTML content from JSON data
-function generateHtmlContent(data) {
+function generateHtmlContent(data,url) {
   if (!data.errors || !Array.isArray(data.errors)) {
     throw new TypeError('Expected an array of errors')
   }
@@ -38,90 +38,127 @@ function generateHtmlContent(data) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Validation Report</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #f5f5f5;
-      }
-      .container {
-        width: 90%;
-        max-width: 1200px;
-        background-color: #ffffff;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        margin: 20px;
-        padding: 20px;
-        border-radius: 8px;
-      }
-      .summary, .details {
-        width: 100%;
-        padding: 20px;
-      }
-      h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        table-layout: fixed;
-      }
-      th, td {
-        border: 1px solid #ddd;
-        padding: 8px;
-        word-break: break-word;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .error {
-        background-color: #f2dede;
-      }
-      .message {
-        width: 30%;
-      }
-      .context {
-        width: 20%;
-      }
-      .icon {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        margin-right: 8px;
-        vertical-align: middle;
-      }
-      .error-icon {
-        background-color: #e74c3c;
-      }
-      .warning-icon {
-        background-color: #f39c12;
-      }
-      @media (max-width: 768px) {
-        .container {
-          width: 100%;
-          margin: 0;
-          padding: 10px;
-        }
-      }
-      /* Add space after the "context" column */
-      .details-table td:last-child {
-        position: relative;
-      }
+   <style>
+   body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px auto; /* Add 'auto' to center and give top-bottom margin */
+    padding: 20px; /* This padding is equal on all sides */
+    border-radius: 8px;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+  }
+  
+  .summary, .details {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width calculations */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+    box-sizing: border-box; /* Include padding in width calculations */
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    word-break: break-word;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .error {
+    background-color: #f2dede;
+  }
+  
+  .message {
+    width: 30%;
+  }
+  
+  .context {
+    width: 20%;
+  }
+  
+  .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  .error-icon {
+    background-color: #e74c3c;
+  }
+  
+  .warning-icon {
+    background-color: #f39c12;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      width: 100%;
+      margin: 0 auto; /* Ensure it's centered on small screens too */
+      padding: 10px;
+    }
+  }
+  
+  /* Add additional padding to the right side for equal space */
+  .details-table td {
+    padding-right: 15px; /* Adds extra space to the right */
+  }
+  
+  /* Add space after the "context" column */
+  .details-table td:last-child {
+    position: relative;
+  }
+  
+  .details-table td:last-child::after {
+    content: "";
+    display: block;
+    width: 15px; /* Adjust the width as needed */
+    height: 100%;
+    position: absolute;
+    right: -15px; /* Moves the space outside the table cell */
+    top: 0;
+  }
+  
+  /* Add margin between the search box and the table */
+  .dataTables_wrapper .dataTables_filter {
+    margin-bottom: 20px; /* Adds space below the search box */
+  }
 
-      .details-table td:last-child::after {
-        content: "";
-        display: block;
-        width: 15px; /* Adjust the width as needed */
-        height: 100%;
-        position: absolute;
-        right: -15px; /* Moves the space outside the table cell */
-        top: 0;
-      }
+  .dataTables_wrapper .dataTables_length {
+    margin-bottom: 20px; /* Adds space below the "Show entries" dropdown */
+  }
+
+  /* Optional: Adjust spacing around the DataTable itself */
+  #detailsTable_wrapper {
+    margin-top: 20px; /* Adds space above the DataTable */
+    margin-bottom: 20px; /* Adds space below the DataTable */
+  }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -130,7 +167,7 @@ function generateHtmlContent(data) {
   <body>
     <div class="container">
       <div class="header">
-        <h1>Validation Report</h1>
+        <h1>Validation Report for ${escapeHtml(url)}</h1> <!-- Add URL here -->
       </div>
       <div class="summary">
         <h1>Summary</h1>
@@ -211,7 +248,7 @@ function writeHtmlFile(filePath, content) {
 }
 
 // Main function to read JSON, generate HTML, and write to a file
-function main(jsonFilePath, htmlFilePath) {
+function main(jsonFilePath, htmlFilePath,url) {
   const jsonData = readJsonFile(jsonFilePath)
 
   if (!jsonData) {
@@ -220,7 +257,7 @@ function main(jsonFilePath, htmlFilePath) {
   }
 
   try {
-    const htmlContent = generateHtmlContent(jsonData)
+    const htmlContent = generateHtmlContent(jsonData,url)
     writeHtmlFile(htmlFilePath, htmlContent)
     console.log(`HTML report generated at ${htmlFilePath}`)
   } catch (error) {
