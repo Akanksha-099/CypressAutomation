@@ -1,0 +1,43 @@
+name: Run Validators
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run-validators:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code from the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # Specify the version you need
+
+      # Step 3: Install dependencies in HTMLValidator directory
+      - name: Install dependencies
+        run: |
+          cd HTMLValidator
+          npm install
+
+      # Step 4: Run validator.js using bash command after navigating to HTMLValidator directory
+      - name: Run Default Validator
+        run: bash -c "cd HTMLValidator && node validator_default.js"
+
+      # Step 5: Run validator_WHATWG.js using bash command after navigating to HTMLValidator directory
+      - name: Run WHATWG Validator
+        run: bash -c "cd HTMLValidator && node validator_WHATWG.js"
+
+      # Step 6: Upload the generated reports as artifacts (optional)
+      - name: Upload Reports
+        uses: actions/upload-artifact@v2
+        with:
+          name: validation-reports
+          path: HTMLValidator/logs/*.json, HTMLValidator/*.html
