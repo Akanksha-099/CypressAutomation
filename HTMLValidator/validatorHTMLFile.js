@@ -61,6 +61,14 @@ function generateHtmlContent(data) {
       border-radius: 8px;
       box-sizing: border-box; /* Ensures padding is included in width */
     }
+    .header {
+      display: flex; /* Enables Flexbox layout */
+      justify-content: center; /* Centers the content horizontally */
+      align-items: center; /* Centers the content vertically */
+      text-align: center; /* Aligns text center inside the flex container */
+      width: 100%; /* Ensures full width */
+      padding: 20px 0; /* Optional: Adds some padding for spacing */
+  }
     .summary, .details {
       width: 100%;
       padding: 20px;

@@ -14,14 +14,16 @@ function readJsonFile(filePath) {
 
 // Function to escape HTML special characters
 function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') {
+    return unsafe ? JSON.stringify(unsafe) : '';
+  }
   return unsafe
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+    .replace(/'/g, '&#039;');
 }
-
 // Function to generate HTML content from JSON data
 function generateHtmlContent(data,url) {
   if (!data.errors || !Array.isArray(data.errors)) {
@@ -30,6 +32,13 @@ function generateHtmlContent(data,url) {
 
   // Count the number of errors and warnings
   const counts = { errors: data.errorCount || 0, warnings: data.warningCount || 0 }
+
+  // Prepare data for the chart
+  const ruleCounts = {}
+  data.errors.forEach(item => {
+    const ruleId = item.ruleId || 'Unknown'
+    ruleCounts[ruleId] = (ruleCounts[ruleId] || 0) + 1
+  })
 
   let htmlContent = `
   <!DOCTYPE html>
@@ -59,6 +68,14 @@ function generateHtmlContent(data,url) {
     border-radius: 8px;
     box-sizing: border-box; /* Ensure padding is included in width calculations */
   }
+  .header {
+    display: flex; /* Enables Flexbox layout */
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    text-align: center; /* Aligns text center inside the flex container */
+    width: 100%; /* Ensures full width */
+    padding: 20px 0; /* Optional: Adds some padding for spacing */
+}
   
   .summary, .details {
     width: 100%;
@@ -99,8 +116,20 @@ function generateHtmlContent(data,url) {
   
   .context {
     width: 20%;
-  }
-  
+    max-width: 300px;
+    white-space: pre-wrap; /* Preserves whitespace and wraps text */
+    overflow-wrap: break-word; /* Breaks long words if necessary */
+    box-sizing: border-box;
+}
+
+.context pre {
+    display: block;
+    margin: 0;
+    white-space: pre-wrap; /* Wraps text while preserving whitespace */
+    overflow-wrap: break-word; /* Breaks long words if needed */
+    word-break: normal; /* Prevents breaking words in the middle */
+}
+
   .icon {
     display: inline-block;
     width: 16px;
@@ -163,14 +192,18 @@ function generateHtmlContent(data,url) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <h1>Validation Report for ${escapeHtml(url)}</h1> <!-- Add URL here -->
+        <h1>Validation Report for ${escapeHtml(url)}</h1> 
       </div>
       <div class="summary">
-        <h1>Summary</h1>
+        <h1>Summary: Error Distribution by Rule ID</h1>
+        <div class="chart-container">
+        <canvas id="ruleChart" width="400" height="200"></canvas>
+      </div>
         <table id="summaryTable">
           <thead>
             <tr>
@@ -204,12 +237,12 @@ function generateHtmlContent(data,url) {
             </tr>
           </thead>
           <tbody>
-  `
+  `;
 
   data.errors.forEach(item => {
-    const escapedMessage = escapeHtml(item.message || '')
-    const escapedContext = escapeHtml(JSON.stringify(item.context, null, 2) || '')
-    const escapedRuleUrl = escapeHtml(item.ruleUrl || '')
+    const escapedMessage = escapeHtml(item.message || '');
+    const escapedContext = escapeHtml(JSON.stringify(item.context,null,2) || 'No context available');
+    const escapedRuleUrl = escapeHtml(item.ruleUrl || '');
     htmlContent += `
       <tr class="error">
         <td><a href="${escapedRuleUrl}" target="_blank">${escapeHtml(item.ruleId)}</a></td>
@@ -219,19 +252,50 @@ function generateHtmlContent(data,url) {
         <td>${escapeHtml(item.selector)}</td>
         <td class="context"><pre>${escapedContext}</pre></td>
       </tr>
-    `
-  })
+    `;
+  });
 
   htmlContent += `
-          </tbody>
-        </table>
-      </div>
+        </tbody>
+      </table>
     </div>
+   
     <script>
       document.addEventListener('DOMContentLoaded', function () {
         // Make the table sortable and filterable
         $(document).ready(function() {
           $('#detailsTable').DataTable();
+        });
+
+        // Prepare data for the chart
+        const ctx = document.getElementById('ruleChart').getContext('2d');
+        const ruleCounts = ${JSON.stringify(ruleCounts)};
+        const chartLabels = Object.keys(ruleCounts);
+        const chartData = Object.values(ruleCounts);
+        // Log to check if data is correct
+
+        console.log('Chart Data:', chartLabels, chartData);
+
+        // Create the chart
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: chartLabels,
+            datasets: [{
+              label: 'Number of Errors',
+              data: chartData,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
         });
       });
     </script>

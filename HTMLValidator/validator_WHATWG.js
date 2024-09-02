@@ -28,7 +28,7 @@ function beautifyErrors(input) {
 }
 
 ;(async () => {
-  const url = 'https://www.ajio.com/'
+  const url = 'https://www.mckinsey.com/'
   const options = {
     url: url,
     format: 'json',
