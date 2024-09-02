@@ -29,10 +29,10 @@ function generateHtmlContent(data) {
   }
 
   // Count the number of each type of message
-  const counts = { info: 0, warning: 0, error: 0 }
+  const counts = { info: 0, warning: 0, error: 0 };
   data.messages.forEach(item => {
-    counts[item.type.toLowerCase()]++
-  })
+    counts[item.type.toLowerCase()]++;
+  });
 
   let htmlContent = `
   <!DOCTYPE html>
@@ -68,7 +68,15 @@ function generateHtmlContent(data) {
       text-align: center; /* Aligns text center inside the flex container */
       width: 100%; /* Ensures full width */
       padding: 20px 0; /* Optional: Adds some padding for spacing */
-  }
+    }
+    .header a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .header a:hover {
+      text-decoration: underline;
+    }
+  
     .summary, .details {
       width: 100%;
       padding: 20px;
@@ -94,13 +102,13 @@ function generateHtmlContent(data) {
       background-color: #f2f2f2;
     }
     .info {
-      background-color: #d9edf7;
+      background-color: rgba(75, 192, 192, 0.2);
     }
     .warning {
-      background-color: #fcf8e3;
+      background-color: rgba(255, 159, 64, 0.2);
     }
     .error {
-      background-color: #f2dede;
+      background-color: rgba(255, 99, 132, 0.2);
     }
     .chart {
       margin: 20px 0;
@@ -123,13 +131,13 @@ function generateHtmlContent(data) {
       vertical-align: middle;
     }
     .info-icon {
-      background-color: #3498db;
+      background-color: rgba(75, 192, 192, 1);
     }
     .warning-icon {
-      background-color: #f39c12;
+      background-color: rgba(255, 159, 64, 1);
     }
     .error-icon {
-      background-color: #e74c3c;
+      background-color: rgba(255, 99, 132, 1);
     }
     @media (max-width: 768px) {
       .container {
@@ -161,19 +169,19 @@ function generateHtmlContent(data) {
   
 
   /* Add margin between the search box and the table */
-  .dataTables_wrapper .dataTables_filter {
+    .dataTables_wrapper .dataTables_filter {
     margin-bottom: 20px; /* Adds space below the search box */
-  }
-
-  .dataTables_wrapper .dataTables_length {
+    }
+  
+    .dataTables_wrapper .dataTables_length {
     margin-bottom: 20px; /* Adds space below the "Show entries" dropdown */
-  }
-
+    }
+  
   /* Optional: Adjust spacing around the DataTable itself */
-  #detailsTable_wrapper {
+    #detailsTable_wrapper {
     margin-top: 20px; /* Adds space above the DataTable */
     margin-bottom: 20px; /* Adds space below the DataTable */
-  }
+    }
   </style>
   
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -184,10 +192,10 @@ function generateHtmlContent(data) {
   <body>
     <div class="container">
       <div class="header">
-        <h1>Validation Report for ${escapeHtml(data.url)}</h1>
-      </div>
+        <h1>Validation Report for <a href="${escapeHtml(data.url)}" target="_blank">${escapeHtml(data.url)}</a></h1>
+      </div>    
       <div class="summary">
-        <h1>Summary</h1>
+        <h1>Summary: Validation Message Overview by Severity</h1>
         <canvas id="barChart" width="200" height="100"></canvas>
         <table id="summaryTable">
           <thead>
@@ -197,6 +205,10 @@ function generateHtmlContent(data) {
             </tr>
           </thead>
           <tbody>
+            <tr class="error">
+              <td><span class="icon error-icon"></span>Error</td>
+              <td>${counts.error}</td>
+            </tr>
             <tr class="info">
               <td><span class="icon info-icon"></span>Info</td>
               <td>${counts.info}</td>
@@ -204,10 +216,6 @@ function generateHtmlContent(data) {
             <tr class="warning">
               <td><span class="icon warning-icon"></span>Warning</td>
               <td>${counts.warning}</td>
-            </tr>
-            <tr class="error">
-              <td><span class="icon error-icon"></span>Error</td>
-              <td>${counts.error}</td>
             </tr>
           </tbody>
         </table>
@@ -226,11 +234,11 @@ function generateHtmlContent(data) {
             </tr>
           </thead>
           <tbody>
-  `
+  `;
 
   data.messages.forEach(item => {
-    const escapedMessage = escapeHtml(item.message)
-    const escapedExtract = escapeHtml(item.extract)
+    const escapedMessage = escapeHtml(item.message);
+    const escapedExtract = escapeHtml(item.extract);
     htmlContent += `
       <tr class="${item.type.toLowerCase()}">
         <td><span class="icon ${item.type.toLowerCase()}-icon"></span>${item.type}</td>
@@ -240,8 +248,8 @@ function generateHtmlContent(data) {
         <td>${item.firstColumn}</td>
         <td class="extract">${escapedExtract}</td>
       </tr>
-    `
-  })
+    `;
+  });
 
   htmlContent += `
           </tbody>
@@ -250,16 +258,25 @@ function generateHtmlContent(data) {
     </div>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        // Draw the bar chart
         const ctx = document.getElementById('barChart').getContext('2d');
         const barChart = new Chart(ctx, {
           type: 'bar',
           data: {
-            labels: ['Info', 'Warning', 'Error'],
+            labels: ['Error', 'Info', 'Warning'],  // Updated order
             datasets: [{
               label: 'Count',
-              data: [${counts.info}, ${counts.warning}, ${counts.error}],
-              backgroundColor: ['#3498db', '#f39c12', '#e74c3c']
+              data: [${counts.error}, ${counts.info}, ${counts.warning}],  // Updated order
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',  // Error: red
+                'rgba(75, 192, 192, 0.3)',  // Info: teal
+                'rgba(255, 159, 64, 0.2)'   // Warning: orange
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',    // Error: red
+                'rgba(75, 192, 192, 1)',    // Info: teal
+                'rgba(255, 159, 64, 1)'     // Warning: orange
+              ],
+              borderWidth: 1
             }]
           },
           options: {
@@ -291,10 +308,11 @@ function generateHtmlContent(data) {
     </script>
   </body>
   </html>
-  `
+  `;
 
-  return htmlContent
+  return htmlContent;
 }
+
 
 // Function to write HTML content to a file
 function writeHtmlFile(filePath, content) {

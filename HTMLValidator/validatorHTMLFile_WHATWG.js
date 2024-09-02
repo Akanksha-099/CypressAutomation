@@ -75,7 +75,15 @@ function generateHtmlContent(data,url) {
     text-align: center; /* Aligns text center inside the flex container */
     width: 100%; /* Ensures full width */
     padding: 20px 0; /* Optional: Adds some padding for spacing */
-}
+  }
+  .header a {
+    color: inherit; /* Ensures the link takes the color of its parent */
+    text-decoration: none; /* Removes the underline from the link */
+  }
+
+  .header a:hover {
+    text-decoration: underline; /* Adds underline on hover for better UX */
+  }
   
   .summary, .details {
     width: 100%;
@@ -107,9 +115,11 @@ function generateHtmlContent(data,url) {
   }
   
   .error {
-    background-color: #f2dede;
+    background-color: rgba(255, 99, 132, 0.2); /* Error: red */
   }
-  
+  .warning {
+    background-color: rgba(255, 159, 64, 0.2); /* Warning: orange */
+  }
   .message {
     width: 30%;
   }
@@ -120,7 +130,7 @@ function generateHtmlContent(data,url) {
     white-space: pre-wrap; /* Preserves whitespace and wraps text */
     overflow-wrap: break-word; /* Breaks long words if necessary */
     box-sizing: border-box;
-}
+  }
 
 .context pre {
     display: block;
@@ -139,11 +149,11 @@ function generateHtmlContent(data,url) {
   }
   
   .error-icon {
-    background-color: #e74c3c;
+    background-color: rgba(255, 99, 132, 1); /* Error: red */
   }
   
   .warning-icon {
-    background-color: #f39c12;
+    background-color: rgba(255, 159, 64, 1); /* Warning: orange */
   }
   
   @media (max-width: 768px) {
@@ -197,7 +207,7 @@ function generateHtmlContent(data,url) {
   <body>
     <div class="container">
       <div class="header">
-        <h1>Validation Report for ${escapeHtml(url)}</h1> 
+      <h1>Validation Report for <a href="${escapeHtml(url)}" target="_blank">${escapeHtml(url)}</a></h1>
       </div>
       <div class="summary">
         <h1>Summary: Error Distribution by Rule ID</h1>
@@ -284,8 +294,8 @@ function generateHtmlContent(data,url) {
             datasets: [{
               label: 'Number of Errors',
               data: chartData,
-              backgroundColor: 'rgba(75, 192, 192, 0.2)',
-              borderColor: 'rgba(75, 192, 192, 1)',
+              backgroundColor:  'rgba(255, 99, 132, 0.2)' ,  // Error: red
+              borderColor:'rgba(255, 99, 132, 1)' ,
               borderWidth: 1
             }]
           },
