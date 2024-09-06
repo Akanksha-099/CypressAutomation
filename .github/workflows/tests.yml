@@ -21,6 +21,13 @@ jobs:
        uses: cypress-io/github-action@v4
        with:
          browser: chrome
+     - name: Upload page load times HTML report
+       uses: actions/upload-artifact@v3
+       if: always()
+       with:
+        name: loadtimes-html-report
+        path: cypress/reports/loadtimes_*.html
+        retention-days: 2
      - name: Upload tests report
        uses: actions/upload-artifact@master
        if: always()
