@@ -16,7 +16,7 @@ jobs:
    name: Cypress e2e tests
    steps:
      - name: Actions Checkout
-       uses: actions/checkouts@v3 
+       uses: actions/checkout@v3 
      - name: Cypress Checkout and test execution
        uses: cypress-io/github-action@v4
        with:
@@ -94,7 +94,7 @@ jobs:
    name: Lighthouse checks
    steps:
      - name: Actions Checkout
-       uses: actions/checkouts@v3 
+       uses: actions/checkout@v3 
      - name: Create Report folder
        run: mkdir -p ${{ github.workspace }}/tmp/artifacts
      - name: Audit URLs using Lighthouse
