@@ -5,6 +5,8 @@ on:
     branches:
       - main 
   workflow_dispatch:  
+  schedule:
+   - cron: '0 0 * * 1'
 
 jobs:
   measure-load-times:
@@ -40,3 +42,20 @@ jobs:
           name: page-load-time-report
           path: PageLoadTime/reports/PageLoadTimeReport_*.html
           retention-days: 2
+
+  send-slack-notification:
+   needs: [measure-load-times] # Wait for both cypress-run and performance-tests to complete
+   if: always() # Always run the Slack notification job regardless of the status of previous jobs
+   runs-on: ubuntu-latest
+   name: Send Slack Notification
+   steps:
+     - name: Slack Notification
+       uses: rtCamp/action-slack-notify@v2      
+       if: always()
+       env:
+        SLACK_CHANNEL: cypressautomation
+        SLACK_COLOR: ${{ job.status }} 
+        SLACK_TITLE: Page Load Results
+        SLACK_USERNAME: testuser
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_MESSAGE: "Page Load Times Job Status: ${{ needs.measure-load-times.result }} "
