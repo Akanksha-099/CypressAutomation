@@ -1,0 +1,42 @@
+name: Page Load Time Measurement
+
+on:
+  push:
+    branches:
+      - main 
+  workflow_dispatch:  
+
+jobs:
+  measure-load-times:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: PageLoad
+        run: npm install
+
+      - name: Run page load time measurement script
+        working-directory: PageLoad
+        run: node loadtimes.js
+
+      - name: Upload load times JSON
+        uses: actions/upload-artifact@v3
+        with:
+          name: loadtimes
+          path: PageLoad/logs/loadtimes_*.json
+          retention-days: 2
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@v3
+        with:
+          name: page-load-time-report
+          path: PageLoad/reports/PageLoadTimeReport_*.html
+          retention-days: 2

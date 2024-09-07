@@ -1,13 +1,12 @@
 describe('Calculating Page load times for URLs', () => {
     const urls = [
-      'https://www.mckinsey.com/',
-      'https://www.mckinsey.com/capabilities/operations/how-we-help-clients/capital-excellence',
-      'https://www.mckinsey.com/industries/aerospace-and-defense/how-we-help-clients/',
-      'https://www.mckinsey.com/industries/healthcare/how-we-help-clients/',
-      'https://www.mckinsey.com/featured-insights/sustainable-inclusive-growth/chart-of-the-day',
-      'https://www.mckinsey.com/about-us/new-at-mckinsey-blog/mckinsey-and-celonis-bring-power-of-process-mining-technology-to-transformations',
-      'https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/the-economic-potential-of-generative-ai-the-next-productivity-frontier#business-and-society',
-      'https://www.mckinsey.com/capabilities/quantumblack/our-insights/exploring-opportunities-in-the-generative-ai-value-chain',
+     'https://blog.scoop.it',
+     'https://blog.scoop.it/2024/06/13/revitalizing-email-marketing-with-a-curated-approach/',
+     'https://blog.scoop.it/2024/09/05/uncovering-the-hidden-gems-of-content-curation-4-benefits-you-didnt-know-existed/',
+     'https://blog.scoop.it/2024/08/29/optimizing-your-content-strategy-best-practices-for-curated-content-marketing/',
+     'https://blog.scoop.it/2024/08/15/email-accessibility-2024s-game-changing-email-marketing-trend-and-how-to-get-it-right/',
+     'https://blog.scoop.it/2021/12/07/social-media-seo-understanding-the-seismic-influence-of-social-networks-on-digital-marketing/',
+     
     ]
   
     const loadTimes = [];

@@ -47,3 +47,4 @@ jobs:
           path: |
             HTMLValidator/logs/*.json
             HTMLValidator/*.html
+          retention-days: 2
