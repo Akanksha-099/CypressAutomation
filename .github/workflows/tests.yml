@@ -16,7 +16,7 @@ jobs:
    name: Cypress e2e tests
    steps:
      - name: Actions Checkout
-       uses: actions/checkout@v3 
+       uses: actions/checkouts@v3 
      - name: Cypress Checkout and test execution
        uses: cypress-io/github-action@v4
        with:
@@ -94,7 +94,7 @@ jobs:
    name: Lighthouse checks
    steps:
      - name: Actions Checkout
-       uses: actions/checkout@v3 
+       uses: actions/checkouts@v3 
      - name: Create Report folder
        run: mkdir -p ${{ github.workspace }}/tmp/artifacts
      - name: Audit URLs using Lighthouse
@@ -144,7 +144,7 @@ jobs:
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ job.status }} 
+        SLACK_COLOR: ${{ needs.cypress-tests.result == 'success' && needs.performance-tests.result == 'success' && needs.lighthouse-tests.result == 'success' && 'good' || 'danger' }}
         SLACK_TITLE: Combined Job Status
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
