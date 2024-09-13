@@ -50,6 +50,15 @@ jobs:
             HTMLValidator/logs/*.json
             HTMLValidator/*.html
           retention-days: 2
+          
+      # Step 8: Deploy HTML validation report to GitHub Pages
+      - name: Deploy HTML Validator Reports to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: HTMLValidator  # Adjust this to your actual reports folder
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: html-validator  # Deploy to a subdirectory to avoid collision with Cypress report
+
 
   send-slack-notification:
    needs: [run-validators] # Wait for both cypress-run and performance-tests to complete
