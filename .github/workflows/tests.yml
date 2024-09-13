@@ -157,6 +157,7 @@ jobs:
          echo "cypress-status=${{ needs.cypress-tests.result }}" >> $GITHUB_OUTPUT
          echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
+         echo "report_url=https://akanksha-099.github.io/CypressAutomation/cypress-reports/html/latest-report.html" >> $GITHUB_ENV
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2      
        if: always()
@@ -169,6 +170,8 @@ jobs:
          # Combine the status of the jobs in the Slack message
         SLACK_MESSAGE: "Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} |
                         Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | 
-                        Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} "
+                        Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} | 
+                        View Cypress Report: ${{ steps.combine-outputs.outputs.report_url }}"
+
         
    
