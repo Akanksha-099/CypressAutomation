@@ -49,7 +49,7 @@ jobs:
         with:
           folder: PageLoadTime/reports/  
           token: ${{ secrets.GITHUB_TOKEN }}
-          target-folder: html-validator/whatwg 
+          target-folder: page-load-times
 
   send-slack-notification:
    needs: [measure-load-times] # Wait for both cypress-run and performance-tests to complete
