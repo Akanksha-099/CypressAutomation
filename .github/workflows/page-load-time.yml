@@ -45,7 +45,9 @@ jobs:
           name: page-load-time-report
           path: PageLoadTime/reports/PageLoadTimeReport_*.html
           retention-days: 2
-      
+          
+      - name: Create .nojekyll file
+        run: echo > PageLoadTime/reports/.nojekyll
       
       - name: Deploy Page Load Time Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
