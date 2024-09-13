@@ -50,15 +50,22 @@ jobs:
             HTMLValidator/logs/*.json
             HTMLValidator/*.html
           retention-days: 2
-          
-      # Step 8: Deploy HTML validation report to GitHub Pages
-      - name: Deploy HTML Validator Reports to GitHub Pages
+
+      # Step 8.1: Deploy Default Validator Report to GitHub Pages
+      - name: Deploy Default Validator Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: HTMLValidator  # Adjust this to your actual reports folder
+          folder: HTMLValidator/reports  # Adjust this to the location of the Default Validator report
           token: ${{ secrets.GITHUB_TOKEN }}
-          target-folder: html-validator  # Deploy to a subdirectory to avoid collision with Cypress report
+          target-folder: html-validator/default  # Deploy to a subdirectory for the default report
 
+      # Step 8.2: Deploy WHATWG Validator Report to GitHub Pages
+      - name: Deploy WHATWG Validator Report to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: HTMLValidator/reports  # Adjust this to the location of the WHATWG Validator report
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: html-validator/whatwg 
 
   send-slack-notification:
    needs: [run-validators] # Wait for both cypress-run and performance-tests to complete
