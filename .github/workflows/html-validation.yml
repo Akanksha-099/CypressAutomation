@@ -1,9 +1,9 @@
 name: Run Validators
 
 on:
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
   workflow_dispatch:
   schedule:
    - cron: '0 0 * * 1'
@@ -15,7 +15,7 @@ jobs:
     steps:
       # Step 1: Checkout the code from the repository
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v14
 
       # Step 2: Set up Node.js environment
       - name: Set up Node.js
@@ -62,7 +62,7 @@ jobs:
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ job.status }} 
+        SLACK_COLOR: ${{ needs.run-validators.result == 'success' && 'good' || 'danger' }}    
         SLACK_TITLE: HTML Validation Results
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
