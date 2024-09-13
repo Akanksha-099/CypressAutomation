@@ -72,14 +72,7 @@ jobs:
        with:
           folder: cypress-reports
           token: ${{ secrets.GITHUB_TOKEN }}
-          target-folder: cypress-reports
-          
-    #  - name : Deploy to Github Pages
-    #    uses: JamesIves/github-pages-deploy-action@v4
-    #    if: always()
-    #    with:
-    #       folder: cypress/reports/html 
-    #       token: ${{ secrets.GITHUB_TOKEN }}             
+          target-folder: cypress-reports         
  
  performance-tests:
    runs-on: ubuntu-latest

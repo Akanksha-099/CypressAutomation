@@ -1,4 +1,4 @@
-describe.skip('Calculating Page load times for URLs', () => {
+describe('Calculating Page load times for URLs', () => {
     const urls = [
      'https://blog.scoop.it',
      'https://blog.scoop.it/2024/06/13/revitalizing-email-marketing-with-a-curated-approach/',

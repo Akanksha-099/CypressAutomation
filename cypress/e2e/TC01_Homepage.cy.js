@@ -2,7 +2,7 @@
 /// <reference types="Cypress" />
 
 
-describe.skip('Homepage Visit', () => {
+describe('Homepage Visit', () => {
   beforeEach(() => {
     cy.visit('/')
    

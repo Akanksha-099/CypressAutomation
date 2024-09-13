@@ -1,9 +1,11 @@
 # Code-Craft-LearnAutomation
 [![Test Execution Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/tests.yml)
 [![Run Appium Tests](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml)
+[![Page Load Time Measurement](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml)
+[![Run Validators](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml)
 
 ## Overview
-Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse and other tools to hone my skills in the automation domain.
+Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse, HTML Validators, and Page Load Times and other tools to hone my skills in the automation domain.
 
 ### Key Learning Focus Areas
 
@@ -11,6 +13,8 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Performance with K6:** Delving into the realm of performance testing, simulating and optimizing system behavior with K6.
 - **Lighthouse Insights:** Exploring Lighthouse for in-depth insights into accessibility and performance metrics.
 - **Appium:** Learning about Mobile Automation, and automating it using appium tests.
+- **HTML Validation:** Ensuring HTML compliance with the WHATWG/W3C standards and generating detailed reports.
+- **Page Load Times:** Measuring and analyzing page load times to optimize performance and user experience.
 
 ### Why Code-Craft-LearnAutomation?
 
@@ -23,6 +27,8 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Performance Tests:** Runs performance tests using K6.
 - **Lighthouse Checks:** Performs accessibility and performance checks using Lighthouse.
 - **Appium Tests:** Executes Appium tests using BrowserStack.
+- **HTML Validator:** Validates HTML against the WHATWG and default W3C standards and generates validation reports.
+- **Page Load Times:** Measures and reports on page load times for various URLs.
 - **Send Slack Notification:** Sends notifications to Slack with combined workflow status.
 
 ## Getting Started
@@ -52,4 +58,12 @@ Lighthouse tests are automated through workflows and are triggered automatically
 
 ### Running Appium Tests
 ```npx wdio run wdio.android.bs.conf.js --spec ./test/specs/<script-name>.ts```
+
+### Running HTML Validation
+HTML validation is performed through GitHub Actions by passing the URLs in the repsective validator files. You can also manually execute the HTML validation script using the following command:
+```node HTMLValidator/validator_*.js```
+
+### Running Page Load Times Measurement
+Page load times are measured and reported through GitHub Actions by passing the URLs in the repsective page-load times file. You can also manually execute the page load times measurement script using the following command:
+```node PageLoadTime/loadtimes.js```
 
