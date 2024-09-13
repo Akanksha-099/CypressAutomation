@@ -53,16 +53,19 @@ jobs:
 
      - name: Create .nojekyll file
        run: echo > cypress/reports/.nojekyll
+       if: always()
 
      - name: Copy latest report to a static file name
        run: cp cypress/reports/html/*.html cypress/reports/html/latest-report.html
+       if: always()
 
      - name: Prepare Deployment Folder
+       if: always()
        run: |
             mkdir -p cypress-reports
             cp -r cypress/reports/html cypress-reports/html
             cp -r cypress/videos cypress-reports/videos
-
+        
      - name: Deploy Cypress Reports to GitHub Pages
        uses: JamesIves/github-pages-deploy-action@v4
        if: always()

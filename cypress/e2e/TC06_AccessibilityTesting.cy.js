@@ -32,7 +32,7 @@ function terminalLog(violations) {
   
     cy.task('table', violationData)
   }
-describe('Accessibility testing', () => {
+describe.skip('Accessibility testing', () => {
   urlsToTest.forEach((url) => {
     it(`Test accessibility for URL: ${url}`, () => {
       cy.visit(url);

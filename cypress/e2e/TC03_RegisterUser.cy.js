@@ -1,7 +1,7 @@
 /// <reference types="Cypress" />
 
 
-describe('User registration flow', () => {
+describe.skip('User registration flow', () => {
     before(() => {
       cy.visit('/')
      

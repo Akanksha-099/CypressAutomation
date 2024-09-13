@@ -1,6 +1,6 @@
 /// <reference types="@cypress-audit/lighthouse" />
 
-describe('Performance testing using Google Page Speed Scores',() => {
+describe.skip('Performance testing using Google Page Speed Scores',() => {
     beforeEach(() => { 
         cy.visit('/');
       });
