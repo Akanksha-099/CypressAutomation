@@ -1,0 +1,85 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Page Load Times Report</title>
+      <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .chart { width: 100%; height: 400px; }
+      </style>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+      <h1 style="text-align: center;"><u>Page Load Times Report</u></h1>
+      <table>
+        <tr>
+          <th>URL</th>
+          <th>Load Time</th>
+        </tr>
+        
+    <tr>
+      <td><a href="https://www.foo.software" target="_blank">https://www.foo.software</a></td>
+      <td>0.70 seconds</td>
+    </tr>
+  
+    <tr>
+      <td><a href="https://www.w3.org/WAI/" target="_blank">https://www.w3.org/WAI/</a></td>
+      <td>0.80 seconds</td>
+    </tr>
+  
+    <tr>
+      <td><a href="https://webaim.org/" target="_blank">https://webaim.org/</a></td>
+      <td>0.51 seconds</td>
+    </tr>
+  
+    <tr>
+      <td><a href="https://dequeuniversity.com/" target="_blank">https://dequeuniversity.com/</a></td>
+      <td>0.83 seconds</td>
+    </tr>
+  
+    <tr>
+      <td><a href="https://developer.mozilla.org/en-US/" target="_blank">https://developer.mozilla.org/en-US/</a></td>
+      <td>0.60 seconds</td>
+    </tr>
+  
+    <tr>
+      <td><a href="https://alistapart.com/" target="_blank">https://alistapart.com/</a></td>
+      <td>0.50 seconds</td>
+    </tr>
+  
+    <tr>
+      <td><a href="https://www.mckinsey.com/" target="_blank">https://www.mckinsey.com/</a></td>
+      <td>Failed to load</td>
+    </tr>
+  
+      </table>
+      <h2>Average Load Time: 0.66 seconds</h2>
+      <canvas id="loadTimeChart" class="chart"></canvas>
+      <script>
+        const ctx = document.getElementById('loadTimeChart').getContext('2d');
+        const chart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ["https://www.foo.software","https://www.w3.org/WAI/","https://webaim.org/","https://dequeuniversity.com/","https://developer.mozilla.org/en-US/","https://alistapart.com/","https://www.mckinsey.com/"],
+            datasets: [{
+              label: 'Load Time (seconds)',
+              data: [0.6981387370000012,0.7957113039999968,0.509369699999981,0.8292018629999948,0.603323532999988,0.49685635599997474,0], // Handle failed URLs with 0
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+    </body>
+    </html>
+  
