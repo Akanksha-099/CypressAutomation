@@ -1,0 +1,266 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Report</title>
+   <style>
+   body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f5f5f5;
+  }
+  
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px auto; /* Add 'auto' to center and give top-bottom margin */
+    padding: 20px; /* This padding is equal on all sides */
+    border-radius: 8px;
+    box-sizing: border-box; /* Ensure padding is included in width calculations */
+  }
+  .header {
+    display: flex; /* Enables Flexbox layout */
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically */
+    text-align: center; /* Aligns text center inside the flex container */
+    width: 100%; /* Ensures full width */
+    padding: 20px 0; /* Optional: Adds some padding for spacing */
+  }
+  .header a {
+    color: inherit; /* Ensures the link takes the color of its parent */
+    text-decoration: none; /* Removes the underline from the link */
+  }
+
+  .header a:hover {
+    text-decoration: underline; /* Adds underline on hover for better UX */
+  }
+  
+  .summary, .details {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width calculations */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    table-layout: fixed;
+    box-sizing: border-box; /* Include padding in width calculations */
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    word-break: break-word;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  
+  .error {
+    background-color: rgba(255, 99, 132, 0.2); /* Error: red */
+  }
+  .warning {
+    background-color: rgba(255, 159, 64, 0.2); /* Warning: orange */
+  }
+  .message {
+    width: 30%;
+  }
+  
+  .context {
+    width: 20%;
+    max-width: 300px;
+    white-space: pre-wrap; /* Preserves whitespace and wraps text */
+    overflow-wrap: break-word; /* Breaks long words if necessary */
+    box-sizing: border-box;
+  }
+
+.context pre {
+    display: block;
+    margin: 0;
+    white-space: pre-wrap; /* Wraps text while preserving whitespace */
+    overflow-wrap: break-word; /* Breaks long words if needed */
+    word-break: normal; /* Prevents breaking words in the middle */
+}
+
+  .icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  
+  .error-icon {
+    background-color: rgba(255, 99, 132, 1); /* Error: red */
+  }
+  
+  .warning-icon {
+    background-color: rgba(255, 159, 64, 1); /* Warning: orange */
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      width: 100%;
+      margin: 0 auto; /* Ensure it's centered on small screens too */
+      padding: 10px;
+    }
+  }
+  
+  /* Add additional padding to the right side for equal space */
+  .details-table td {
+    padding-right: 15px; /* Adds extra space to the right */
+  }
+  
+  /* Add space after the "context" column */
+  .details-table td:last-child {
+    position: relative;
+  }
+  
+  .details-table td:last-child::after {
+    content: "";
+    display: block;
+    width: 15px; /* Adjust the width as needed */
+    height: 100%;
+    position: absolute;
+    right: -15px; /* Moves the space outside the table cell */
+    top: 0;
+  }
+  
+  /* Add margin between the search box and the table */
+  .dataTables_wrapper .dataTables_filter {
+    margin-bottom: 20px; /* Adds space below the search box */
+  }
+
+  .dataTables_wrapper .dataTables_length {
+    margin-bottom: 20px; /* Adds space below the "Show entries" dropdown */
+  }
+
+  /* Optional: Adjust spacing around the DataTable itself */
+  #detailsTable_wrapper {
+    margin-top: 20px; /* Adds space above the DataTable */
+    margin-bottom: 20px; /* Adds space below the DataTable */
+  }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+      <h1>Validation Report for <a href="https://www.example.com" target="_blank">https://www.example.com</a></h1>
+      </div>
+      <div class="summary">
+        <h1>Summary: Error Distribution by Rule ID</h1>
+        <div class="chart-container">
+        <canvas id="ruleChart" width="400" height="200"></canvas>
+      </div>
+        <table id="summaryTable">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="error">
+              <td><span class="icon error-icon"></span>Error</td>
+              <td>1</td>
+            </tr>
+            <tr class="warning">
+              <td><span class="icon warning-icon"></span>Warning</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="details">
+        <h1>Details</h1>
+        <table id="detailsTable" class="details-table">
+          <thead>
+            <tr>
+              <th>Rule ID</th>
+              <th>Message</th>
+              <th>Line</th>
+              <th>Column</th>
+              <th>Selector</th>
+              <th>Context</th>
+            </tr>
+          </thead>
+          <tbody>
+  
+      <tr class="error">
+        <td><a href="https://html-validate.org/rules/element-required-attributes.html" target="_blank">element-required-attributes</a></td>
+        <td class="message">&lt;html&gt; is missing required &quot;lang&quot; attribute</td>
+        <td>2</td>
+        <td>2</td>
+        <td>html</td>
+        <td class="context"><pre>{
+  &quot;element&quot;: &quot;html&quot;,
+  &quot;attribute&quot;: &quot;lang&quot;
+}</pre></td>
+      </tr>
+    
+        </tbody>
+      </table>
+    </div>
+   
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Make the table sortable and filterable
+        $(document).ready(function() {
+          $('#detailsTable').DataTable();
+        });
+
+        // Prepare data for the chart
+        const ctx = document.getElementById('ruleChart').getContext('2d');
+        const ruleCounts = {"element-required-attributes":1};
+        const chartLabels = Object.keys(ruleCounts);
+        const chartData = Object.values(ruleCounts);
+        // Log to check if data is correct
+
+        console.log('Chart Data:', chartLabels, chartData);
+
+        // Create the chart
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: chartLabels,
+            datasets: [{
+              label: 'Number of Errors',
+              data: chartData,
+              backgroundColor:  'rgba(255, 99, 132, 0.2)' ,  // Error: red
+              borderColor:'rgba(255, 99, 132, 1)' ,
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+  </html>
+  

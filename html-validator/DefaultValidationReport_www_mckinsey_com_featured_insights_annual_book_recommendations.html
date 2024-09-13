@@ -1,0 +1,1082 @@
+
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation Report</title>
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f5f5f5;
+    }
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin: 20px auto; /* Centers the container with equal margins */
+      padding: 20px;
+      border-radius: 8px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    .header {
+      display: flex; /* Enables Flexbox layout */
+      justify-content: center; /* Centers the content horizontally */
+      align-items: center; /* Centers the content vertically */
+      text-align: center; /* Aligns text center inside the flex container */
+      width: 100%; /* Ensures full width */
+      padding: 20px 0; /* Optional: Adds some padding for spacing */
+    }
+    .header a {
+      color: inherit;
+      text-decoration: none;
+    }
+    .header a:hover {
+      text-decoration: underline;
+    }
+  
+    .summary, .details {
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      table-layout: fixed;
+      box-sizing: border-box; /* Ensures padding is included in width */
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      word-break: break-word;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .info {
+      background-color: rgba(75, 192, 192, 0.2);
+    }
+    .warning {
+      background-color: rgba(255, 159, 64, 0.2);
+    }
+    .error {
+      background-color: rgba(255, 99, 132, 0.2);
+    }
+    .chart {
+      margin: 20px 0;
+    }
+    .chart text {
+      font-size: 14px;
+      fill: white;
+    }
+    .message {
+      width: 30%;
+    }
+    .extract {
+      width: 20%;
+    }
+    .icon {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .info-icon {
+      background-color: rgba(75, 192, 192, 1);
+    }
+    .warning-icon {
+      background-color: rgba(255, 159, 64, 1);
+    }
+    .error-icon {
+      background-color: rgba(255, 99, 132, 1);
+    }
+    @media (max-width: 768px) {
+      .container {
+        width: 100%;
+        margin: 0 auto; /* Centers the container on smaller screens */
+        padding: 10px;
+      }
+    }
+  
+    /* Adding right padding to table cells to prevent content from sticking to the edge */
+    .details-table td {
+      padding-right: 15px; /* Adds extra space to the right */
+    }
+  
+    /* Adding space after the "extract" column */
+    .details-table td:last-child {
+      position: relative;
+    }
+  
+    .details-table td:last-child::after {
+      content: "";
+      display: block;
+      width: 15px; /* Adjust the width as needed */
+      height: 100%;
+      position: absolute;
+      right: -15px; /* Moves the space outside the table cell */
+      top: 0;
+    }
+  
+
+  /* Add margin between the search box and the table */
+    .dataTables_wrapper .dataTables_filter {
+    margin-bottom: 20px; /* Adds space below the search box */
+    }
+  
+    .dataTables_wrapper .dataTables_length {
+    margin-bottom: 20px; /* Adds space below the "Show entries" dropdown */
+    }
+  
+  /* Optional: Adjust spacing around the DataTable itself */
+    #detailsTable_wrapper {
+    margin-top: 20px; /* Adds space above the DataTable */
+    margin-bottom: 20px; /* Adds space below the DataTable */
+    }
+  </style>
+  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Validation Report for <a href="https://www.mckinsey.com/featured-insights/annual-book-recommendations" target="_blank">https://www.mckinsey.com/featured-insights/annual-book-recommendations</a></h1>
+      </div>    
+      <div class="summary">
+        <h1>Summary: Validation Message Overview by Severity</h1>
+        <canvas id="barChart" width="200" height="100"></canvas>
+        <table id="summaryTable">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="error">
+              <td><span class="icon error-icon"></span>Error</td>
+              <td>13</td>
+            </tr>
+            <tr class="info">
+              <td><span class="icon info-icon"></span>Info</td>
+              <td>78</td>
+            </tr>
+            <tr class="warning">
+              <td><span class="icon warning-icon"></span>Warning</td>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="details">
+        <h1>Details</h1>
+        <table id="detailsTable">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th class="message">Message</th>
+              <th>Last Line</th>
+              <th>Last Column</th>
+              <th>First Column</th>
+              <th class="extract">Extract</th>
+            </tr>
+          </thead>
+          <tbody>
+  
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>70</td>
+        <td>48</td>
+        <td class="extract">en&quot;&gt;&lt;head&gt;&lt;meta charSet=&quot;utf-8&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>141</td>
+        <td>71</td>
+        <td class="extract">=&quot;utf-8&quot;/&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>195</td>
+        <td>142</td>
+        <td class="extract">ale=1.0&quot;/&gt;&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;/&gt;&lt;scrip</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">The “type” attribute is unnecessary for JavaScript resources.</td>
+        <td>1</td>
+        <td>226</td>
+        <td>196</td>
+        <td class="extract">IE=edge&quot;/&gt;&lt;script type=&quot;text/javascript&quot;&gt;window</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">The “type” attribute is unnecessary for JavaScript resources.</td>
+        <td>1</td>
+        <td>572</td>
+        <td>542</td>
+        <td class="extract">}&lt;/script&gt;&lt;script type=&quot;text/javascript&quot;&gt;(windo</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32523</td>
+        <td>32486</td>
+        <td class="extract">;&lt;/script&gt;&lt;link rel=&quot;icon&quot; href=&quot;/favicon.ico&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32616</td>
+        <td>32524</td>
+        <td class="extract">con.ico&quot;/&gt;&lt;link href=&quot;https://www.mckinsey.com/redesign/resources/css/styles-rc.css&quot; rel=&quot;stylesheet&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32660</td>
+        <td>32617</td>
+        <td class="extract">lesheet&quot;/&gt;&lt;link rel=&quot;manifest&quot; href=&quot;/manifest.json&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32716</td>
+        <td>32661</td>
+        <td class="extract">st.json&quot;/&gt;&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.dynamicyield.com&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32771</td>
+        <td>32717</td>
+        <td class="extract">eld.com&quot;/&gt;&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//st.dynamicyield.com&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32828</td>
+        <td>32772</td>
+        <td class="extract">eld.com&quot;/&gt;&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//rcom.dynamicyield.com&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32881</td>
+        <td>32829</td>
+        <td class="extract">eld.com&quot;/&gt;&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//cdn.cookielaw.org&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32934</td>
+        <td>32882</td>
+        <td class="extract">law.org&quot;/&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;//assets.adobedtm.com&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>32988</td>
+        <td>32935</td>
+        <td class="extract">dtm.com&quot;/&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;//connect.facebook.net&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33039</td>
+        <td>32989</td>
+        <td class="extract">ook.net&quot;/&gt;&lt;link rel=&quot;preconnect&quot; href=&quot;//static.hotjar.com&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33152</td>
+        <td>33040</td>
+        <td class="extract">jar.com&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/bower/Bower-Bold.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33291</td>
+        <td>33153</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/mckinsey-sans/regular/McKinseySans-Regular.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33428</td>
+        <td>33292</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/mckinsey-sans/medium/McKinseySans-Medium.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33563</td>
+        <td>33429</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/mckinsey-sans/light/McKinseySans-Light.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33700</td>
+        <td>33564</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/mckinsey-sans/italic/McKinseySans-Italic.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33848</td>
+        <td>33701</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/mckinsey-sans/light-italic/McKinseySans-LightItalic.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>33998</td>
+        <td>33849</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; as=&quot;font&quot; href=&quot;/next-static/fonts/mckinsey-sans/medium-italic/McKinseySans-MediumItalic.woff2&quot; type=&quot;font/woff2&quot; crossorigin=&quot;&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34056</td>
+        <td>33999</td>
+        <td class="extract">rigin=&quot;&quot;/&gt;&lt;meta name=&quot;apple-itunes-app&quot; content=&quot;app-id=674902075&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34152</td>
+        <td>34057</td>
+        <td class="extract">4902075&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;57x57&quot; href=&quot;/next-static/images/mck-touch-icon-57x57.png&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34248</td>
+        <td>34153</td>
+        <td class="extract">x57.png&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;72x72&quot; href=&quot;/next-static/images/mck-touch-icon-72x72.png&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34348</td>
+        <td>34249</td>
+        <td class="extract">x72.png&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;114x114&quot; href=&quot;/next-static/images/mck-touch-icon-114x114.png&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34448</td>
+        <td>34349</td>
+        <td class="extract">114.png&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;144x144&quot; href=&quot;/next-static/images/mck-touch-icon-144x144.png&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34548</td>
+        <td>34449</td>
+        <td class="extract">144.png&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;152x152&quot; href=&quot;/next-static/images/mck-touch-icon-152x152.png&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34648</td>
+        <td>34549</td>
+        <td class="extract">152.png&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;167x167&quot; href=&quot;/next-static/images/mck-touch-icon-167x167.png&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34748</td>
+        <td>34649</td>
+        <td class="extract">167.png&quot;/&gt;&lt;link rel=&quot;apple-touch-icon&quot; sizes=&quot;180x180&quot; href=&quot;/next-static/images/mck-touch-icon-180x180.png&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34808</td>
+        <td>34749</td>
+        <td class="extract">180.png&quot;/&gt;&lt;meta content=&quot;no-referrer-when-downgrade&quot; name=&quot;referrer&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>34889</td>
+        <td>34809</td>
+        <td class="extract">eferrer&quot;/&gt;&lt;meta content=&quot;McKinsey &amp;amp; Company&quot; property=&quot;og:site_name&quot; name=&quot;site_name&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35002</td>
+        <td>34890</td>
+        <td class="extract">te_name&quot;/&gt;&lt;meta content=&quot;What to read next: McKinsey’s 2024 annual book recommendations&quot; property=&quot;og:title&quot; name=&quot;title&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35288</td>
+        <td>35003</td>
+        <td class="extract">=&quot;title&quot;/&gt;&lt;meta content=&quot;Looking for your next book? Each year, McKinsey seeks out the best books in business, technology, workplace culture, and more. Here’s our 2024 list, recommended by CEOs, founders, editors in chief, and other global leaders.&quot; property=&quot;og:description&quot; name=&quot;description&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35405</td>
+        <td>35289</td>
+        <td class="extract">ription&quot;/&gt;&lt;meta content=&quot;https://www.mckinsey.com/featured-insights/annual-book-recommendations&quot; name=&quot;url&quot; property=&quot;og:url&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35453</td>
+        <td>35406</td>
+        <td class="extract">&quot;og:url&quot;/&gt;&lt;meta content=&quot;index,follow,all&quot; name=&quot;robots&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35700</td>
+        <td>35454</td>
+        <td class="extract">&quot;robots&quot;/&gt;&lt;meta content=&quot;https://www.mckinsey.com/~/media/mckinsey/featured%20insights/what%20to%20read%20next%20mckinseys%202024%20annual%20book%20recomendations/what-to-read-next-book-recommendations-thumb-1536x1536.jpg&quot; property=&quot;og:image&quot; name=&quot;image&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35767</td>
+        <td>35701</td>
+        <td class="extract">=&quot;image&quot;/&gt;&lt;meta content=&quot;{93E66B0C-844B-461B-A345-A59630819CB8}&quot; name=&quot;sid&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35868</td>
+        <td>35768</td>
+        <td class="extract">me=&quot;sid&quot;/&gt;&lt;link href=&quot;https://www.mckinsey.com/featured-insights/annual-book-recommendations&quot; rel=&quot;canonical&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35925</td>
+        <td>35869</td>
+        <td class="extract">nonical&quot;/&gt;&lt;meta content=&quot;Monthly Highlights&quot; name=&quot;practice-name&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>35967</td>
+        <td>35926</td>
+        <td class="extract">ce-name&quot;/&gt;&lt;meta content=&quot;N02&quot; name=&quot;practice-code&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36024</td>
+        <td>35968</td>
+        <td class="extract">ce-code&quot;/&gt;&lt;meta content=&quot;summary_large_image&quot; name=&quot;twitter:card&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36071</td>
+        <td>36025</td>
+        <td class="extract">er:card&quot;/&gt;&lt;meta content=&quot;@mckinsey&quot; name=&quot;twitter:site&quot;/&gt;&lt;title</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36220</td>
+        <td>36160</td>
+        <td class="extract">ey&lt;/title&gt;&lt;meta content=&quot;Insights &amp;amp; Publications&quot; name=&quot;sections&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36331</td>
+        <td>36221</td>
+        <td class="extract">ections&quot;/&gt;&lt;meta content=&quot;What to read next: McKinsey&amp;amp;rsquo;s 2024 annual book recommendations&quot; name=&quot;twitter:title&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36599</td>
+        <td>36332</td>
+        <td class="extract">r:title&quot;/&gt;&lt;meta content=&quot;Looking for your next book? Each year, McKinsey seeks out the best books in business, technology, workplace culture, and more. Here’s our 2024 list, recommended by CEOs, founders, editors in chief, and other global leaders.&quot; name=&quot;twitter:description&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36666</td>
+        <td>36600</td>
+        <td class="extract">ription&quot;/&gt;&lt;meta content=&quot;Article&quot; property=&quot;contenttype&quot; name=&quot;contenttype&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>36922</td>
+        <td>36667</td>
+        <td class="extract">enttype&quot;/&gt;&lt;meta content=&quot;https://www.mckinsey.com/~/media/mckinsey/featured%20insights/what%20to%20read%20next%20mckinseys%202024%20annual%20book%20recomendations/what-to-read-next-book-recommendations-thumb-1536x1536.jpg?mw=677&amp;amp;car=42:25&quot; name=&quot;twitter:image&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>37027</td>
+        <td>36923</td>
+        <td class="extract">r:image&quot;/&gt;&lt;meta content=&quot;What to read next: McKinsey’s 2024 annual book recommendations&quot; name=&quot;twitter:image:alt&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>37070</td>
+        <td>37028</td>
+        <td class="extract">age:alt&quot;/&gt;&lt;meta content=&quot;public&quot; name=&quot;accesslevel&quot;/&gt;&lt;</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>37122</td>
+        <td>37071</td>
+        <td class="extract">sslevel&quot;/&gt;&lt;meta content=&quot;false&quot; name=&quot;excludefromclientlink&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>37170</td>
+        <td>37123</td>
+        <td class="extract">entlink&quot;/&gt;&lt;meta content=&quot;interactive&quot; name=&quot;articletype&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>37224</td>
+        <td>37171</td>
+        <td class="extract">cletype&quot;/&gt;&lt;meta content=&quot;2024-07-02T00:00:00Z&quot; name=&quot;itemdate&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>37314</td>
+        <td>37225</td>
+        <td class="extract">temdate&quot;/&gt;&lt;meta content=&quot;Featured Insights | Interactive | July 2, 2024&quot; name=&quot;searchresults-tags&quot;/&gt;&lt;scrip</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38406</td>
+        <td>38364</td>
+        <td class="extract">}&lt;/script&gt;&lt;meta name=&quot;next-head-count&quot; content=&quot;55&quot;/&gt;&lt;meta </td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Element “meta” is missing one or more of the following attributes: “content”, “property”.</td>
+        <td>1</td>
+        <td>38441</td>
+        <td>38407</td>
+        <td class="extract">ent=&quot;55&quot;/&gt;&lt;meta name=&quot;next-font-preconnect&quot;/&gt;&lt;scrip</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38441</td>
+        <td>38407</td>
+        <td class="extract">ent=&quot;55&quot;/&gt;&lt;meta name=&quot;next-font-preconnect&quot;/&gt;&lt;scrip</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Bad value “” for attribute “src” on element “script”: Must be non-empty.</td>
+        <td>1</td>
+        <td>38518</td>
+        <td>38442</td>
+        <td class="extract">connect&quot;/&gt;&lt;script src=&quot;&quot; id=&quot;onetrust-wrapperchecker&quot; data-nscript=&quot;beforeInteractive&quot;&gt;functi</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">The text content of element “script” was not in the required format: Expected space, tab, newline, or slash but found “f” instead.</td>
+        <td>1</td>
+        <td>38562</td>
+        <td>38554</td>
+        <td class="extract">ecker() {}&lt;/script&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38640</td>
+        <td>38563</td>
+        <td class="extract">}&lt;/script&gt;&lt;link rel=&quot;preload&quot; href=&quot;/_next/static/css/0167d356193758ce.css&quot; as=&quot;style&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38722</td>
+        <td>38641</td>
+        <td class="extract">=&quot;style&quot;/&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/_next/static/css/0167d356193758ce.css&quot; data-n-g=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38800</td>
+        <td>38723</td>
+        <td class="extract">a-n-g=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; href=&quot;/_next/static/css/597daefe3a58aa0a.css&quot; as=&quot;style&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38882</td>
+        <td>38801</td>
+        <td class="extract">=&quot;style&quot;/&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/_next/static/css/597daefe3a58aa0a.css&quot; data-n-p=&quot;&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>38960</td>
+        <td>38883</td>
+        <td class="extract">a-n-p=&quot;&quot;/&gt;&lt;link rel=&quot;preload&quot; href=&quot;/_next/static/css/9e23a2b34f5d8622.css&quot; as=&quot;style&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>39030</td>
+        <td>38961</td>
+        <td class="extract">=&quot;style&quot;/&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/_next/static/css/9e23a2b34f5d8622.css&quot;/&gt;&lt;link </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>39108</td>
+        <td>39031</td>
+        <td class="extract">622.css&quot;/&gt;&lt;link rel=&quot;preload&quot; href=&quot;/_next/static/css/c3764aa37d337f28.css&quot; as=&quot;style&quot;/&gt;&lt;</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>1</td>
+        <td>39178</td>
+        <td>39109</td>
+        <td class="extract">=&quot;style&quot;/&gt;&lt;link rel=&quot;stylesheet&quot; href=&quot;/_next/static/css/c3764aa37d337f28.css&quot;/&gt;&lt;noscr</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">The “type” attribute is unnecessary for JavaScript resources.</td>
+        <td>1</td>
+        <td>39530</td>
+        <td>39309</td>
+        <td class="extract">&gt;&lt;/script&gt;&lt;script src=&quot;https://cdn.cookielaw.org/scripttemplates/otSDKStub.js&quot; data-document-language=&quot;true&quot; type=&quot;text/javascript&quot; data-domain-script=&quot;915b5091-0d7e-44d2-a8c4-cf08267e52fe&quot; defer=&quot;&quot; data-nscript=&quot;beforeInteractive&quot;&gt;&lt;/scri</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">The “main” role is unnecessary for element “main”.</td>
+        <td>3</td>
+        <td>3482</td>
+        <td>3393</td>
+        <td class="extract">&lt;/a&gt;&lt;/div&gt;&lt;main class=&quot;mck-o-container--outer&quot; data-layer-region=&quot;body&quot; role=&quot;main&quot; id=&quot;skipToMain&quot;&gt;&lt;style</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Element “style” not allowed as child of element “main” in this context. (Suppressing further errors from this subtree.)</td>
+        <td>3</td>
+        <td>3489</td>
+        <td>3483</td>
+        <td class="extract">ipToMain&quot;&gt;&lt;style&gt;
+     </td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">CSS: Parse Error.</td>
+        <td>4</td>
+        <td>61</td>
+        <td>undefined</td>
+        <td class="extract">imary-nav&amp;#x27;], 
+      .glob</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">CSS: Parse Error.</td>
+        <td>5</td>
+        <td>63</td>
+        <td>undefined</td>
+        <td class="extract">c-eyebrow&amp;#x27;], 
+      .glob</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Duplicate ID “button_id”.</td>
+        <td>13</td>
+        <td>2459</td>
+        <td>2211</td>
+        <td class="extract">rop-down&quot;&gt;&lt;button data-component=&quot;mdc-c-button&quot; aria-label=&quot;&quot; type=&quot;button&quot; id=&quot;button_id&quot; class=&quot;mdc-c-button___U4iY2_42cd86a mdc-c-button--ghost mdc-c-button--size-medium mdc-c-drop-down__rootmenu___yJzvz_42cd86a&quot; aria-expanded=&quot;false&quot; aria-haspopup=&quot;menu&quot;&gt;&lt;span </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">The first occurrence of ID “button_id” was here.</td>
+        <td>13</td>
+        <td>1130</td>
+        <td>882</td>
+        <td class="extract">rop-down&quot;&gt;&lt;button data-component=&quot;mdc-c-button&quot; aria-label=&quot;&quot; type=&quot;button&quot; id=&quot;button_id&quot; class=&quot;mdc-c-button___U4iY2_42cd86a mdc-c-button--ghost mdc-c-button--size-medium mdc-c-drop-down__rootmenu___yJzvz_42cd86a&quot; aria-expanded=&quot;false&quot; aria-haspopup=&quot;menu&quot;&gt;&lt;span </td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections, or else use a “div” element instead for any cases where no heading is needed.</td>
+        <td>13</td>
+        <td>499</td>
+        <td>400</td>
+        <td class="extract">-spacing&quot;&gt;&lt;section class=&quot;mdc-u-grid mdc-u-grid-col-md-12 mck-u-animation-blur-in-400 byline-share-container&quot;&gt;&lt;div c</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Section lacks heading. Consider using “h2”-“h6” elements to add identifying headings to all sections, or else use a “div” element instead for any cases where no heading is needed.</td>
+        <td>13</td>
+        <td>3726</td>
+        <td>3650</td>
+        <td class="extract">tter-xxl&quot;&gt;&lt;section class=&quot;mdc-u-grid mdc-u-grid-col-md-12 mck-u-animation-blur-in-400&quot;&gt;&lt;div c</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">The “main” element must not appear as a descendant of the “main” element.</td>
+        <td>13</td>
+        <td>4303</td>
+        <td>4224</td>
+        <td class="extract">&lt;/section&gt;&lt;main data-layer-region=&quot;article-body&quot; class=&quot;mdc-u-grid mdc-u-grid-gutter-xxl&quot;&gt;&lt;div c</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">A document must not include more than one visible “main” element.</td>
+        <td>13</td>
+        <td>4303</td>
+        <td>4224</td>
+        <td class="extract">&lt;/section&gt;&lt;main data-layer-region=&quot;article-body&quot; class=&quot;mdc-u-grid mdc-u-grid-gutter-xxl&quot;&gt;&lt;div c</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>17</td>
+        <td>852</td>
+        <td>530</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;Books stacked on a bookshelf to spell out &amp;quot;What to read next&amp;quot;&quot; src=&quot;/~/media/mckinsey/featured%20insights/what%20to%20read%20next%20mckinseys%202024%20annual%20book%20recomendations/what-to-read-next-book-recommendations-thumb-1536x1536.jpg?cq=50&amp;amp;mh=145&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Element “div” not allowed as child of element “h3” in this context. (Suppressing further errors from this subtree.)</td>
+        <td>17</td>
+        <td>1117</td>
+        <td>1113</td>
+        <td class="extract">_42cd86a&quot;&gt;&lt;div&gt;What t</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Bad value “http://www.mckinsey.com/~/media/mckinsey/featured insights/what to read next mckinseys 2024 annual book recomendations/what-to-read-next-mckinseys-annual-book-recommendations-july-2024.pdf” for attribute “href” on element “a”: Illegal character in path segment: space is not allowed.</td>
+        <td>17</td>
+        <td>1799</td>
+        <td>1457</td>
+        <td class="extract">utter-md&quot;&gt;&lt;a data-component=&quot;mdc-c-link&quot; href=&quot;http://www.mckinsey.com/~/media/mckinsey/featured insights/what to read next mckinseys 2024 annual book recomendations/what-to-read-next-mckinseys-annual-book-recommendations-july-2024.pdf&quot; class=&quot;mdc-c-button___U4iY2_42cd86a mdc-c-button--primary___Ed-lT_42cd86a mdc-c-button--size-large___jwpUy_42cd86a&quot;&gt;&lt;span </td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Element “div” not allowed as child of element “h2” in this context. (Suppressing further errors from this subtree.)</td>
+        <td>18</td>
+        <td>644</td>
+        <td>640</td>
+        <td class="extract">e__4XbMT&quot;&gt;&lt;div&gt;More o</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>18</td>
+        <td>1573</td>
+        <td>1311</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;Stack of books&quot; src=&quot;/~/media/mckinsey/featured%20insights/what%20to%20read%20next%20mckinseys%202024%20annual%20book%20recomendations/mckinsey%20books%20picks-1474600332-thumb-1536x1536.jpg?cq=50&amp;amp;mw=767&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>18</td>
+        <td>3261</td>
+        <td>3084</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;McKinsey Books&quot; src=&quot;/~/media/mckinsey/featured%20insights/mckinsey%20books/mck-books-thumb-1536x1536.jpg?cq=50&amp;amp;mw=767&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>18</td>
+        <td>5079</td>
+        <td>4890</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;Author Talks&quot; src=&quot;/~/media/mckinsey/featured%20insights/mckinsey%20books/author%20talks/authortalks_1536x1536_v1.png?cq=50&amp;amp;mw=767&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="error">
+        <td><span class="icon error-icon"></span>error</td>
+        <td class="message">Element “div” not allowed as child of element “h2” in this context. (Suppressing further errors from this subtree.)</td>
+        <td>19</td>
+        <td>644</td>
+        <td>640</td>
+        <td class="extract">e__4XbMT&quot;&gt;&lt;div&gt;REVISI</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>19</td>
+        <td>1563</td>
+        <td>1301</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;Open book with 3D pop-out animation of a beach, boardwalk, and Ferris wheel&quot; src=&quot;/~/media/mckinsey/featured%20insights/2023%20summer%20reading%20list/summer-reading-2023-thumb-1536x1536.jpg?cq=50&amp;amp;mw=767&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>19</td>
+        <td>3248</td>
+        <td>3037</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;2022 Summer Reading List&quot; src=&quot;/~/media/mckinsey/featured%20insights/2022%20summer%20reading%20list/summer-reading-2022-thumb-1536x1536.jpg?cq=50&amp;amp;mw=767&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>19</td>
+        <td>4963</td>
+        <td>4725</td>
+        <td class="extract">-picture&quot;&gt;&lt;img alt=&quot;We still know what you’re reading this summer&quot; src=&quot;/~/media/mckinsey/featured%20insights/2021%20summer%20reading%20list/summer-reading-1129723517-thumb-1536x1536.jpg?cq=50&amp;amp;mw=767&amp;amp;car=16:9&amp;amp;cpy=Center&quot; loading=&quot;lazy&quot;/&gt;&lt;/pict</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">Trailing slash on void elements has no effect and interacts badly with unquoted attribute values.</td>
+        <td>20</td>
+        <td>5</td>
+        <td>1</td>
+        <td class="extract">iv&gt;&lt;/div&gt;
+&lt;hr/&gt;
+&lt;p&gt;&lt;e</td>
+      </tr>
+    
+      <tr class="info">
+        <td><span class="icon info-icon"></span>info</td>
+        <td class="message">The “type” attribute is unnecessary for JavaScript resources.</td>
+        <td>27</td>
+        <td>78442</td>
+        <td>78338</td>
+        <td class="extract">}&lt;/script&gt;&lt;script type=&quot;text/javascript&quot;  src=&quot;/-24EUDVp6FM4C/9vKdajJwKm/6WuE/ODh5XkLXXwXLSi/MWFhNw/RH5/vTXlEbD8B&quot;&gt;&lt;/scri</td>
+      </tr>
+    
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('barChart').getContext('2d');
+        const barChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Error', 'Info', 'Warning'],  // Updated order
+            datasets: [{
+              label: 'Count',
+              data: [13, 78, 0],  // Updated order
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',  // Error: red
+                'rgba(75, 192, 192, 0.3)',  // Info: teal
+                'rgba(255, 159, 64, 0.2)'   // Warning: orange
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',    // Error: red
+                'rgba(75, 192, 192, 1)',    // Info: teal
+                'rgba(255, 159, 64, 1)'     // Warning: orange
+              ],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return context.parsed.y + ' messages';
+                  }
+                }
+              }
+            }
+          }
+        });
+
+        // Make the table sortable and filterable
+        $(document).ready(function() {
+          $('#detailsTable').DataTable();
+        });
+      });
+    </script>
+  </body>
+  </html>
+  

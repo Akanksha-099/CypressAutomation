@@ -1,0 +1,286 @@
+{
+  "isValid": false,
+  "errorCount": 24,
+  "warningCount": 0,
+  "errors": [
+    {
+      "ruleId": "attribute-allowed-values",
+      "ruleUrl": "https://html-validate.org/rules/attribute-allowed-values.html",
+      "severity": 2,
+      "message": "Attribute \"src\" has invalid value \"\"",
+      "offset": 36428,
+      "line": 1,
+      "column": 36429,
+      "size": 6,
+      "selector": "#onetrust-wrapperchecker",
+      "context": {
+        "element": "script",
+        "attribute": "src",
+        "value": "",
+        "allowed": {
+          "enum": [
+            {}
+          ]
+        }
+      }
+    },
+    {
+      "ruleId": "no-redundant-role",
+      "ruleUrl": "https://html-validate.org/rules/no-redundant-role.html",
+      "severity": 2,
+      "message": "Redundant role \"main\" on <main>",
+      "offset": 42143,
+      "line": 3,
+      "column": 3483,
+      "size": 4,
+      "selector": "#skipToMain",
+      "context": {
+        "tagname": "main",
+        "role": "main"
+      }
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 42685,
+      "line": 3,
+      "column": 4025,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(1) > div:nth-child(1) > style:nth-child(1)"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 42865,
+      "line": 8,
+      "column": 19,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(1) > div:nth-child(1) > style:nth-child(2)"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h1>",
+      "offset": 43968,
+      "line": 8,
+      "column": 1122,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(1) > div:nth-child(1) > div:nth-child(4) > div > div > div > div > div > h1 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 49241,
+      "line": 8,
+      "column": 6395,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(1) > div > div:nth-child(1) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 50428,
+      "line": 8,
+      "column": 7582,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(1) > div > div:nth-child(2) > div > div > div > div > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 52734,
+      "line": 8,
+      "column": 9888,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(2) > div > div:nth-child(1) > div > div > div > div > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 54325,
+      "line": 8,
+      "column": 11479,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(2) > div > div:nth-child(2) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 55413,
+      "line": 8,
+      "column": 12567,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(3) > div > div:nth-child(1) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 56556,
+      "line": 8,
+      "column": 13710,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(3) > div > div:nth-child(2) > div > div > div > div > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h2>",
+      "offset": 58117,
+      "line": 8,
+      "column": 15271,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(1) > h2 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 58825,
+      "line": 8,
+      "column": 15979,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(1) > a > div:nth-child(1) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 59950,
+      "line": 8,
+      "column": 17104,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(1) > a > div:nth-child(2) > div > div > div > div:nth-child(2) > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 60541,
+      "line": 8,
+      "column": 17695,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(2) > a > div:nth-child(1) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 61664,
+      "line": 8,
+      "column": 18818,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(2) > a > div:nth-child(2) > div > div > div > div:nth-child(2) > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 63174,
+      "line": 8,
+      "column": 20328,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(3) > a > div > div > div > div > div:nth-child(2) > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 63831,
+      "line": 8,
+      "column": 20985,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(4) > a > div:nth-child(1) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 64933,
+      "line": 8,
+      "column": 22087,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(4) > a > div:nth-child(2) > div > div > div > div:nth-child(2) > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 65578,
+      "line": 8,
+      "column": 22732,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(5) > a > div:nth-child(1) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 66699,
+      "line": 8,
+      "column": 23853,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(4) > div:nth-child(2) > div > div:nth-child(5) > a > div:nth-child(2) > div > div > div > div:nth-child(2) > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 70756,
+      "line": 8,
+      "column": 27910,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(6) > div > div:nth-child(1) > div > div > div > div > h3 > div"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <style> is not permitted as content in <div>",
+      "offset": 71880,
+      "line": 8,
+      "column": 29034,
+      "size": 5,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(6) > div > div:nth-child(2) > style"
+    },
+    {
+      "ruleId": "element-permitted-content",
+      "ruleUrl": "https://html-validate.org/rules/element-permitted-content.html",
+      "severity": 2,
+      "message": "Element <div> is not permitted as content in <h3>",
+      "offset": 73271,
+      "line": 8,
+      "column": 30425,
+      "size": 3,
+      "selector": "#skipToMain > div:nth-child(2) > div > div > div:nth-child(7) > div > div > div > div > div > div > h3 > div"
+    }
+  ],
+  "warnings": []
+}
