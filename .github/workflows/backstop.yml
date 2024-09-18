@@ -74,11 +74,11 @@ jobs:
         if: always()  
         run: |
           if [ "$INPUT_MODE" = "test" ]; then
-           echo "Copying test screenshots to separate folder."
-           mkdir -p backstop_data/bitmaps_test
-           cp -r backstop_data/bitmaps_test backstop_data/bitmaps_test
+            echo "Copying test screenshots to a separate folder."
+            mkdir -p backstop_data/bitmaps_test_archive
+            cp -r backstop_data/bitmaps_test/* backstop_data/bitmaps_test_archive/
           else
-           echo "Not in test mode. Skipping screenshot copy."
+            echo "Not in test mode. Skipping screenshot copy."
           fi
 
       - name: Commit and push approved reference images (if approve mode)
