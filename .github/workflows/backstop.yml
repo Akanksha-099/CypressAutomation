@@ -61,17 +61,24 @@ jobs:
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
-      # - name: Commit and push approved reference images (if approve mode)
-      #   if: always() && env.INPUT_MODE == 'approve'
-      #   run: |
-      #     if [ "$INPUT_MODE" = "approve" ]; then
-      #       echo "Approving screenshots by copying them to reference folder."
-      #       # Copy test screenshots directly to reference folder
-      #       cp -r backstop_data/bitmaps_test/* backstop_data/bitmaps_reference/
-      #       echo "Screenshots approved and updated."
-      #     else
-      #       echo "Not in approve mode. Skipping approval."
-      #     fi
+      - name: Commit and push approved reference images (if approve mode)
+        if: always() && env.INPUT_MODE == 'approve'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Create and checkout the branch (force update if it already exists)
+          git checkout -B update-backstop-test
+
+          # Fetch the latest from origin
+          git fetch origin
+
+          # Add and commit changes
+          git add backstop_data/bitmaps_reference/
+          git commit -m "Save BackstopJS test screenshots" || echo "No changes to commit"
+
+          # Force push changes to the remote branch
+          git push origin update-backstop-test --force
 
       - name: Commit and push test screenshots (if test mode)
         if: always() && env.INPUT_MODE == 'test'
