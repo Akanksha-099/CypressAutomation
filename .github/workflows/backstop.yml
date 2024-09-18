@@ -1,6 +1,12 @@
 name: BackstopJS Visual Regression Tests
 
 on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Run mode (test or approve)'
+        required: true
+        default: 'test'
   push:
     branches:
       - main
@@ -42,8 +48,18 @@ jobs:
       #     else
       #       npx backstop test
       #     fi
+      - name: Set the mode (for push or workflow_dispatch)
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "Setting mode from workflow_dispatch input: {{ inputs.mode }}"
+            echo "INPUT_MODE={{ inputs.mode }}" >> $GITHUB_OUTPUT
+          else
+           echo "Setting default mode: $DEFAULT_MODE"
+           echo "INPUT_MODE=$DEFAULT_MODE" >> $GITHUB_OUTPUT
+          fi
       - name: Run BackstopJS tests
         run: |
+         echo "Mode: $INPUT_MODE"
          if [ "$INPUT_MODE" = "approve" ]; then
           npx backstop approve
          else
