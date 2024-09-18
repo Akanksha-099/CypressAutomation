@@ -70,6 +70,7 @@ jobs:
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
+      # Always copy test screenshots to the archive folder (even if BackstopJS fails)
       - name: Copy test screenshots to separate folder
         if: always()  
         run: |
@@ -110,10 +111,10 @@ jobs:
 
       - name: Copy latest report to a static file name
         run: cp backstop_data/html_report/*.html backstop_data/html_report/latest-report.html
-        if: always()
+        if: always() && env.INPUT_MODE == 'test'
 
       - name: Prepare Deployment Folder
-        if: always()
+        if: always() && env.INPUT_MODE == 'test'
         run: |
           mkdir -p backstop-reports
           cp -r backstop_data/html_report backstop-reports/html
