@@ -45,15 +45,6 @@ jobs:
           mkdir -p backstop_data/bitmaps_reference
           mkdir -p backstop_data/bitmaps_test
 
-      - name: Pull reference images from backstop-references branch
-        run: |
-          if git ls-tree --name-only backstop-references | grep -q 'backstop_data/bitmaps_reference'; then
-            echo "Pulling reference images."
-            git checkout backstop-references -- backstop_data/bitmaps_reference/
-          else
-            echo "No reference images to pull."
-          fi
-
       - name: Set mode
         id: set-mode
         run: echo "INPUT_MODE=${{ github.event.inputs.mode || 'test' }}" >> $GITHUB_ENV
@@ -70,28 +61,16 @@ jobs:
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
-      # Always copy test screenshots to the archive folder (even if BackstopJS fails)
-      - name: Copy test screenshots to separate folder
-        if: always()  
-        run: |
-          if [ "$INPUT_MODE" = "test" ]; then
-            echo "Copying test screenshots to a separate folder."
-            mkdir -p backstop_data/bitmaps_test_archive
-            cp -r backstop_data/bitmaps_test/* backstop_data/bitmaps_test_archive/
-          else
-            echo "Not in test mode. Skipping screenshot copy."
-          fi
-
       - name: Commit and push approved reference images (if approve mode)
         if: always() && env.INPUT_MODE == 'approve'
         run: |
           if [ "$INPUT_MODE" = "approve" ]; then
-           echo "Approving screenshots by copying them to reference folder."
-           mkdir -p backstop_data/bitmaps_reference
-           cp -r backstop_data/bitmaps_test_archive/* backstop_data/bitmaps_reference/
-           echo "Screenshots approved and updated."
+            echo "Approving screenshots by copying them to reference folder."
+            # Copy test screenshots directly to reference folder
+            cp -r backstop_data/bitmaps_test/* backstop_data/bitmaps_reference/
+            echo "Screenshots approved and updated."
           else
-           echo "Not in approve mode. Skipping approval."
+            echo "Not in approve mode. Skipping approval."
           fi
 
       - name: Commit and push test screenshots (if test mode)
