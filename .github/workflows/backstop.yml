@@ -18,8 +18,14 @@ jobs:
 
       - name: Pull reference images from backstop-references branch
         run: |
-          git fetch origin backstop-references
-          git checkout origin/backstop-references -- backstop_data/bitmaps_reference/
+         git fetch origin
+         if git ls-remote --exit-code --heads origin backstop-references; then
+            git checkout origin/backstop-references -- backstop_data/bitmaps_reference/
+         else
+            echo "backstop-references branch does not exist. Creating it..."
+            git checkout -b backstop-references
+            git push origin backstop-references
+         fi
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
