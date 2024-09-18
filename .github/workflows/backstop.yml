@@ -53,7 +53,7 @@ jobs:
         run: |
           if [ "$INPUT_MODE" = "approve" ]; then
             echo "Approving screenshots."
-            npx backstop approve
+            npx backstop reference
           else
             echo "Running BackstopJS tests."
             npx backstop test
@@ -61,17 +61,17 @@ jobs:
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
-      - name: Commit and push approved reference images (if approve mode)
-        if: always() && env.INPUT_MODE == 'approve'
-        run: |
-          if [ "$INPUT_MODE" = "approve" ]; then
-            echo "Approving screenshots by copying them to reference folder."
-            # Copy test screenshots directly to reference folder
-            cp -r backstop_data/bitmaps_test/* backstop_data/bitmaps_reference/
-            echo "Screenshots approved and updated."
-          else
-            echo "Not in approve mode. Skipping approval."
-          fi
+      # - name: Commit and push approved reference images (if approve mode)
+      #   if: always() && env.INPUT_MODE == 'approve'
+      #   run: |
+      #     if [ "$INPUT_MODE" = "approve" ]; then
+      #       echo "Approving screenshots by copying them to reference folder."
+      #       # Copy test screenshots directly to reference folder
+      #       cp -r backstop_data/bitmaps_test/* backstop_data/bitmaps_reference/
+      #       echo "Screenshots approved and updated."
+      #     else
+      #       echo "Not in approve mode. Skipping approval."
+      #     fi
 
       - name: Commit and push test screenshots (if test mode)
         if: always() && env.INPUT_MODE == 'test'
@@ -95,7 +95,7 @@ jobs:
       # Steps to prepare and deploy the report
       - name: Create .nojekyll file
         run: echo > backstop_data/html_report/.nojekyll
-        if: always()
+        if: always() && env.INPUT_MODE == 'test'
 
       - name: Copy latest report to a static file name
         run: cp backstop_data/html_report/*.html backstop_data/html_report/latest-report.html
@@ -109,7 +109,7 @@ jobs:
 
       - name: Deploy BackstopJS Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
-        if: always()
+        if: always() && env.INPUT_MODE == 'test'
         with:
           folder: backstop-reports
           token: ${{ secrets.GITHUB_TOKEN }}
