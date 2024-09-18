@@ -100,6 +100,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b update-backstop-test
+          git pull origin main
           git add backstop_data/bitmaps_test/
           git commit -m "Save BackstopJS test screenshots"
           git push --set-upstream origin update-backstop-test
