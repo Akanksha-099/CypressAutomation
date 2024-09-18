@@ -99,17 +99,19 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b update-backstop-test
-          git config --global pull.ff only
-          # Pull the latest changes from the remote branch
-          git pull origin update-backstop-test --rebase || true
+
+          # Create and checkout the branch (force update if it already exists)
+          git checkout -B update-backstop-test
+
+          # Fetch the latest from origin
+          git fetch origin
 
           # Add and commit changes
           git add backstop_data/bitmaps_test/
           git commit -m "Save BackstopJS test screenshots" || echo "No changes to commit"
 
-          # Push changes
-          git push --set-upstream origin update-backstop-test
+          # Force push changes to the remote branch
+          git push origin update-backstop-test --force
 
       # Steps to prepare and deploy the report
       - name: Create .nojekyll file
