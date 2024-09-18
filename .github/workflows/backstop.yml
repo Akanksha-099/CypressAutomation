@@ -71,10 +71,15 @@ jobs:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
       - name: Copy test screenshots to separate folder
-        if: env.INPUT_MODE == 'test'
+        if: always()  
         run: |
-          mkdir -p backstop_data/bitmaps_test
-          cp -r backstop_data/bitmaps_test backstop_data/bitmaps_test
+          if [ "$INPUT_MODE" = "test" ]; then
+           echo "Copying test screenshots to separate folder."
+           mkdir -p backstop_data/bitmaps_test
+           cp -r backstop_data/bitmaps_test backstop_data/bitmaps_test
+          else
+           echo "Not in test mode. Skipping screenshot copy."
+          fi
 
       - name: Commit and push approved reference images (if approve mode)
         if: env.INPUT_MODE == 'approve'
