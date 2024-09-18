@@ -101,8 +101,14 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b update-backstop-test
           git config --global pull.ff only
+          # Pull the latest changes from the remote branch
+          git pull origin update-backstop-test --rebase || true
+
+          # Add and commit changes
           git add backstop_data/bitmaps_test/
-          git commit -m "Save BackstopJS test screenshots"
+          git commit -m "Save BackstopJS test screenshots" || echo "No changes to commit"
+
+          # Push changes
           git push --set-upstream origin update-backstop-test
 
       # Steps to prepare and deploy the report
