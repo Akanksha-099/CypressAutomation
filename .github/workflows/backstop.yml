@@ -25,8 +25,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -36,47 +34,42 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Fetch and checkout backstop-references branch
+      - name: Fetch backstop-references branch
         run: |
           git fetch origin
           git checkout backstop-references || git checkout -b backstop-references
-          git pull origin backstop-references
+          git pull origin backstop-references || echo "Branch already up-to-date"
 
-      - name: Ensure backstop_data/bitmaps_reference directory
+      - name: Ensure backstop_data/bitmaps_reference directory exists
         run: mkdir -p backstop_data/bitmaps_reference
 
       - name: Pull reference images from backstop-references branch
         run: |
-          if git ls-tree --name-only backstop-references | grep -q '^backstop_data/bitmaps_reference/'; then
-            echo "Directory exists in branch. Pulling reference images."
+          if git ls-tree --name-only backstop-references | grep -q 'backstop_data/bitmaps_reference'; then
+            echo "Pulling reference images."
             git checkout backstop-references -- backstop_data/bitmaps_reference/
           else
-            echo "Directory does not exist in branch. Skipping pull."
+            echo "No reference images to pull."
           fi
 
-      - name: Set the mode (for push or workflow_dispatch)
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "Setting mode from workflow_dispatch input: ${{ github.event.inputs.mode }}"
-            echo "INPUT_MODE=${{ github.event.inputs.mode }}" >> $GITHUB_ENV
-          else
-            echo "Setting default mode: test"
-            echo "INPUT_MODE=test" >> $GITHUB_ENV
-          fi
+      - name: Set mode
+        id: set-mode
+        run: echo "INPUT_MODE=${{ github.event.inputs.mode || 'test' }}" >> $GITHUB_ENV
 
       - name: Run BackstopJS tests
         run: |
-          echo "Mode: $INPUT_MODE"
           if [ "$INPUT_MODE" = "approve" ]; then
+            echo "Approving screenshots."
             npx backstop approve
           else
+            echo "Running BackstopJS tests."
             npx backstop test
           fi
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
       - name: Commit and push approved reference images (if approve mode)
-        if: ${{ env.INPUT_MODE == 'approve' }}
+        if: env.INPUT_MODE == 'approve'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -88,7 +81,7 @@ jobs:
       - name: Archive BackstopJS reports
         uses: actions/upload-artifact@v3
         with:
-          name: backstop-data
+          name: backstop-reports
           path: backstop_data/html_report
 
   deploy:
@@ -102,7 +95,7 @@ jobs:
       - name: Download Backstop report artifact
         uses: actions/download-artifact@v3
         with:
-          name: backstop-data
+          name: backstop-reports
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
