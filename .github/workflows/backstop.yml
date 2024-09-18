@@ -40,10 +40,10 @@ jobs:
           git checkout backstop-references || git checkout -b backstop-references
           git pull origin backstop-references || echo "Branch already up-to-date"
 
-      - name: Ensure backstop_data/bitmaps_reference directory exists
+      - name: Ensure bitmaps_reference and bitmaps_test directories exist
         run: |
           mkdir -p backstop_data/bitmaps_reference
-          mkdir -p backstop_data/bitmaps_reference
+          mkdir -p backstop_data/bitmaps_test
 
       - name: Pull reference images from backstop-references branch
         run: |
@@ -70,6 +70,12 @@ jobs:
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
+      - name: Copy test screenshots to separate folder
+        if: env.INPUT_MODE == 'test'
+        run: |
+          mkdir -p backstop_data/bitmaps_test
+          cp -r backstop_data/bitmaps_test backstop_data/bitmaps_test
+
       - name: Commit and push approved reference images (if approve mode)
         if: env.INPUT_MODE == 'approve'
         run: |
@@ -79,6 +85,16 @@ jobs:
           git add backstop_data/bitmaps_reference/
           git commit -m "Update BackstopJS reference images"
           git push origin update-backstop-references:backstop-references
+
+      - name: Commit and push test screenshots (if test mode)
+        if: env.INPUT_MODE == 'test'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b update-backstop-test
+          git add backstop_data/bitmaps_test/
+          git commit -m "Save BackstopJS test screenshots"
+          git push origin update-backstop-test
 
       # Steps to prepare and deploy the report
       - name: Create .nojekyll file
