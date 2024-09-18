@@ -22,17 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Pull reference images from backstop-references branch
-        run: |
-         git fetch origin
-         if git ls-remote --exit-code --heads origin backstop-references; then
-            git checkout origin/backstop-references -- backstop_data/bitmaps_reference/
-         else
-            echo "backstop-references branch does not exist. Creating it..."
-            git checkout -b backstop-references
-            git push origin backstop-references
-         fi
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -48,6 +37,25 @@ jobs:
       #     else
       #       npx backstop test
       #     fi
+
+      - name: Fetch and checkout backstop-references branch
+        run: |
+          git fetch origin
+          git checkout backstop-references || git checkout -b backstop-references
+          git pull origin backstop-references
+
+      - name: Ensure backstop_data/bitmaps_reference directory
+        run: mkdir -p backstop_data/bitmaps_reference
+
+      - name: Pull reference images from backstop-references branch
+        run: |
+          if [ -d "backstop_data/bitmaps_reference" ]; then
+            echo "Directory exists. Pulling reference images."
+            git checkout backstop-references -- backstop_data/bitmaps_reference/
+          else
+            echo "Directory does not exist. Creating it."
+            mkdir -p backstop_data/bitmaps_reference
+          fi
       - name: Set the mode (for push or workflow_dispatch)
         run: |
           if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
