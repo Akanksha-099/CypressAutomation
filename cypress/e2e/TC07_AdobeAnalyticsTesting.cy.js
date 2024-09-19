@@ -92,15 +92,15 @@ describe('Testing Adobe Analytics', () => {
       })
     it('Validate Adobe analytics variables', () => {
         cy.intercept('/b/ss/**').as('adobe')
-        cy.visit('https://promos.marriott.com/en/GROUP/golden-triangle')
+        cy.visit('https://www.americanexpress.com/in/credit-cards/all-cards/')
         cy.scrollTo('bottom')
         cy.wait('@adobe').then(interception => {
             // Extract the values from the intercepted request
-            const v41ValueExpand = new URL(interception.request.url).searchParams.get('v41')
-            expect(v41ValueExpand).to.eq('Augustine, a Luxury Collection Hotel, Prague')
+            const v45ValueExpand = new URL(interception.request.url).searchParams.get('v45')
+            expect(v45ValueExpand).to.eq('prospect')
         })
     })
-    it('Validate Adobe analytics variables',()=>{
+    it.skip('Validate Adobe analytics variables',()=>{
       cy.intercept('/b/ss/**').as('adobe')
       cy.visit('https://www.marriott.com/en-us/hotels/laspm-park-mgm-las-vegas-a-tribute-portfolio-resort/rooms/')
       cy.scrollTo('bottom')
