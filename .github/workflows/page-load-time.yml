@@ -72,7 +72,7 @@ jobs:
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ job.status }} 
+        SLACK_COLOR: ${{ needs.measure-load-times.result == 'success' && 'good' || 'danger' }} 
         SLACK_TITLE: Page Load Results
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

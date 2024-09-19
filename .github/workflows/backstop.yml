@@ -120,22 +120,17 @@ jobs:
           folder: backstop-reports
           token: ${{ secrets.GITHUB_TOKEN }}
           target-folder: backstop-reports
-  send-slack-notification:
-   needs: [backstop-tests] # Wait for both cypress-run and performance-tests to complete
-   if: always() # Always run the Slack notification job regardless of the status of previous jobs
-   runs-on: ubuntu-latest
-   name: Send Slack Notification
-   steps:
-     - name: Slack Notification
-       uses: rtCamp/action-slack-notify@v2      
-       if: always()
-       env:
-        SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ job.status }} 
-        SLACK_TITLE: Page Load Results
-        SLACK_USERNAME: testuser
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: |
+     
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2      
+        if: always()
+        with:        
+          SLACK_CHANNEL: cypressautomation
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: Page Load Results
+          SLACK_USERNAME: testuser
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: |
             BackstopJS run completed with status: ${{ needs.backstop-tests.result }}.
-            Mode: ${{ github.event.inputs.mode }}.
+            Mode: ${{ github.event.inputs.mode }} .
             Report URL: https://akanksha-099.github.io/CypressAutomation/backstop-reports/html/latest-report.html
