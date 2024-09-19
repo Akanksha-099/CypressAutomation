@@ -110,7 +110,7 @@ jobs:
         run: |
             mkdir -p backstop-reports/html
             cp -r backstop_data/html_report/* backstop-reports/html/
-            cp -r backstop_data/bitmaps_test backstop-reports/  # Copy screenshots too
+            cp -r backstop_data/bitmaps_test backstop-reports/ 
 
       - name: Deploy BackstopJS Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
