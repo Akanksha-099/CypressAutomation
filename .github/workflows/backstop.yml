@@ -95,8 +95,7 @@ jobs:
 
           # Move test screenshots into the timestamped folder
 
-          mv backstop_data/bitmaps_test/* backstop_data/bitmaps_test/${TIMESTAMP}/
-
+          find backstop_data/bitmaps_test/* -maxdepth 1 -not -path "backstop_data/bitmaps_test/${TIMESTAMP}" -exec mv {} backstop_data/bitmaps_test/${TIMESTAMP}/ \;
           # Create and checkout the branch (force update if it already exists)
           git checkout -B update-backstop-test
 
