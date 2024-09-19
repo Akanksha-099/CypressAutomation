@@ -90,12 +90,8 @@ jobs:
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 
           mkdir -p backstop_data/bitmaps_test/${TIMESTAMP}
-
-
-
           # Move test screenshots into the timestamped folder
-
-          find backstop_data/bitmaps_test/* -maxdepth 1 -not -path "backstop_data/bitmaps_test/${TIMESTAMP}" -exec mv {} backstop_data/bitmaps_test/${TIMESTAMP}/ \;
+          mv backstop_data/bitmaps_test/*.png backstop_data/bitmaps_test/${TIMESTAMP}/ || echo "No files to move"
           # Create and checkout the branch (force update if it already exists)
           git checkout -B update-backstop-test
 
