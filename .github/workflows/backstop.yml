@@ -34,12 +34,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Fetch backstop-references branch
-      #   run: |
-      #     git fetch origin
-      #     git checkout backstop-references || git checkout -b backstop-references
-      #     git pull origin backstop-references || echo "Branch already up-to-date"
-
       - name: Ensure bitmaps_reference and bitmaps_test directories exist
         run: |
           mkdir -p backstop_data/bitmaps_reference
@@ -61,49 +55,46 @@ jobs:
         env:
           INPUT_MODE: ${{ env.INPUT_MODE }}
 
+      # Handle approved reference images without changing branches
       - name: Commit and push approved reference images (if approve mode)
         if: always() && env.INPUT_MODE == 'approve'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # Create and checkout the branch (force update if it already exists)
-          git checkout -B update-backstop-test
-
           # Fetch the latest from origin
-          git fetch origin
+          git fetch origin main
 
-          # Add and commit changes
+          # Add and commit changes to the references folder
           git add backstop_data/bitmaps_reference/
-          git commit -m "Save BackstopJS test screenshots" || echo "No changes to commit"
+          git commit -m "Save BackstopJS approved reference screenshots" || echo "No changes to commit"
 
-          # Force push changes to the remote branch
-          git push origin update-backstop-test --force
+          # Push changes to the main branch
+          git push origin main
 
+      # Handle test screenshots with timestamp preservation
       - name: Commit and push test screenshots (if test mode)
         if: always() && env.INPUT_MODE == 'test'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-            # Generate timestamped folder for test screenshots
 
+          # Generate timestamped folder for test screenshots
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-
           mkdir -p backstop_data/bitmaps_test/${TIMESTAMP}
+
           # Move test screenshots into the timestamped folder
           mv backstop_data/bitmaps_test/*.png backstop_data/bitmaps_test/${TIMESTAMP}/ || echo "No files to move"
-          # Create and checkout the branch (force update if it already exists)
-          git checkout -B update-backstop-test
 
           # Fetch the latest from origin
-          git fetch origin
+          git fetch origin main
 
-          # Add and commit changes
+          # Add and commit changes to the test images folder
           git add backstop_data/bitmaps_test/
           git commit -m "Save BackstopJS test screenshots" || echo "No changes to commit"
 
-          # Force push changes to the remote branch
-          git push origin update-backstop-test --force
+          # Push changes to the main branch
+          git push origin main
 
       # Steps to prepare and deploy the report
       - name: Create .nojekyll file
