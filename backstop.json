@@ -37,7 +37,7 @@
     {
       "label": "Google Homepage",
       "cookiePath": "backstop_data/engine_scripts/cookies.json",
-      "url": "https://www.automationexercise.com/",
+      "url": "https://www.google.com/",
       "referenceUrl": "",
       "readyEvent": "",
       "readySelector": "",
