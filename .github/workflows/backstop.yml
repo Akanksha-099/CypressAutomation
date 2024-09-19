@@ -61,16 +61,16 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
+          git checkout -B update-backstop-test
           # Fetch the latest from origin
-          git fetch origin main
+          git fetch origin 
 
           # Add and commit changes to the references folder
           git add backstop_data/bitmaps_reference/
           git commit -m "Save BackstopJS approved reference screenshots" || echo "No changes to commit"
 
-          # Push changes to the main branch
-          git push origin main
+          # Push changes to the update-backstop-test branch
+          git push origin update-backstop-test --force
 
       # Handle test screenshots with timestamp preservation
       - name: Commit and push test screenshots (if test mode)
@@ -78,7 +78,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
+          git checkout -B update-backstop-test
           # Generate timestamped folder for test screenshots
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
           mkdir -p backstop_data/bitmaps_test/${TIMESTAMP}
@@ -87,14 +87,14 @@ jobs:
           mv backstop_data/bitmaps_test/*.png backstop_data/bitmaps_test/${TIMESTAMP}/ || echo "No files to move"
 
           # Fetch the latest from origin
-          git fetch origin main
+          git fetch origin 
 
           # Add and commit changes to the test images folder
           git add backstop_data/bitmaps_test/
           git commit -m "Save BackstopJS test screenshots" || echo "No changes to commit"
 
-          # Push changes to the main branch
-          git push origin main
+          # Push changes to the update-backstop-test branch
+          git push origin update-backstop-test --force
 
       # Steps to prepare and deploy the report
       - name: Create .nojekyll file
