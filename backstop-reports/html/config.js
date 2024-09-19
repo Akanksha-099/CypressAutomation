@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20240919-110203/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20240919-110434/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
         "label": "BackstopJS Homepage",
@@ -28,7 +28,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20240919-110203/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20240919-110434/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "label": "BackstopJS Homepage",
@@ -52,7 +52,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_Google_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20240919-110203/backstop_default_Google_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20240919-110434/backstop_default_Google_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_default_Google_Homepage_0_document_0_phone.png",
         "label": "Google Homepage",
@@ -76,7 +76,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_Google_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20240919-110203/backstop_default_Google_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20240919-110434/backstop_default_Google_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_default_Google_Homepage_0_document_1_tablet.png",
         "label": "Google Homepage",
@@ -92,11 +92,11 @@ report({
             "width": 0,
             "height": -580
           },
-          "rawMisMatchPercentage": 9.73575891008386,
-          "misMatchPercentage": "9.74",
-          "analysisTime": 269
+          "rawMisMatchPercentage": 6.914596328553681,
+          "misMatchPercentage": "6.91",
+          "analysisTime": 174
         },
-        "diffImage": "../bitmaps_test/20240919-110203/failed_diff_backstop_default_Google_Homepage_0_document_1_tablet.png"
+        "diffImage": "../bitmaps_test/20240919-110434/failed_diff_backstop_default_Google_Homepage_0_document_1_tablet.png"
       },
       "status": "fail"
     }
