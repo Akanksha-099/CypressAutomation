@@ -50,6 +50,9 @@ jobs:
           name: K6 Summary Report
           path: summary/report.html
           retention-days: 2
+      
+      - name: Create performance-reports folder
+        run: mkdir -p performance-reports
 
       - name: Create .nojekyll file for GitHub Pages
         run: echo > performance-reports/.nojekyll
