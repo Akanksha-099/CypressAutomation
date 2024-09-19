@@ -1,0 +1,86 @@
+name: K6 Performance Tests Workflow
+
+on: 
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 1'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  performance-tests:
+    runs-on: ubuntu-latest
+    name: K6 performance tests
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Create summary folder
+        run: mkdir -p summary
+
+      - name: Install k6-html-reporter
+        run: npm install k6-html-reporter
+
+      - name: Run k6 local test
+        uses: grafana/k6-action@v0.3.0
+        with:
+          filename: k6Tests/single-request.js
+          flags: -v -q
+          #flags: --vus 50 --duration 10s
+
+      - name: Execute k6-reporter-config.js
+        run: node k6-reporter-config.js
+
+      - name: Upload detailed k6 report
+        uses: actions/upload-artifact@v3
+        with:
+          name: K6 Detail Report
+          path: summary/result.html
+          retention-days: 2
+
+      - name: Upload combined k6 report
+        uses: actions/upload-artifact@v3
+        with:
+          name: K6 Summary Report
+          path: summary/report.html
+          retention-days: 2
+
+      - name: Create .nojekyll file for GitHub Pages
+        run: echo > performance-reports/.nojekyll
+
+      - name: Copy reports to static file names
+        run: |
+          cp summary/result.html performance-reports/k6-detailed-latest.html
+          cp summary/report.html performance-reports/k6-summary-latest.html
+
+      - name: Deploy K6 Reports to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: performance-reports/
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: performance-reports
+
+  send-slack-notification:
+    needs: [performance-tests]
+    if: always()
+    runs-on: ubuntu-latest
+    name: Send Slack Notification
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: cypressautomation
+          SLACK_COLOR: ${{ needs.performance-tests.result == 'success' && 'good' || 'danger' }}
+          SLACK_TITLE: Performance Test Results
+          SLACK_USERNAME: testuser
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: |
+            Performance Test Job Status: ${{ needs.performance-tests.result }} 
+            Detailed Report URL: https://akanksha-099.github.io/CypressAutomation/performance-reports/k6-detailed-latest.html
+            Summary Report URL: https://akanksha-099.github.io/CypressAutomation/performance-reports/k6-summary-latest.html

@@ -1,4 +1,4 @@
-name: Run Validators
+name: Run HTML Validators Workflow
 
 on:
   push:

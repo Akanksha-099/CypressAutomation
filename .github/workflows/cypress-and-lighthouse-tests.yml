@@ -1,4 +1,4 @@
-name: Test Execution Workflow
+name: Cypress and Lighthouse Tests Execution Workflow
 on: 
  workflow_dispatch:
  push:
@@ -22,14 +22,14 @@ jobs:
        with:
          browser: chrome
      - name: Upload page load times HTML report
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        if: always()
        with:
         name: loadtimes-html-report
         path: cypress/reports/loadtimes_*.html
         retention-days: 2
      - name: Upload tests report
-       uses: actions/upload-artifact@master
+       uses: actions/upload-artifact@v4
        if: always()
        with:
          name: cypress-execution-report
@@ -37,14 +37,14 @@ jobs:
          retention-days: 2
 
      - name: Upload tests screenshots
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        if: failure()
        with:
          name: cypress-screenshots
          path: cypress/screenshots
          retention-days: 2
      - name: Upload tests videos
-       uses: actions/upload-artifact@v3
+       uses: actions/upload-artifact@v4
        if: always()
        with:
          name: cypress-videos
@@ -72,41 +72,7 @@ jobs:
        with:
           folder: cypress-reports
           token: ${{ secrets.GITHUB_TOKEN }}
-          target-folder: cypress-reports         
- 
- performance-tests:
-   runs-on: ubuntu-latest
-   name: K6 performance tests
-   steps:
-    - name: Checkout
-      uses: actions/checkout@master
-    - name: Create summary folder
-      run: mkdir -p summary
-    - name: Install k6-html-reporter
-      run: npm install k6-html-reporter
-    - name: Run k6 local test
-      uses: grafana/k6-action@v0.3.0
-      with:
-        filename: k6Tests/single-request.js
-        flags: -v -q
-        #flags: --vus 50 --duration 10s
-    - name: Upload test report
-      uses: actions/upload-artifact@master
-      with:
-        #html file name define in k6 code
-        name: K6 detail report  
-        # path in our github repo
-        path: summary/result.html   
-        retention-days: 2  
-    - name: Execute k6-reporter-config.js
-      run: node k6-reporter-config.js
-    - name: Upload k6-combined report artifacts
-      uses: actions/upload-artifact@master
-      with:
-        name: K6 summary report
-        path: summary/report.html
-        retention-days: 2
-        
+          target-folder: cypress-reports                
  lighthouse-tests:
    runs-on: ubuntu-latest
    name: Lighthouse checks
@@ -130,7 +96,7 @@ jobs:
          slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
          commentUrl: https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
      - name: Upload artifacts
-       uses: actions/upload-artifact@master
+       uses: actions/upload-artifact@v4
        with:
         name: Lighthouse reports
         path: ${{ github.workspace }}/tmp/artifacts
@@ -146,7 +112,7 @@ jobs:
           minSeoScore: "50"
            
  send-slack-notification:
-   needs: [cypress-tests, performance-tests, lighthouse-tests] # Wait for both cypress-tests and performance-tests to complete
+   needs: [cypress-tests, lighthouse-tests] # Wait for both cypress-tests and performance-tests to complete
    if: always() # Always run the Slack notification job regardless of the status of previous jobs
    runs-on: ubuntu-latest
    name: Send Slack Notification
@@ -155,7 +121,6 @@ jobs:
        id: combine-outputs
        run: |
          echo "cypress-status=${{ needs.cypress-tests.result }}" >> $GITHUB_OUTPUT
-         echo "performance-tests-status=${{ needs.performance-tests.result }}" >> $GITHUB_OUTPUT
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
          echo "report_url=https://akanksha-099.github.io/CypressAutomation/cypress-reports/html/latest-report.html" >> $GITHUB_OUTPUT
      - name: Slack Notification
@@ -163,14 +128,13 @@ jobs:
        if: always()
        env:
         SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ needs.cypress-tests.result == 'success' && needs.performance-tests.result == 'success' && needs.lighthouse-tests.result == 'success' && 'good' || 'danger' }}
+        SLACK_COLOR: ${{ needs.cypress-tests.result == 'success' && needs.lighthouse-tests.result == 'success' && 'good' || 'danger' }}
         SLACK_TITLE: Combined Job Status
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
          # Combine the status of the jobs in the Slack message
         SLACK_MESSAGE: |
             Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} |
-            Performance Tests Status: ${{ steps.combine-outputs.outputs.performance-tests-status }} | 
             Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} | 
             View Cypress Report: ${{ steps.combine-outputs.outputs.report_url }}
 

@@ -1,4 +1,4 @@
-name: Page Load Time Measurement
+name: Page Load Time Measurement Workflow
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: BackstopJS Visual Regression Tests
+name: BackstopJS Visual Regression Tests Workflow
 
 on:
   workflow_dispatch:
