@@ -76,4 +76,6 @@ jobs:
         SLACK_TITLE: Page Load Results
         SLACK_USERNAME: testuser
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_MESSAGE: "Page Load Times Job Status: ${{ needs.measure-load-times.result }} "
+        SLACK_MESSAGE: |
+          Page Load Times Job Status: ${{ needs.measure-load-times.result }} 
+          Report URL: https://akanksha-099.github.io/CypressAutomation/page-load-times/latest-report.html
