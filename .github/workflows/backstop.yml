@@ -108,8 +108,9 @@ jobs:
       - name: Prepare Deployment Folder
         if: always() && env.INPUT_MODE == 'test'
         run: |
-          mkdir -p backstop-reports
-          cp -r backstop_data/html_report backstop-reports/html
+            mkdir -p backstop-reports/html
+            cp -r backstop_data/html_report/* backstop-reports/html/
+            cp -r backstop_data/bitmaps_test backstop-reports/  # Copy screenshots too
 
       - name: Deploy BackstopJS Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
