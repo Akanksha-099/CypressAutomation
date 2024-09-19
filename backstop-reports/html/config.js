@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20240919-124158/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20240919-124402/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
         "label": "BackstopJS Homepage",
@@ -28,7 +28,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20240919-124158/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20240919-124402/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "label": "BackstopJS Homepage",
@@ -52,7 +52,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_Google_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20240919-124158/backstop_default_Google_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20240919-124402/backstop_default_Google_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_default_Google_Homepage_0_document_0_phone.png",
         "label": "Google Homepage",
@@ -63,23 +63,23 @@ report({
         "expect": 0,
         "viewportLabel": "phone",
         "diff": {
-          "isSameDimensions": false,
+          "isSameDimensions": true,
           "dimensionDifference": {
-            "width": -29,
-            "height": 46
+            "width": 0,
+            "height": 0
           },
-          "rawMisMatchPercentage": 34.56729456729457,
-          "misMatchPercentage": "34.57",
+          "rawMisMatchPercentage": 29.365133883797935,
+          "misMatchPercentage": "29.37",
           "analysisTime": 18
         },
-        "diffImage": "../bitmaps_test/20240919-124158/failed_diff_backstop_default_Google_Homepage_0_document_0_phone.png"
+        "diffImage": "../bitmaps_test/20240919-124402/failed_diff_backstop_default_Google_Homepage_0_document_0_phone.png"
       },
       "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_Google_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20240919-124158/backstop_default_Google_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20240919-124402/backstop_default_Google_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_default_Google_Homepage_0_document_1_tablet.png",
         "label": "Google Homepage",
