@@ -21,32 +21,32 @@
         
     <tr>
       <td><a href="https://www.foo.software" target="_blank">https://www.foo.software</a></td>
-      <td>1.07 seconds</td>
+      <td>0.55 seconds</td>
     </tr>
   
     <tr>
       <td><a href="https://www.w3.org/WAI/" target="_blank">https://www.w3.org/WAI/</a></td>
-      <td>0.71 seconds</td>
+      <td>0.58 seconds</td>
     </tr>
   
     <tr>
       <td><a href="https://webaim.org/" target="_blank">https://webaim.org/</a></td>
-      <td>0.77 seconds</td>
+      <td>0.63 seconds</td>
     </tr>
   
     <tr>
       <td><a href="https://dequeuniversity.com/" target="_blank">https://dequeuniversity.com/</a></td>
-      <td>1.27 seconds</td>
+      <td>6.62 seconds</td>
     </tr>
   
     <tr>
       <td><a href="https://developer.mozilla.org/en-US/" target="_blank">https://developer.mozilla.org/en-US/</a></td>
-      <td>0.80 seconds</td>
+      <td>0.68 seconds</td>
     </tr>
   
     <tr>
       <td><a href="https://alistapart.com/" target="_blank">https://alistapart.com/</a></td>
-      <td>0.72 seconds</td>
+      <td>0.44 seconds</td>
     </tr>
   
     <tr>
@@ -55,7 +55,7 @@
     </tr>
   
       </table>
-      <h2>Average Load Time: 0.89 seconds</h2>
+      <h2>Average Load Time: 1.58 seconds</h2>
       <canvas id="loadTimeChart" class="chart"></canvas>
       <script>
         const ctx = document.getElementById('loadTimeChart').getContext('2d');
@@ -65,7 +65,7 @@
             labels: ["https://www.foo.software","https://www.w3.org/WAI/","https://webaim.org/","https://dequeuniversity.com/","https://developer.mozilla.org/en-US/","https://alistapart.com/","https://www.mckinsey.com/"],
             datasets: [{
               label: 'Load Time (seconds)',
-              data: [1.0734027449999994,0.7101914939999988,0.7653344320000033,1.2713737580000015,0.7989194880000141,0.7172420039999997,0], // Handle failed URLs with 0
+              data: [0.5516037760000035,0.5805716409999877,0.6311384079999989,6.616960071000008,0.6813549170000187,0.43855105799998273,0], // Handle failed URLs with 0
               backgroundColor: 'rgba(75, 192, 192, 0.2)',
               borderColor: 'rgba(75, 192, 192, 1)',
               borderWidth: 1
