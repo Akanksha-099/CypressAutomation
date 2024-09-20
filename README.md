@@ -1,13 +1,11 @@
 # Code-Craft-LearnAutomation
-[![Cypress and Lighthouse Tests Execution Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/cypress-and-lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/cypress-and-lighthouse-tests.yml)
+[![Test Execution Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/tests.yml)
 [![Run Appium Tests](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml)
 [![Page Load Time Measurement](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml)
 [![Run Validators](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml)
-[![K6 Performance Tests Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/performance-tests.yml)
-[![BackstopJS Visual Regression Tests Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/backstop.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/backstop.yml)
 
 ## Overview
-Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse, HTML Validators, Page Load Times, and BackstopJS and other tools to hone my skills in the automation domain.
+Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse, HTML Validators, and Page Load Times and other tools to hone my skills in the automation domain.
 
 ### Key Learning Focus Areas
 
@@ -17,8 +15,6 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Appium:** Learning about Mobile Automation, and automating it using appium tests.
 - **HTML Validation:** Ensuring HTML compliance with the WHATWG/W3C standards and generating detailed reports.
 - **Page Load Times:** Measuring and analyzing page load times to optimize performance and user experience.
-- **Visual Regression Testing with BackstopJS:** Automating visual regression tests to capture and compare screenshots, ensuring that UI changes do not introduce unexpected regressions.
-
 
 ### Why Code-Craft-LearnAutomation?
 
@@ -33,7 +29,6 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Appium Tests:** Executes Appium tests using BrowserStack.
 - **HTML Validator:** Validates HTML against the WHATWG and default W3C standards and generates validation reports.
 - **Page Load Times:** Measures and reports on page load times for various URLs.
-- **BackstopJS Visual Tests:** Automates visual regression testing using BackstopJS, comparing screenshots to ensure no unintended UI changes.
 - **Send Slack Notification:** Sends notifications to Slack with combined workflow status.
 
 ## Getting Started
@@ -71,13 +66,4 @@ HTML validation is performed through GitHub Actions by passing the URLs in the r
 ### Running Page Load Times Measurement
 Page load times are measured and reported through GitHub Actions by passing the URLs in the repsective page-load times file. You can also manually execute the page load times measurement script using the following command:
 ```node PageLoadTime/loadtimes.js```
-
-### Running BackstopJS Visual Regression Tests
-BackstopJS visual regression tests compare screenshots to catch UI changes. You can run the tests locally or via GitHub Actions. 
-To run the tests locally:
-```npx backstop test```
-
-To update the changes after visual validation:
-```npx backstop reference```
-
 

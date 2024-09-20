@@ -139,4 +139,4 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: |
             BackstopJS run completed with status: ${{ needs.backstop-tests.result }}.
-            Report URL: https://${{ github.actor }}.github.io/${{ github.repository }}/backstop-reports/html/latest-report.html
+            Report URL: https://akanksha-099.github.io/CypressAutomation/backstop-reports/html/latest-report.html
