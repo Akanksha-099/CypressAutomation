@@ -55,6 +55,10 @@ jobs:
        run: echo > cypress/reports/.nojekyll
        if: always()
 
+     - name: Ensure Load Times Directory Exists
+       run: mkdir -p cypress/reports/loadtimes
+       if: always()
+
      - name: Copy latest report to a static file name
        run: cp cypress/reports/html/*.html cypress/reports/html/latest-report.html
        if: always()
