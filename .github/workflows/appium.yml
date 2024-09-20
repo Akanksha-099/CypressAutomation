@@ -35,10 +35,10 @@ jobs:
        uses: rtCamp/action-slack-notify@v2      
        if: always()
        env:
-        SLACK_CHANNEL: cypressautomation
-        SLACK_COLOR: ${{ job.status }} 
+        SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
+        SLACK_COLOR: ${{ needs.run-appium-tests.result == 'success' && 'good' || 'danger' }} 
         SLACK_TITLE: Appium Tests Results
-        SLACK_USERNAME: testuser
+        SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: "Appium Job Status: ${{ needs.run-appium-tests.result }} "
         

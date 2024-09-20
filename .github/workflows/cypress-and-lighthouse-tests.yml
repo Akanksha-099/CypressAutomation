@@ -127,10 +127,10 @@ jobs:
        uses: rtCamp/action-slack-notify@v2      
        if: always()
        env:
-        SLACK_CHANNEL: cypressautomation
+        SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
         SLACK_COLOR: ${{ needs.cypress-tests.result == 'success' && needs.lighthouse-tests.result == 'success' && 'good' || 'danger' }}
         SLACK_TITLE: Combined Job Status
-        SLACK_USERNAME: testuser
+        SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
          # Combine the status of the jobs in the Slack message
         SLACK_MESSAGE: |

@@ -78,10 +78,10 @@ jobs:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: cypressautomation
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
           SLACK_COLOR: ${{ needs.performance-tests.result == 'success' && 'good' || 'danger' }}
           SLACK_TITLE: Performance Test Results
-          SLACK_USERNAME: testuser
+          SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: |
             Performance Test Job Status: ${{ needs.performance-tests.result }} 
