@@ -85,5 +85,5 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: |
             Performance Test Job Status: ${{ needs.performance-tests.result }} 
-            Detailed Report URL: https://akanksha-099.github.io/CypressAutomation/performance-reports/k6-detailed-latest.html
-            Summary Report URL: https://akanksha-099.github.io/CypressAutomation/performance-reports/k6-summary-latest.html
+            Detailed Report URL: https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/performance-reports/k6-detailed-latest.html
+            Summary Report URL: https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/performance-reports/k6-summary-latest.html

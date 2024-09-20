@@ -122,7 +122,7 @@ jobs:
        run: |
          echo "cypress-status=${{ needs.cypress-tests.result }}" >> $GITHUB_OUTPUT
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
-         echo "report_url=https://akanksha-099.github.io/CypressAutomation/cypress-reports/html/latest-report.html" >> $GITHUB_OUTPUT
+         echo "report_url=https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/cypress-reports/html/latest-report.html" >> $GITHUB_OUTPUT
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2      
        if: always()
