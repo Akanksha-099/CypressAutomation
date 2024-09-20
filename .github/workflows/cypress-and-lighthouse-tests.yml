@@ -55,16 +55,27 @@ jobs:
        run: echo > cypress/reports/.nojekyll
        if: always()
 
+     - name: Ensure Load Times Directory Exists
+       run: mkdir -p cypress/reports/loadtimes
+       if: always()
+
      - name: Copy latest report to a static file name
        run: cp cypress/reports/html/*.html cypress/reports/html/latest-report.html
+       if: always()
+      
+     - name: Copy latest Page Load Time report to a static file name
+       run: cp cypress/reports/loadtimes_*.html cypress/reports/loadtimes/latest-loadtimes.html
        if: always()
 
      - name: Prepare Deployment Folder
        if: always()
        run: |
             mkdir -p cypress-reports
+            mkdir -p cypress-reports/page-load-times
             cp -r cypress/reports/html cypress-reports/html
             cp -r cypress/videos cypress-reports/videos
+            cp cypress/reports/loadtimes/latest-loadtimes.html cypress-reports/page-load-times/latest-loadtimes.html
+
         
      - name: Deploy Cypress Reports to GitHub Pages
        uses: JamesIves/github-pages-deploy-action@v4
@@ -123,6 +134,7 @@ jobs:
          echo "cypress-status=${{ needs.cypress-tests.result }}" >> $GITHUB_OUTPUT
          echo "lighthouse-tests-status=${{ needs.lighthouse-tests.result }}" >> $GITHUB_OUTPUT
          echo "report_url=https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/cypress-reports/html/latest-report.html" >> $GITHUB_OUTPUT
+         echo "page_loadtime_report_url=https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/cypress-reports/page-load-times/latest-loadtimes.html " >> $GITHUB_OUTPUT
      - name: Slack Notification
        uses: rtCamp/action-slack-notify@v2      
        if: always()
@@ -134,9 +146,10 @@ jobs:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
          # Combine the status of the jobs in the Slack message
         SLACK_MESSAGE: |
-            Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} |
-            Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} | 
-            View Cypress Report: ${{ steps.combine-outputs.outputs.report_url }}
+            Cypress Job Status: ${{ steps.combine-outputs.outputs.cypress-status }} 
+            Lighthouse Checks : ${{ steps.combine-outputs.outputs.lighthouse-tests-status }} 
+            View Cypress Automation Report: ${{ steps.combine-outputs.outputs.report_url }}
+            View Cypress Page LoadTimes Report: ${{ steps.combine-outputs.outputs.page_loadtime_report_url }}
 
         
    
