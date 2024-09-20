@@ -132,11 +132,11 @@ jobs:
        uses: rtCamp/action-slack-notify@v2      
        if: always()
        env:
-        SLACK_CHANNEL: cypressautomation
+        SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
         SLACK_COLOR: ${{ needs.backstop-tests.result == 'success' && 'good' || 'danger' }} 
         SLACK_TITLE: Backstop Tests Job Results
-        SLACK_USERNAME: testuser
+        SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         SLACK_MESSAGE: |
             BackstopJS run completed with status: ${{ needs.backstop-tests.result }}.
-            Report URL: https://${{ github.actor }}.github.io/${{ github.repository }} | cut -d '/' -f2 }}/backstop-reports/html/latest-report.html
+            Report URL: https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/backstop-reports/html/latest-report.html

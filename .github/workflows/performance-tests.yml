@@ -78,12 +78,12 @@ jobs:
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: cypressautomation
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
           SLACK_COLOR: ${{ needs.performance-tests.result == 'success' && 'good' || 'danger' }}
           SLACK_TITLE: Performance Test Results
-          SLACK_USERNAME: testuser
+          SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: |
             Performance Test Job Status: ${{ needs.performance-tests.result }} 
-            Detailed Report URL: https://akanksha-099.github.io/CypressAutomation/performance-reports/k6-detailed-latest.html
-            Summary Report URL: https://akanksha-099.github.io/CypressAutomation/performance-reports/k6-summary-latest.html
+            Detailed Report URL: https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/performance-reports/k6-detailed-latest.html
+            Summary Report URL: https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/performance-reports/k6-summary-latest.html
