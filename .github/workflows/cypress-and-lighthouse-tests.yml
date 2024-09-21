@@ -74,16 +74,13 @@ jobs:
             mkdir -p cypress-reports/page-load-times
             cp -r cypress/reports/html cypress-reports/html
             cp -r cypress/videos cypress-reports/videos
-            cp cypress/reports/loadtimes/latest-loadtimes.html cypress-reports/page-load-times/latest-loadtimes.html
-
-        
-     - name: Deploy Cypress Reports to GitHub Pages
-       uses: JamesIves/github-pages-deploy-action@v4
-       if: always()
-       with:
-          folder: cypress-reports
-          token: ${{ secrets.GITHUB_TOKEN }}
-          target-folder: cypress-reports                
+            cp cypress/reports/loadtimes/latest-loadtimes.html cypress-reports/page-load-times/latest-loadtimes.html   
+ deploy:
+    needs: cypress-tests  # Ensure tests complete first
+    uses: ./.github/workflows/deploy-reports.yml  # Call external deploy workflow
+    with: 
+      folder: cypress-reports
+      target-folder: cypress-reports   
  lighthouse-tests:
    runs-on: ubuntu-latest
    name: Lighthouse checks

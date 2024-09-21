@@ -1,0 +1,24 @@
+name: Deploy Reports
+on:
+  workflow_call:
+    inputs:
+      folder:
+        required: true
+        type: string
+      target-folder:
+        required: true
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Deploy Reports to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: ${{ inputs.folder }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: ${{ inputs.target-folder }}
