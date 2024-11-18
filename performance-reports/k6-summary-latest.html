@@ -34,7 +34,7 @@
     <div class="jumbotron jumbotron-fluid bg-white my-5">
       <div class="container px-0 mb-5">
         <h1 class="display-2 text-primary text-dark text-center">K6 Summary Report</h1>
-        <p class="text-secondary text-center">Generated at 11/11/2024, 1:10:39 AM</p>
+        <p class="text-secondary text-center">Generated at 11/18/2024, 1:15:33 AM</p>
       </div>
 
       
@@ -71,14 +71,21 @@
                 </li>
               
                 <li class="list-group-item">
-                  <h6>RTT</h6>
+                  <h6>http_req_duration</h6>
                   <ul class="list-group">
                     
                     
                     <li class="list-group-item success-block">
                     
-                      min&lt;100
+                      p(95)&lt;500
                     </li>
+                    
+                  </ul>
+                </li>
+              
+                <li class="list-group-item">
+                  <h6>RTT</h6>
+                  <ul class="list-group">
                     
                     
                     <li class="list-group-item success-block">
@@ -102,6 +109,12 @@
                     <li class="list-group-item success-block">
                     
                       med&lt;150
+                    </li>
+                    
+                    
+                    <li class="list-group-item success-block">
+                    
+                      min&lt;100
                     </li>
                     
                   </ul>
@@ -128,19 +141,6 @@
                     <li class="list-group-item success-block">
                     
                       count&lt;100
-                    </li>
-                    
-                  </ul>
-                </li>
-              
-                <li class="list-group-item">
-                  <h6>http_req_duration</h6>
-                  <ul class="list-group">
-                    
-                    
-                    <li class="list-group-item success-block">
-                    
-                      p(95)&lt;500
                     </li>
                     
                   </ul>
@@ -190,8 +190,8 @@
                 
                   <th scope="row" class="text-secondary">2</th>
                   <td>data_received</td>
-                  <td>1338363</td>
-                  <td>11076.322133711077</td>
+                  <td>1342287</td>
+                  <td>11094.65531630588</td>
                 </tr>
                 
                 
@@ -199,8 +199,8 @@
                 
                   <th scope="row" class="text-secondary">3</th>
                   <td>data_sent</td>
-                  <td>45344</td>
-                  <td>375.26795856654365</td>
+                  <td>45547</td>
+                  <td>376.46812171449466</td>
                 </tr>
                 
                 
@@ -208,8 +208,8 @@
                 
                   <th scope="row" class="text-secondary">4</th>
                   <td>http_reqs</td>
-                  <td>904</td>
-                  <td>7.48152422689122</td>
+                  <td>907</td>
+                  <td>7.496796416779297</td>
                 </tr>
                 
                 
@@ -217,8 +217,8 @@
                 
                   <th scope="row" class="text-secondary">5</th>
                   <td>iterations</td>
-                  <td>904</td>
-                  <td>7.48152422689122</td>
+                  <td>907</td>
+                  <td>7.496796416779297</td>
                 </tr>
                 
               </tbody>
@@ -249,12 +249,12 @@
                 
                   <th scope="row" class="text-secondary">1</th>
                   <td>RTT</td>
-                  <td>16.15 ms</td>
-                  <td>148.73 ms</td>
-                  <td>14.02 ms</td>
-                  <td>9.12 ms</td>
-                  <td>22.51 ms</td>
-                  <td>26.69 ms</td>
+                  <td>13.73 ms</td>
+                  <td>62.02 ms</td>
+                  <td>12.50 ms</td>
+                  <td>8.36 ms</td>
+                  <td>18.61 ms</td>
+                  <td>21.77 ms</td>
                 </tr>
                 
                 
@@ -262,12 +262,12 @@
                 
                   <th scope="row" class="text-secondary">2</th>
                   <td>group_duration</td>
-                  <td>16.44 ms</td>
-                  <td>148.91 ms</td>
-                  <td>14.18 ms</td>
-                  <td>9.29 ms</td>
-                  <td>22.95 ms</td>
-                  <td>27.51 ms</td>
+                  <td>14.09 ms</td>
+                  <td>62.23 ms</td>
+                  <td>12.74 ms</td>
+                  <td>8.52 ms</td>
+                  <td>19.29 ms</td>
+                  <td>22.69 ms</td>
                 </tr>
                 
                 
@@ -275,8 +275,8 @@
                 
                   <th scope="row" class="text-secondary">3</th>
                   <td>http_req_blocked</td>
-                  <td>0.13 ms</td>
-                  <td>21.02 ms</td>
+                  <td>0.14 ms</td>
+                  <td>37.01 ms</td>
                   <td>0.00 ms</td>
                   <td>0.00 ms</td>
                   <td>0.00 ms</td>
@@ -289,7 +289,7 @@
                   <th scope="row" class="text-secondary">4</th>
                   <td>http_req_connecting</td>
                   <td>0.03 ms</td>
-                  <td>3.34 ms</td>
+                  <td>3.61 ms</td>
                   <td>0.00 ms</td>
                   <td>0.00 ms</td>
                   <td>0.00 ms</td>
@@ -301,12 +301,12 @@
                 
                   <th scope="row" class="text-secondary">5</th>
                   <td>http_req_duration</td>
-                  <td>16.15 ms</td>
-                  <td>148.73 ms</td>
-                  <td>14.02 ms</td>
-                  <td>9.12 ms</td>
-                  <td>22.51 ms</td>
-                  <td>26.69 ms</td>
+                  <td>13.73 ms</td>
+                  <td>62.02 ms</td>
+                  <td>12.50 ms</td>
+                  <td>8.36 ms</td>
+                  <td>18.61 ms</td>
+                  <td>21.77 ms</td>
                 </tr>
                 
                 
@@ -314,12 +314,12 @@
                 
                   <th scope="row" class="text-secondary">6</th>
                   <td>http_req_duration{expected_response:true}</td>
-                  <td>16.15 ms</td>
-                  <td>148.73 ms</td>
-                  <td>14.02 ms</td>
-                  <td>9.12 ms</td>
-                  <td>22.51 ms</td>
-                  <td>26.69 ms</td>
+                  <td>13.73 ms</td>
+                  <td>62.02 ms</td>
+                  <td>12.50 ms</td>
+                  <td>8.36 ms</td>
+                  <td>18.61 ms</td>
+                  <td>21.77 ms</td>
                 </tr>
                 
                 
@@ -327,12 +327,12 @@
                 
                   <th scope="row" class="text-secondary">7</th>
                   <td>http_req_receiving</td>
+                  <td>0.08 ms</td>
+                  <td>0.54 ms</td>
                   <td>0.07 ms</td>
-                  <td>1.67 ms</td>
-                  <td>0.06 ms</td>
                   <td>0.03 ms</td>
-                  <td>0.10 ms</td>
-                  <td>0.12 ms</td>
+                  <td>0.11 ms</td>
+                  <td>0.13 ms</td>
                 </tr>
                 
                 
@@ -340,12 +340,12 @@
                 
                   <th scope="row" class="text-secondary">8</th>
                   <td>http_req_sending</td>
-                  <td>0.06 ms</td>
-                  <td>0.37 ms</td>
-                  <td>0.05 ms</td>
-                  <td>0.03 ms</td>
                   <td>0.09 ms</td>
+                  <td>0.25 ms</td>
                   <td>0.10 ms</td>
+                  <td>0.04 ms</td>
+                  <td>0.11 ms</td>
+                  <td>0.12 ms</td>
                 </tr>
                 
                 
@@ -353,8 +353,8 @@
                 
                   <th scope="row" class="text-secondary">9</th>
                   <td>http_req_tls_handshaking</td>
-                  <td>0.09 ms</td>
-                  <td>10.43 ms</td>
+                  <td>0.08 ms</td>
+                  <td>14.48 ms</td>
                   <td>0.00 ms</td>
                   <td>0.00 ms</td>
                   <td>0.00 ms</td>
@@ -366,12 +366,12 @@
                 
                   <th scope="row" class="text-secondary">10</th>
                   <td>http_req_waiting</td>
-                  <td>16.03 ms</td>
-                  <td>148.61 ms</td>
-                  <td>13.91 ms</td>
-                  <td>9.05 ms</td>
-                  <td>22.40 ms</td>
-                  <td>26.57 ms</td>
+                  <td>13.55 ms</td>
+                  <td>61.88 ms</td>
+                  <td>12.32 ms</td>
+                  <td>8.20 ms</td>
+                  <td>18.43 ms</td>
+                  <td>21.58 ms</td>
                 </tr>
                 
                 
@@ -379,12 +379,12 @@
                 
                   <th scope="row" class="text-secondary">11</th>
                   <td>iteration_duration</td>
-                  <td>1017.07 ms</td>
-                  <td>1149.35 ms</td>
-                  <td>1014.87 ms</td>
-                  <td>1009.55 ms</td>
-                  <td>1023.76 ms</td>
-                  <td>1028.15 ms</td>
+                  <td>1014.74 ms</td>
+                  <td>1062.83 ms</td>
+                  <td>1013.30 ms</td>
+                  <td>1009.15 ms</td>
+                  <td>1020.02 ms</td>
+                  <td>1023.57 ms</td>
                 </tr>
                 
               </tbody>
@@ -413,7 +413,7 @@
                     <th scope="row" class="text-secondary">1</th>
                     <td>ContentOK</td>
                     <td>1</td>
-                    <td>904</td>
+                    <td>907</td>
                     <td>0</td>
                   </tr>
                   
@@ -424,7 +424,7 @@
                     <td>http_req_failed</td>
                     <td>0</td>
                     <td>0</td>
-                    <td>904</td>
+                    <td>907</td>
                   </tr>
                   
                 </tbody>
