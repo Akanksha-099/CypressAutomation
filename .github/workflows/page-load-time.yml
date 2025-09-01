@@ -33,14 +33,14 @@ jobs:
         run: node loadtimes.js
 
       - name: Upload load times JSON
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: loadtimes
           path: PageLoadTime/logs/loadtimes_*.json
           retention-days: 2
 
       - name: Upload HTML report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: page-load-time-report
           path: PageLoadTime/reports/PageLoadTimeReport_*.html

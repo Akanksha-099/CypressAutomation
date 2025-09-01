@@ -38,14 +38,14 @@ jobs:
         run: node k6-reporter-config.js
 
       - name: Upload detailed k6 report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: K6 Detail Report
           path: summary/result.html
           retention-days: 2
 
       - name: Upload combined k6 report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: K6 Summary Report
           path: summary/report.html
