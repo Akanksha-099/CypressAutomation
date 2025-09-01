@@ -4,7 +4,7 @@ report({
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
-        "test": "../bitmaps_test/20250901-102027/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
+        "test": "../bitmaps_test/20250901-102455/backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
         "selector": "document",
         "fileName": "backstop_default_BackstopJS_Homepage_0_document_0_phone.png",
         "label": "BackstopJS Homepage",
@@ -20,18 +20,18 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 2.6356072154471546,
-          "misMatchPercentage": "2.64",
-          "analysisTime": 24
+          "rawMisMatchPercentage": 4.510924796747968,
+          "misMatchPercentage": "4.51",
+          "analysisTime": 29
         },
-        "diffImage": "../bitmaps_test/20250901-102027/failed_diff_backstop_default_BackstopJS_Homepage_0_document_0_phone.png"
+        "diffImage": "../bitmaps_test/20250901-102455/failed_diff_backstop_default_BackstopJS_Homepage_0_document_0_phone.png"
       },
       "status": "fail"
     },
     {
       "pair": {
         "reference": "../bitmaps_reference/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
-        "test": "../bitmaps_test/20250901-102027/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
+        "test": "../bitmaps_test/20250901-102455/backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "selector": "document",
         "fileName": "backstop_default_BackstopJS_Homepage_0_document_1_tablet.png",
         "label": "BackstopJS Homepage",
@@ -47,11 +47,11 @@ report({
             "width": 0,
             "height": 0
           },
-          "rawMisMatchPercentage": 1.3932241930863254,
-          "misMatchPercentage": "1.39",
-          "analysisTime": 38
+          "rawMisMatchPercentage": 2.037203375668449,
+          "misMatchPercentage": "2.04",
+          "analysisTime": 53
         },
-        "diffImage": "../bitmaps_test/20250901-102027/failed_diff_backstop_default_BackstopJS_Homepage_0_document_1_tablet.png"
+        "diffImage": "../bitmaps_test/20250901-102455/failed_diff_backstop_default_BackstopJS_Homepage_0_document_1_tablet.png"
       },
       "status": "fail"
     }
