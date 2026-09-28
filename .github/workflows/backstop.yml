@@ -25,12 +25,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
-          node-version: '18'
+          node-version: 'latest'
 
       - name: Install dependencies
         run: npm install
@@ -75,7 +75,7 @@ jobs:
 
       # Handle test screenshots with timestamp preservation
       - name: Commit and push test screenshots (if test mode)
-        if: always() && env.INPUT_MODE == 'test'
+        if: always() && github.event.inputs.mode != 'approve'
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -100,14 +100,14 @@ jobs:
       # Steps to prepare and deploy the report
       - name: Create .nojekyll file
         run: echo > backstop_data/html_report/.nojekyll
-        if: always() && env.INPUT_MODE == 'test'
+        if: always() && github.event.inputs.mode != 'approve'
 
       - name: Copy latest report to a static file name
         run: cp backstop_data/html_report/*.html backstop_data/html_report/latest-report.html
-        if: always() && env.INPUT_MODE == 'test'
+        if: always() && github.event.inputs.mode != 'approve'
 
       - name: Prepare Deployment Folder
-        if: always() && env.INPUT_MODE == 'test'
+        if: always() && github.event.inputs.mode != 'approve'
         run: |
             mkdir -p backstop-reports/html
             cp -r backstop_data/html_report/* backstop-reports/html/

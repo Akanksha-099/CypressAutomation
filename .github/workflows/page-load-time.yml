@@ -17,12 +17,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v7
         with:
-          node-version: '18'
+          node-version: latest
 
       - name: Install dependencies
         working-directory: PageLoadTime
@@ -33,14 +33,14 @@ jobs:
         run: node loadtimes.js
 
       - name: Upload load times JSON
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: loadtimes
           path: PageLoadTime/logs/loadtimes_*.json
           retention-days: 2
 
       - name: Upload HTML report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: page-load-time-report
           path: PageLoadTime/reports/PageLoadTimeReport_*.html

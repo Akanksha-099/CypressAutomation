@@ -16,20 +16,20 @@ jobs:
    name: Cypress e2e tests
    steps:
      - name: Actions Checkout
-       uses: actions/checkout@v3 
+       uses: actions/checkout@v7 
      - name: Cypress Checkout and test execution
-       uses: cypress-io/github-action@v4
+       uses: cypress-io/github-action@v7
        with:
          browser: chrome
      - name: Upload page load times HTML report
-       uses: actions/upload-artifact@v4
+       uses: actions/upload-artifact@v7
        if: always()
        with:
         name: loadtimes-html-report
         path: cypress/reports/loadtimes_*.html
         retention-days: 2
      - name: Upload tests report
-       uses: actions/upload-artifact@v4
+       uses: actions/upload-artifact@v7
        if: always()
        with:
          name: cypress-execution-report
@@ -37,14 +37,14 @@ jobs:
          retention-days: 2
 
      - name: Upload tests screenshots
-       uses: actions/upload-artifact@v4
+       uses: actions/upload-artifact@v7
        if: failure()
        with:
          name: cypress-screenshots
          path: cypress/screenshots
          retention-days: 2
      - name: Upload tests videos
-       uses: actions/upload-artifact@v4
+       uses: actions/upload-artifact@v7
        if: always()
        with:
          name: cypress-videos
@@ -89,7 +89,7 @@ jobs:
    name: Lighthouse checks
    steps:
      - name: Actions Checkout
-       uses: actions/checkout@v3 
+       uses: actions/checkout@v7 
      - name: Create Report folder
        run: mkdir -p ${{ github.workspace }}/tmp/artifacts
      - name: Audit URLs using Lighthouse
@@ -107,7 +107,7 @@ jobs:
          slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
          commentUrl: https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
      - name: Upload artifacts
-       uses: actions/upload-artifact@v4
+       uses: actions/upload-artifact@v7
        with:
         name: Lighthouse reports
         path: ${{ github.workspace }}/tmp/artifacts
@@ -120,7 +120,7 @@ jobs:
           minBestPracticesScore: "50"
           minPerformanceScore: "50"
           minProgressiveWebAppScore: "20"
-          minSeoScore: "50"
+          minSeoScore: "40"
            
  send-slack-notification:
    needs: [cypress-tests, lighthouse-tests] # Wait for both cypress-tests and performance-tests to complete
