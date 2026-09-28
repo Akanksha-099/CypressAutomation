@@ -22,15 +22,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v7
         with:
-          node-version: latest
+          node-version: 24
 
       - name: Install dependencies
-        working-directory: PageLoadTime
-        run: npm install
+        run: npm ci
 
       - name: Run page load time measurement script
-        working-directory: PageLoadTime
-        run: node loadtimes.js
+        run: node PageLoadTime/loadtimes.js
 
       - name: Upload load times JSON
         uses: actions/upload-artifact@v7
