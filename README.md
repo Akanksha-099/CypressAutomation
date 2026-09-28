@@ -1,10 +1,9 @@
 # Code-Craft-LearnAutomation
 [![Cypress and Lighthouse Tests Execution Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/cypress-and-lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/cypress-and-lighthouse-tests.yml)
-[![Run Appium Tests](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/appium.yml)
 [![Page Load Time Measurement](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml)
 [![Run Validators](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml)
 [![K6 Performance Tests Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/performance-tests.yml)
-[![BackstopJS Visual Regression Tests Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/backstop.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/backstop.yml)
+
 
 ## Overview
 Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse, HTML Validators, Page Load Times, and BackstopJS and other tools to hone my skills in the automation domain.

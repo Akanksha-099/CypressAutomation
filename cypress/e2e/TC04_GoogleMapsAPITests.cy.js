@@ -70,7 +70,7 @@ describe('Google Maps API tests', () => {
    
     it("Delete Place API",()=>{
       cy.request({
-        method:'PUT',
+        method:'DELETE',
         url:'http://216.10.245.166/maps/api/place/delete/json?key=qaclick123',
         body:
         
