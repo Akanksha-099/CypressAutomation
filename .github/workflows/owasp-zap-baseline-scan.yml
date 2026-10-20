@@ -45,7 +45,7 @@ jobs:
       NOTIFY_COLOR: '17a2b8'
       NOTIFY_LABEL: 'UNKNOWN'
     permissions:
-      contents: read
+      contents: write
       issues: write         # reserved for future ZAP → GitHub Issues integration
 
     steps:
@@ -113,6 +113,22 @@ jobs:
             report_html.html
             report_md.md
           retention-days: 30
+
+      - name: Prepare ZAP HTML Report for GitHub Pages
+        if: always() && hashFiles('report_html.html') != ''
+        run: |
+          mkdir -p zap-baseline-report
+          cp report_html.html zap-baseline-report/latest-report.html
+          touch zap-baseline-report/.nojekyll
+
+      - name: Publish ZAP HTML Report to GitHub Pages
+        if: always() && hashFiles('report_html.html') != ''
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: zap-baseline-report
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: zap-baseline
+
   send-slack-notification:
      needs: [zap-scan] # Wait for both cypress-run and performance-tests to complete
      if: always() # Always run the Slack notification job regardless of the status of previous jobs
@@ -130,6 +146,6 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: |
             ZAP Baseline Scan Job Status: ${{ needs.zap-scan.result }} 
-            Report URL: https://${{ github.actor }}.github.io/${{ github.event.repository.name }}/page-load-times/latest-report.html
+            Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/zap-baseline/latest-report.html
 
   
