@@ -19,7 +19,7 @@ on:
         default: 'https://thebiguglywebsite.com/'
         type: string
   schedule:
-    - cron: '0 2 * * *'    # nightly at 02:00 UTC (03:00 BST / 02:00 GMT)
+    - cron: '0 0 * * 1'    # weekly Monday at 00:00 UTC
 
 jobs:
   zap-scan:
