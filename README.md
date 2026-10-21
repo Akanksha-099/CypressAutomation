@@ -15,7 +15,7 @@ Code Craft Automation Lab is a hands-on learning repository for quality engineer
 | Tool | Purpose |
 | --- | --- |
 | Cypress | Browser end-to-end tests with HTML reports, videos, and a Cypress-generated page-load report |
-| Lighthouse | Accessibility and performance audits with configured score thresholds |
+| Lighthouse | Accessibility and performance audits with configured score thresholds; scores are posted as commit comments on pushes |
 | K6 | HTTP performance testing with detailed and summary HTML reports |
 | Appium and WebdriverIO | Android device tests executed through BrowserStack |
 | HTML Validator | HTML conformance checks using default and WHATWG validator configurations |
@@ -27,7 +27,7 @@ Code Craft Automation Lab is a hands-on learning repository for quality engineer
 
 | Workflow | Triggers | Output |
 | --- | --- | --- |
-| Cypress and Lighthouse | Push to `main`, weekly Monday schedule, or manual dispatch | Cypress report and videos; Cypress page-load report; Lighthouse report artifact |
+| Cypress and Lighthouse | Push to `main`, weekly Monday schedule, or manual dispatch | Cypress report and videos; Cypress page-load report; Lighthouse scores as commit comments on pushes and HTML reports as artifacts (2-day retention) |
 | K6 Performance | Push to `main`, weekly Monday schedule, or manual dispatch | HTML reports on GitHub Pages under `performance-reports/` |
 | HTML Validation | Push to `main`, weekly Monday schedule, or manual dispatch | Validation report artifacts |
 | Page Load Time | Push to `main`, weekly Monday schedule, or manual dispatch | Report on GitHub Pages under `page-load-times/` |
@@ -45,6 +45,7 @@ The Cypress/Lighthouse, K6, HTML validation, page-load, BackstopJS, OWASP ZAP, a
 
 - BackstopJS compares screenshots against reference images in `backstop_data/bitmaps_reference`. Review visual diffs before approving new references.
 - Several workflows exercise external websites or hosted services. A target outage or site change can affect results independently of changes in this repository.
+- On pushes, the Cypress/Lighthouse workflow posts Lighthouse scores as a comment on the triggering commit. Lighthouse HTML reports are uploaded as workflow artifacts for two days; they are not committed to the repository or published to GitHub Pages.
 - OWASP ZAP reports are published to GitHub Pages and may be public. Only scan authorized targets, and avoid sensitive target URLs.
 - GitHub Actions artifacts expire according to each workflow's retention setting; GitHub Pages holds the latest published report at its stable URL.
 
