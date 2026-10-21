@@ -5,7 +5,14 @@ async function measurePageLoadTime(url) {
   for (let attempt = 0; attempt < 2; attempt++) {
     let browser;
     try {
-      const launchOptions = attempt === 1 ? { args: ['--disable-http2'] } : {};
+      const args = [];
+      if (process.env.CI && process.platform === 'linux') {
+        args.push('--no-sandbox');
+      }
+      if (attempt === 1) {
+        args.push('--disable-http2');
+      }
+      const launchOptions = { args };
       browser = await puppeteer.launch(launchOptions);
       const page = await browser.newPage();
 
