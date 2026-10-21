@@ -1,6 +1,7 @@
 # Code Craft Automation Lab
 
-[![Cypress and Lighthouse](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-and-lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-and-lighthouse-tests.yml)
+[![Cypress Tests](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-tests.yml)
+[![Lighthouse Tests](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/lighthouse-tests.yml)
 [![K6 Performance](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml)
 [![HTML Validation](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml)
 [![Page Load Time](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml)
@@ -27,7 +28,8 @@ Code Craft Automation Lab is a hands-on learning repository for quality engineer
 
 | Workflow | Triggers | Output |
 | --- | --- | --- |
-| Cypress and Lighthouse | Push to `main`, weekly Monday schedule, or manual dispatch | Cypress report and videos; Cypress page-load report; Lighthouse scores as commit comments on pushes and HTML reports as artifacts (2-day retention) |
+| Cypress Tests | Push to `main`, weekly Monday schedule, or manual dispatch | Cypress report and videos; Cypress page-load report; reports deployed to GitHub Pages |
+| Lighthouse Tests | Push to `main`, weekly Monday schedule, or manual dispatch | Lighthouse scores as commit comments on pushes; HTML reports uploaded as artifacts (2-day retention); score thresholds verified |
 | K6 Performance | Push to `main`, weekly Monday schedule, or manual dispatch | HTML reports on GitHub Pages under `performance-reports/` |
 | HTML Validation | Push to `main`, weekly Monday schedule, or manual dispatch | Validation report artifacts |
 | Page Load Time | Push to `main`, weekly Monday schedule, or manual dispatch | Report on GitHub Pages under `page-load-times/` |
@@ -39,13 +41,13 @@ Scheduled workflows must be present on the repository's default branch. Backstop
 
 ### Slack Notifications
 
-The Cypress/Lighthouse, K6, HTML validation, page-load, BackstopJS, OWASP ZAP, and Appium workflows send Slack status notifications. Configure `SLACK_CHANNEL_NAME`, `SLACK_USERNAME`, and `SLACK_WEBHOOK` as GitHub Actions repository secrets. Notifications run even when the test job fails, so the message reports the job result.
+The Cypress, Lighthouse, K6, HTML validation, page-load, BackstopJS, OWASP ZAP, and Appium workflows send Slack status notifications. Configure `SLACK_CHANNEL_NAME`, `SLACK_USERNAME`, and `SLACK_WEBHOOK` as GitHub Actions repository secrets. Notifications run even when the test job fails, so the message reports the job result.
 
 ### QA Notes
 
 - BackstopJS compares screenshots against reference images in `backstop_data/bitmaps_reference`. Review visual diffs before approving new references.
 - Several workflows exercise external websites or hosted services. A target outage or site change can affect results independently of changes in this repository.
-- On pushes, the Cypress/Lighthouse workflow posts Lighthouse scores as a comment on the triggering commit. Lighthouse HTML reports are uploaded as workflow artifacts for two days; they are not committed to the repository or published to GitHub Pages.
+- On pushes, the Lighthouse workflow posts scores as a comment on the triggering commit. Lighthouse HTML reports are uploaded as workflow artifacts for two days; they are not committed to the repository or published to GitHub Pages.
 - OWASP ZAP reports are published to GitHub Pages and may be public. Only scan authorized targets, and avoid sensitive target URLs.
 - GitHub Actions artifacts expire according to each workflow's retention setting; GitHub Pages holds the latest published report at its stable URL.
 

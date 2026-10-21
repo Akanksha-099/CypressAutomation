@@ -1,0 +1,72 @@
+name: Lighthouse Tests Workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  lighthouse-tests:
+    runs-on: ubuntu-latest
+    name: Lighthouse checks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Create report folder
+        run: mkdir -p "${{ github.workspace }}/tmp/artifacts"
+
+      - name: Audit URLs using Lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        id: lighthouseCheck
+        with:
+          gitAuthor: ${{ github.actor }}
+          gitBranch: ${{ github.ref }}
+          urls: 'https://www.foo.software,https://www.w3.org/WAI/,https://webaim.org/,https://dequeuniversity.com/,https://developer.mozilla.org/en-US/,https://alistapart.com/,https://www.nasa.gov/'
+          device: all
+          maxRetries: 1
+          gitHubAccessToken: ${{ secrets.GITHUB_TOKEN }}
+          prCommentEnabled: ${{ github.event_name == 'push' }}
+          outputDirectory: ${{ github.workspace }}/tmp/artifacts
+          slackWebhookUrl: ${{ secrets.SLACK_WEBHOOK }}
+          commentUrl: https://api.github.com/repos/${{ github.repository }}/commits/${{ github.sha }}/comments
+
+      - name: Upload Lighthouse reports
+        uses: actions/upload-artifact@v7
+        with:
+          name: Lighthouse reports
+          path: ${{ github.workspace }}/tmp/artifacts
+          retention-days: 2
+
+      - name: Verify Lighthouse Check results
+        uses: foo-software/lighthouse-check-status-action@master
+        with:
+          lighthouseCheckResults: ${{ steps.lighthouseCheck.outputs.lighthouseCheckResults }}
+          minAccessibilityScore: "50"
+          minBestPracticesScore: "50"
+          minPerformanceScore: "50"
+          minProgressiveWebAppScore: "20"
+          minSeoScore: "40"
+
+  send-slack-notification:
+    needs: [lighthouse-tests]
+    if: always()
+    runs-on: ubuntu-latest
+    name: Send Slack Notification
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
+          SLACK_COLOR: ${{ needs.lighthouse-tests.result == 'success' && 'good' || 'danger' }}
+          SLACK_TITLE: Lighthouse Job Results
+          SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: |
+            Lighthouse job status: ${{ needs.lighthouse-tests.result }}
