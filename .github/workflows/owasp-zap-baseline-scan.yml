@@ -1,0 +1,151 @@
+name: OWASP ZAP Baseline Security Scan
+
+# Uses self-hosted runners which have confirmed direct DNS access to
+# marketplace-qa.tandf.dev, bypassing Cloudflare Zero Trust.
+#
+# Shared logic lives in .github/scripts/:
+#   validate_zap_target.sh           — reachability check + TARGET_HOST slug
+#   parse_zap_report.py              — summary + ALERT_* env vars + fail on High
+#   set_zap_notification_metadata.sh — Teams card colour/label/duration
+#   send_teams_card.py               — POSTs the Adaptive Card
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: 'Target URL to scan'
+        required: false
+        # Keep in sync with TARGET_URL fallbacks below.
+        default: 'https://thebiguglywebsite.com/'
+        type: string
+  schedule:
+    - cron: '0 2 * * *'    # nightly at 02:00 UTC (03:00 BST / 02:00 GMT)
+
+jobs:
+  zap-scan:
+    name: ZAP Baseline Scan - ${{ github.event.inputs.target_url || 'https://thebiguglywebsite.com/' }}
+    runs-on: ["ubuntu-latest"]
+    timeout-minutes: 30
+    env:
+      SCAN_TYPE: 'Baseline'
+      TARGET_URL: ${{ github.event.inputs.target_url || 'https://thebiguglywebsite.com/' }}
+      TARGET_HOST: the-big-ugly-website   # overridden by Validate Target URL
+      # ↓ overridden by Parse ZAP Report
+      ALERT_HIGH: '0'
+      ALERT_MEDIUM: '0'
+      ALERT_LOW: '0'
+      ALERT_INFO: '0'
+      ALERT_TOTAL: '0'
+      ALERT_TOP: 'None'
+      # ↓ overridden by Set Notification Metadata
+      SCAN_START: '0'
+      SCAN_DURATION: 'N/A'
+      RUN_URL: ''
+      COMMIT_SHA: ''
+      NOTIFY_COLOR: '17a2b8'
+      NOTIFY_LABEL: 'UNKNOWN'
+    permissions:
+      contents: write
+      issues: write         # reserved for future ZAP → GitHub Issues integration
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Record Scan Start Time
+        run: echo "SCAN_START=$(date +%s)" >> $GITHUB_ENV
+
+      # Validates reachability and exports TARGET_URL + TARGET_HOST for downstream steps.
+      - name: Validate Target URL
+        run: bash .github/scripts/validate_zap_target.sh
+
+      # Run ZAP baseline passive scan.
+      #
+      # rules_file_name : applies .zap/rules.tsv alert thresholds.
+      # fail_action     : false — blocking is enforced by parse_zap_report.py below.
+      # continue-on-error: true is required because zaproxy/action-baseline@v0.13.0
+      #   still uses the deprecated actions/upload-artifact@v2 internally, which
+      #   returns HTTP 400 on this runner. Reports are written to disk before
+      #   that internal upload fires; we absorb the failure and upload via the
+      #   v4 step below. (action-full-scan@v0.13.0 has been upgraded to v4 and
+      #   does not need this workaround — see that workflow.)
+      #
+      # cmd_options:
+      #   -l WARN : report WARN and above
+      #   -T 30   : hard stop at 30 min — prevents runner getting stuck
+      #   -m 3    : spider for 3 min (default 1 min) for better coverage
+      - name: ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.13.0
+        continue-on-error: true
+        with:
+          target: ${{ env.TARGET_URL }}
+          rules_file_name: '.zap/rules.tsv'
+          fail_action: false
+          allow_issue_writing: false
+          cmd_options: '-l WARN -T 30 -m 3'
+
+      # Fail fast if ZAP crashed before producing any output.
+      - name: Validate ZAP Scan Output
+        if: always()
+        run: |
+          if [ ! -f report_json.json ]; then
+            echo "ZAP scan failed before report generation — no output produced"
+            exit 1
+          fi
+          echo "ZAP scan completed — reports generated"
+
+      # Print summary, export ALERT_* env vars for the Teams card, and fail
+      # the job if any High/Critical alerts are present.
+      - name: Parse ZAP Report and Check for High Alerts
+        if: always()
+        run: python3 .github/scripts/parse_zap_report.py
+
+      # Explicit v4 upload — needed until zaproxy/action-baseline upgrades its
+      # internal upload from v2 to v4 (action-full-scan@v0.13.0 has already
+      # done this, baseline hasn't yet).
+      - name: Upload ZAP Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-baseline-${{ github.run_number }}-${{ env.TARGET_HOST || 'the-big-ugly-website' }}
+          path: |
+            report_json.json
+            report_html.html
+            report_md.md
+          retention-days: 30
+
+      - name: Prepare ZAP HTML Report for GitHub Pages
+        if: always() && hashFiles('report_html.html') != ''
+        run: |
+          mkdir -p zap-baseline-report
+          cp report_html.html zap-baseline-report/latest-report.html
+          touch zap-baseline-report/.nojekyll
+
+      - name: Publish ZAP HTML Report to GitHub Pages
+        if: always() && hashFiles('report_html.html') != ''
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: zap-baseline-report
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: zap-baseline
+
+  send-slack-notification:
+     needs: [zap-scan] # Wait for both cypress-run and performance-tests to complete
+     if: always() # Always run the Slack notification job regardless of the status of previous jobs
+     runs-on: ubuntu-latest
+     name: Send Slack Notification
+     steps:
+       - name: Slack Notification
+         uses: rtCamp/action-slack-notify@v2      
+         if: always()
+         env:
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL_NAME }}
+          SLACK_COLOR: ${{ needs.zap-scan.result == 'success' && 'good' || 'danger' }} 
+          SLACK_TITLE: ZAP Baseline Scan Results
+          SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_MESSAGE: |
+            ZAP Baseline Scan Job Status: ${{ needs.zap-scan.result }} 
+            Report URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/zap-baseline/latest-report.html
+
+  

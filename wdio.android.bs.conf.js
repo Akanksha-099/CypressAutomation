@@ -10,7 +10,7 @@ exports.config = {
           app: 'bs://c8665c3bac9f20d72fe75e9da665d590aefa351d',
           browserstackLocal: true,
           testObservability: true,
-          'projectName': 'CypressAutomation',
+          'projectName': 'code-craft-automation-lab',
           'buildName': 'run-appium-tests',
           //'buildTag': ''
         },

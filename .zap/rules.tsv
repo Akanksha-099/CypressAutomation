@@ -1,0 +1,92 @@
+# ZAP Scan Rules - marketplace-qa.tandf.dev
+# Format: <rule_id>	<action>	<description>
+# Actions: IGNORE | WARN | FAIL
+#
+# IGNORE = confirmed false positive (handled at CDN/Cloudflare/ALB level)
+# WARN   = real finding but non-blocking (track, raise to dev team)
+# FAIL   = must fix before passing CI gate (reserved for future use once triaged)
+#
+# Last updated: 2026-03-27
+# Based on: baseline scan + full scan results (ZAP 2.17.0)
+# Re-verify all IGNORE entries after confirming headers in browser DevTools
+
+# ============================================================
+# IGNORE - Handled at Cloudflare / CDN / ALB level
+# Verify these by checking Response Headers in browser DevTools
+# If headers ARE present there, these are confirmed false positives
+# ============================================================
+10035	IGNORE	Strict-Transport-Security Not Set - enforced by Cloudflare
+10020	IGNORE	Missing Anti-clickjacking Header - X-Frame-Options set at CDN level
+10021	IGNORE	X-Content-Type-Options Header Missing - set at CDN/ALB level
+10050	IGNORE	Retrieved from Cache - expected Cloudflare CDN behaviour
+10096	IGNORE	Timestamp Disclosure Unix - systemic, low exploitability
+
+# ============================================================
+# IGNORE - Informational only, no actionable security risk
+# ============================================================
+10109	IGNORE	Modern Web Application - detection alert only, not a vulnerability
+10111	IGNORE	Authentication Request Identified - informational, ZAP detecting auth flow
+10112	IGNORE	Session Management Response Identified - informational, ZAP detecting sessions
+10103	IGNORE	CSP X-Content-Security-Policy - obsolete header, informational
+10104	IGNORE	CSP X-WebKit-CSP - obsolete header, informational
+10033	IGNORE	Loosely Scoped Cookie - likely intentional for SSO across tandf.dev subdomains
+90033	IGNORE	Loosely Scoped Cookie (passive scanner variant) - same as 10033, intentional for SSO
+10049	IGNORE	Non-Storable Content - no-store on dynamic pages is intentional, not a vulnerability
+10019	IGNORE	Content-Type Header Missing - informational, observed on image proxy endpoint only
+43	IGNORE	Source Code Disclosure File Inclusion - false positive on Next.js /_next/image proxy endpoint; ZAP heuristic misidentifies dynamic image responses as path traversal
+10099	IGNORE	Source Code Disclosure Python - false positive; ZAP matches 'for' keyword in journal article body text, not Python source code
+40025	IGNORE	Proxy Disclosure - Cloudflare is the expected proxy; TRACE/OPTIONS fingerprinting expected behaviour
+10023	IGNORE	Information Disclosure Debug Error Messages - false positive; 'under construction' is UI placeholder text on journal article pages, not a debug message
+90027	IGNORE	Cookie Slack Detector - __cf_bm (Cloudflare bot management) correctly has no effect on app responses
+10054	IGNORE	Cookie SameSite Attribute None - only triggered by Cloudflare __cf_bm bot-mgmt cookie; re-evaluate (promote to WARN/FAIL) if the app starts setting its own cookies
+
+# ============================================================
+# WARN - Real findings, needs dev team review
+# Not blocking CI yet - triage first before promoting to FAIL
+# ============================================================
+10202	WARN	Absence of Anti-CSRF Tokens - verify which forms/endpoints are affected
+10098	WARN	Cross-Domain Misconfiguration - check CORS origins on authenticated endpoints
+10010	WARN	Cookie No HttpOnly Flag - JS-accessible cookies, XSS escalation risk
+10024	WARN	Information Disclosure Sensitive Information in URL - tokens/IDs in query params
+10047	WARN	User Controllable HTML Element Attribute - potential XSS, needs dev verification
+10027	WARN	Information Disclosure Suspicious Comments - dev comments in HTML source
+10037	WARN	Server Leaks X-Powered-By Header - reveals tech stack
+10036	WARN	Server Leaks Version via Server Header - version info aids targeted attacks
+90003	WARN	Sub Resource Integrity Attribute Missing - external scripts without integrity checks
+10015	WARN	Re-examine Cache-control Directives - check if sensitive pages are cacheable
+10017	WARN	Cross-Domain JavaScript Source File Inclusion - verify all external script sources
+
+# ============================================================
+# WARN - CSP findings (verify if set at app level or CDN)
+# Promote to FAIL once confirmed as app-level issues
+# ============================================================
+10038	WARN	Content Security Policy Header Not Set - verify if Cloudflare sets this
+10055	WARN	CSP Wildcard Directive - overly permissive CSP if set in app
+10048	WARN	CSP script-src unsafe-eval - allows eval() execution
+10056	WARN	CSP Failure to Define Directive with No Fallback - incomplete CSP policy
+
+# ============================================================
+# WARN - New findings from 2026-03-27 baseline scan (needs triage)
+# ============================================================
+90004	WARN	Cross-Origin Resource/Embedder/Opener Policy Headers Missing - CORP, COEP, COOP headers absent
+10063	WARN	Permissions Policy Header Not Set - browser feature access not restricted
+
+# ============================================================
+# WARN - New findings from 2026-03-17 full scan (needs triage)
+# ============================================================
+10028	WARN	Off-site Redirect - potential open redirect, verify redirect targets are safe
+3	WARN	Session ID in URL Rewrite - session token exposed in URL, move to cookie
+10003	WARN	Vulnerable JS Library - upgrade affected library to latest version
+90022	WARN	Application Error Disclosure - custom error pages needed, details leak stack info
+10011	WARN	Cookie Without Secure Flag - session cookies must use Secure flag over HTTPS
+# 10054 moved to IGNORE block above — only triggered by Cloudflare __cf_bm currently
+
+# ============================================================
+# TODO: Promote these to FAIL once dev team confirms and fixes
+# ============================================================
+# 10202	FAIL	Anti-CSRF - once dev confirms fix
+# 10098	FAIL	CORS misconfiguration - once dev confirms fix
+# 10010	FAIL	Cookie HttpOnly - once dev confirms fix
+# 10028	FAIL	Off-site Redirect - once redirect targets are audited
+# 3	FAIL	Session ID in URL - once session management is fixed
+# 10003	FAIL	Vulnerable JS Library - once library is upgraded
