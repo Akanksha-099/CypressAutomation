@@ -1,12 +1,12 @@
-# Code-Craft-LearnAutomation
-[![Cypress and Lighthouse Tests Execution Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/cypress-and-lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/cypress-and-lighthouse-tests.yml)
-[![Page Load Time Measurement](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/page-load-time.yml)
-[![Run Validators](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/html-validation.yml)
-[![K6 Performance Tests Workflow](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/Akanksha-099/CypressAutomation/actions/workflows/performance-tests.yml)
+# Code Craft Automation Lab
+[![Cypress and Lighthouse Tests Execution Workflow](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-and-lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-and-lighthouse-tests.yml)
+[![Page Load Time Measurement](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml)
+[![Run Validators](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml)
+[![K6 Performance Tests Workflow](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml)
 
 
 ## Overview
-Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automation technologies through hands-on coding and craftsmanship. This project serves as a comprehensive learning platform, where I actively engage with tools like Cypress, K6, Lighthouse, HTML Validators, Page Load Times, and BackstopJS and other tools to hone my skills in the automation domain.
+Code Craft Automation Lab is a hands-on learning project for automation technologies, including Cypress, K6, Lighthouse, HTML validators, page-load measurement, Appium, and BackstopJS.
 
 ### Key Learning Focus Areas
 
@@ -19,7 +19,7 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - **Visual Regression Testing with BackstopJS:** Automating visual regression tests to capture and compare screenshots, ensuring that UI changes do not introduce unexpected regressions.
 
 
-### Why Code-Craft-LearnAutomation?
+### Why Code Craft Automation Lab?
 
 - **Code Craftsmanship:** Embrace the art of coding by actively working with industry-standard automation tools.
 - **Continuous Learning:** This project embodies a continuous learning journey, where experimentation and growth are paramount.
@@ -43,10 +43,10 @@ Code-Craft-LearnAutomation is a dynamic initiative dedicated to mastering automa
 - BrowserStack is also configured
 
 ### Clone the Repository
-```git clone https://github.com/Akanksha-099/CypressAutomation.git```
+```git clone https://github.com/Akanksha-099/code-craft-automation-lab.git```
 
 ### Install the dependencies
-```cd CypressAutomation```
+```cd code-craft-automation-lab```
 ```npm install```
 
 ### Running Cypress Tests
