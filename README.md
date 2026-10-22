@@ -65,7 +65,7 @@ Code Craft Automation Lab brings together browser and mobile testing, performanc
 | Workflow | Triggers | Output |
 | --- | --- | --- |
 | Cypress Tests | Push to `main`, weekly Monday schedule, or manual dispatch | Cypress report and videos; Cypress page-load report; reports deployed to GitHub Pages |
-| Lighthouse Tests | Push to `main`, weekly Monday schedule, or manual dispatch | Lighthouse scores as commit comments on pushes; HTML reports uploaded as artifacts (2-day retention); score thresholds verified |
+| Lighthouse Tests | Push to `main`, weekly Monday schedule, or manual dispatch | Score summary published to GitHub Pages; detailed HTML reports uploaded as artifacts (2-day retention); thresholds verified |
 | K6 Performance | Push to `main`, weekly Monday schedule, or manual dispatch | HTML reports on GitHub Pages under `performance-reports/` |
 | HTML Validation | Push to `main`, weekly Monday schedule, or manual dispatch | Validation report artifacts |
 | Page Load Time | Push to `main`, weekly Monday schedule, or manual dispatch | Report on GitHub Pages under `page-load-times/` |
@@ -83,7 +83,7 @@ The Cypress, Lighthouse, K6, HTML validation, page-load, BackstopJS, OWASP ZAP, 
 
 - BackstopJS compares screenshots against reference images in `backstop_data/bitmaps_reference`. Review visual diffs before approving new references.
 - Several workflows exercise external websites or hosted services. A target outage or site change can affect results independently of changes in this repository.
-- On pushes, the Lighthouse workflow posts scores as a comment on the triggering commit. Lighthouse HTML reports are uploaded as workflow artifacts for two days; they are not committed to the repository or published to GitHub Pages.
+- On pushes, the Lighthouse workflow posts scores as a comment on the triggering commit. The latest score summary is published to GitHub Pages; detailed HTML reports remain workflow artifacts for two days. The summary only includes scores for the configured public W3C WAI and WebAIM targets.
 - OWASP ZAP reports are published to GitHub Pages and may be public. Only scan authorized targets, and avoid sensitive target URLs.
 - GitHub Actions artifacts expire according to each workflow's retention setting; GitHub Pages holds the latest published report at its stable URL.
 
@@ -148,11 +148,12 @@ Lighthouse audits currently run through GitHub Actions.
 | Cypress page-load result | [`cypress-reports/page-load-times/latest-loadtimes.html`](https://Akanksha-099.github.io/code-craft-automation-lab/cypress-reports/page-load-times/latest-loadtimes.html) |
 | K6 detailed | [`performance-reports/k6-detailed-latest.html`](https://Akanksha-099.github.io/code-craft-automation-lab/performance-reports/k6-detailed-latest.html) |
 | K6 summary | [`performance-reports/k6-summary-latest.html`](https://Akanksha-099.github.io/code-craft-automation-lab/performance-reports/k6-summary-latest.html) |
+| Lighthouse score summary | [`lighthouse-reports/index.html`](https://Akanksha-099.github.io/code-craft-automation-lab/lighthouse-reports/index.html) |
 | Page load time | [`page-load-times/latest-report.html`](https://Akanksha-099.github.io/code-craft-automation-lab/page-load-times/latest-report.html) |
 | BackstopJS | [`backstop-reports/html/latest-report.html`](https://Akanksha-099.github.io/code-craft-automation-lab/backstop-reports/html/latest-report.html) |
 | OWASP ZAP | [`zap-baseline/latest-report.html`](https://Akanksha-099.github.io/code-craft-automation-lab/zap-baseline/latest-report.html) |
 
-Other outputs, including Lighthouse results, HTML validation reports, Cypress videos, and ZAP JSON/Markdown reports, are available as artifacts on their workflow runs. Artifact retention varies by workflow.
+Other outputs, including HTML validation reports, Cypress videos, and ZAP JSON/Markdown reports, are available as artifacts on their workflow runs. Artifact retention varies by workflow.
 
 ## Contributing
 

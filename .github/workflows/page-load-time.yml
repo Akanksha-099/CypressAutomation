@@ -51,6 +51,7 @@ jobs:
         run: |
           latest_file=$(ls PageLoadTime/reports/PageLoadTimeReport_*.html | head -n 1)
           cp "$latest_file" PageLoadTime/reports/latest-report.html
+          printf '{"updatedAt":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > PageLoadTime/reports/report-meta.json
       
       - name: Deploy Page Load Time Report to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

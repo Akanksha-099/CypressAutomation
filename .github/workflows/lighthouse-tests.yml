@@ -54,6 +54,25 @@ jobs:
           minProgressiveWebAppScore: "20"
           minSeoScore: "40"
 
+      - name: Prepare public Lighthouse reports
+        id: prepare_lighthouse_reports
+        if: always() && steps.lighthouseCheck.outcome == 'success'
+        run: |
+          mkdir -p lighthouse-reports
+          node .github/scripts/build_lighthouse_summary.js \
+            "${{ github.workspace }}/tmp/artifacts/results.json" \
+            lighthouse-reports/index.html
+          touch lighthouse-reports/.nojekyll
+          printf '{"updatedAt":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > lighthouse-reports/report-meta.json
+
+      - name: Publish Lighthouse reports to GitHub Pages
+        if: always() && steps.lighthouseCheck.outcome == 'success' && steps.prepare_lighthouse_reports.outcome == 'success'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: lighthouse-reports
+          token: ${{ secrets.GITHUB_TOKEN }}
+          target-folder: lighthouse-reports
+
   send-slack-notification:
     needs: [lighthouse-tests]
     if: always()

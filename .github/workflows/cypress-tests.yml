@@ -75,6 +75,7 @@ jobs:
             cp -r cypress/reports/html cypress-reports/html
             cp -r cypress/videos cypress-reports/videos
             cp cypress/reports/loadtimes/latest-loadtimes.html cypress-reports/page-load-times/latest-loadtimes.html
+            printf '{"updatedAt":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > cypress-reports/report-meta.json
 
         
      - name: Deploy Cypress Reports to GitHub Pages

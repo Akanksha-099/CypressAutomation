@@ -120,6 +120,7 @@ jobs:
           mkdir -p zap-baseline-report
           cp report_html.html zap-baseline-report/latest-report.html
           touch zap-baseline-report/.nojekyll
+          printf '{"updatedAt":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > zap-baseline-report/report-meta.json
 
       - name: Publish ZAP HTML Report to GitHub Pages
         if: always() && hashFiles('report_html.html') != ''

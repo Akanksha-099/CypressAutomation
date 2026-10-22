@@ -62,6 +62,7 @@ jobs:
         run: |
           cp summary/result.html performance-reports/k6-detailed-latest.html
           cp summary/report.html performance-reports/k6-summary-latest.html
+          printf '{"updatedAt":"%s"}\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" > performance-reports/report-meta.json
 
       - name: Deploy K6 Reports to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
