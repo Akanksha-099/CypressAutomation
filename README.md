@@ -31,6 +31,14 @@ Code Craft Automation Lab brings together browser and mobile testing, performanc
 
 **[Explore the latest reports](#reports)** · **[Get started](#getting-started)** · **[Contribute](CONTRIBUTING.md)**
 
+<div align="center">
+  <a href="https://Akanksha-099.github.io/code-craft-automation-lab/cypress-reports/html/latest-report.html">
+    <img src="assets/cypress-report-preview.png" alt="Preview of the Cypress test report showing test suites, duration, and pass/fail counts" width="900">
+  </a>
+  <br>
+  <sub>Sample Cypress report preview · click to open the latest published report</sub>
+</div>
+
 ## Contents
 
 - [Toolset](#toolset)
