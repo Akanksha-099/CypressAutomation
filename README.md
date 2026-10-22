@@ -1,17 +1,45 @@
-# Code Craft Automation Lab
+<h1 align="center">Code Craft Automation Lab</h1>
 
-[![Cypress Tests](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-tests.yml)
-[![Lighthouse Tests](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/lighthouse-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/lighthouse-tests.yml)
-[![K6 Performance](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml)
-[![HTML Validation](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml)
-[![Page Load Time](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml)
-[![BackstopJS Visual Regression](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/backstop.yml/badge.svg?branch=update-backstop-test)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/backstop.yml?query=branch%3Aupdate-backstop-test)
-[![OWASP ZAP Baseline Scan](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/owasp-zap-baseline-scan.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/owasp-zap-baseline-scan.yml)
-[![Appium Tests](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/appium.yml/badge.svg)](https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/appium.yml)
+<div align="center">
+  <img src="assets/project-banner.png" alt="Code Craft Automation Lab — quality engineering and test automation" width="100%">
+</div>
 
-Code Craft Automation Lab is a hands-on learning repository for quality engineering and test automation. It brings together browser and mobile testing, performance and accessibility audits, HTML validation, visual regression, and baseline security scanning. The examples use a mix of local scripts and GitHub Actions so tests can be explored locally and run repeatedly in CI.
+<div align="center">
+  <strong>A hands-on lab for quality engineering and test automation.</strong><br>
+  Browser • Mobile • Performance • Accessibility • Visual • Security
+</div>
 
-## Tools
+<br>
+
+<div align="center">
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-tests.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/cypress-tests.yml/badge.svg" alt="Cypress Tests"></a>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/lighthouse-tests.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/lighthouse-tests.yml/badge.svg" alt="Lighthouse Tests"></a>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/performance-tests.yml/badge.svg" alt="K6 Performance"></a>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/html-validation.yml/badge.svg" alt="HTML Validation"></a>
+</div>
+
+<details>
+  <summary>More workflow checks</summary>
+  <br>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/page-load-time.yml/badge.svg" alt="Page Load Time"></a>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/backstop.yml?query=branch%3Aupdate-backstop-test"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/backstop.yml/badge.svg?branch=update-backstop-test" alt="BackstopJS Visual Regression"></a>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/owasp-zap-baseline-scan.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/owasp-zap-baseline-scan.yml/badge.svg" alt="OWASP ZAP Baseline Scan"></a>
+  <a href="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/appium.yml"><img src="https://github.com/Akanksha-099/code-craft-automation-lab/actions/workflows/appium.yml/badge.svg" alt="Appium Tests"></a>
+</details>
+
+Code Craft Automation Lab brings together browser and mobile testing, performance and accessibility audits, HTML validation, visual regression, and baseline security scanning. Examples run locally and through GitHub Actions, with selected reports published to GitHub Pages.
+
+**[Explore the latest reports](#reports)** · **[Get started](#getting-started)** · **[Contribute](CONTRIBUTING.md)**
+
+## Contents
+
+- [Toolset](#toolset)
+- [GitHub Actions](#github-actions)
+- [Getting Started](#getting-started)
+- [Reports](#reports)
+- [Contributing](CONTRIBUTING.md)
+
+## Toolset
 
 | Tool | Purpose |
 | --- | --- |
@@ -117,3 +145,7 @@ Lighthouse audits currently run through GitHub Actions.
 | OWASP ZAP | [`zap-baseline/latest-report.html`](https://Akanksha-099.github.io/code-craft-automation-lab/zap-baseline/latest-report.html) |
 
 Other outputs, including Lighthouse results, HTML validation reports, Cypress videos, and ZAP JSON/Markdown reports, are available as artifacts on their workflow runs. Artifact retention varies by workflow.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup and contribution guidelines.
