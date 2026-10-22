@@ -1,0 +1,31 @@
+name: Deploy Reports Dashboard
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "site/**"
+      - ".github/workflows/deploy-reports-dashboard.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages-dashboard
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy dashboard without removing reports
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: site
+          target-folder: .
+          clean: false

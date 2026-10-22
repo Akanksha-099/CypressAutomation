@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="420" viewBox="0 0 1280 420" role="img" aria-labelledby="title desc">
+  <title id="title">Code Craft Automation Lab</title>
+  <desc id="desc">A quality engineering and test automation lab for browser, mobile, performance, accessibility, visual, and security testing.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10182b"/>
+      <stop offset="1" stop-color="#172b45"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5ce1d3"/>
+      <stop offset="1" stop-color="#b7f36b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="420" rx="28" fill="url(#background)"/>
+  <circle cx="1070" cy="65" r="220" fill="#35b8b0" opacity=".08"/>
+  <circle cx="1190" cy="375" r="190" fill="#b7f36b" opacity=".06"/>
+  <path d="M48 76h48m-24-24v48" stroke="#5ce1d3" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+  <text x="82" y="156" fill="#9bb3ca" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" letter-spacing="4">QUALITY ENGINEERING • TEST AUTOMATION</text>
+  <text x="78" y="230" fill="#f4f8fc" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Test smarter.</text>
+  <text x="78" y="298" fill="#f4f8fc" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="700">Ship confidently.</text>
+  <rect x="82" y="333" width="310" height="5" rx="2.5" fill="url(#accent)"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700">
+    <rect x="700" y="112" width="215" height="72" rx="16" fill="#203750" stroke="#42617b"/>
+    <circle cx="735" cy="148" r="8" fill="#5ce1d3"/>
+    <text x="757" y="154" fill="#e4eef7">BROWSER</text>
+    <rect x="943" y="112" width="215" height="72" rx="16" fill="#203750" stroke="#42617b"/>
+    <circle cx="978" cy="148" r="8" fill="#b7f36b"/>
+    <text x="1000" y="154" fill="#e4eef7">MOBILE</text>
+    <rect x="700" y="204" width="215" height="72" rx="16" fill="#203750" stroke="#42617b"/>
+    <circle cx="735" cy="240" r="8" fill="#b7f36b"/>
+    <text x="757" y="246" fill="#e4eef7">PERFORMANCE</text>
+    <rect x="943" y="204" width="215" height="72" rx="16" fill="#203750" stroke="#42617b"/>
+    <circle cx="978" cy="240" r="8" fill="#5ce1d3"/>
+    <text x="1000" y="246" fill="#e4eef7">ACCESSIBILITY</text>
+    <rect x="700" y="296" width="215" height="72" rx="16" fill="#203750" stroke="#42617b"/>
+    <circle cx="735" cy="332" r="8" fill="#5ce1d3"/>
+    <text x="757" y="338" fill="#e4eef7">VISUAL</text>
+    <rect x="943" y="296" width="215" height="72" rx="16" fill="#203750" stroke="#42617b"/>
+    <circle cx="978" cy="332" r="8" fill="#b7f36b"/>
+    <text x="1000" y="338" fill="#e4eef7">SECURITY</text>
+  </g>
+</svg>

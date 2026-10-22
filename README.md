@@ -29,7 +29,7 @@
 
 Code Craft Automation Lab brings together browser and mobile testing, performance and accessibility audits, HTML validation, visual regression, and baseline security scanning. Examples run locally and through GitHub Actions, with selected reports published to GitHub Pages.
 
-**[Explore the latest reports](#reports)** · **[Get started](#getting-started)** · **[Contribute](CONTRIBUTING.md)**
+**[Open the QA reports dashboard](https://Akanksha-099.github.io/code-craft-automation-lab/)** · **[Explore reports](#reports)** · **[Get started](#getting-started)** · **[Contribute](CONTRIBUTING.md)**
 
 <div align="center">
   <a href="https://Akanksha-099.github.io/code-craft-automation-lab/cypress-reports/html/latest-report.html">
